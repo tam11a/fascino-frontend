@@ -12,6 +12,9 @@ const theme = createTheme({
     primary: {
       main: "#F58EB3",
     },
+    secondary: {
+      main: "#5F6C74",
+    },
   },
   typography: {
     fontFamily: "Sarala, sans-serif",
