@@ -1,5 +1,24 @@
 import { createTheme } from "@mui/material";
 
-const theme = createTheme({});
+localStorage.setItem("theme", "dark");
 
-export default theme
+const theme = createTheme({
+  palette: {
+    mode: "dark",
+    background: {
+      default: "#1F2326",
+      paper: "#161A1E",
+    },
+    primary: {
+      main: "#F58EB3",
+    },
+  },
+  typography: {
+    fontFamily: "Sarala, sans-serif",
+    button: {
+      textTransform: "unset",
+    },
+  },
+});
+
+export default theme;
