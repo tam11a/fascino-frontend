@@ -25,3 +25,6 @@ build-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# ENV
+.env.*
