@@ -2,7 +2,6 @@ import React from "react";
 
 import {
 	Divider,
-	//   Avatar,
 	IconButton,
 	List,
 	ListItemIcon,
@@ -12,22 +11,25 @@ import {
 	Tooltip,
 	Box,
 	Paper,
+	Avatar,
 } from "@mui/material";
 
 //Icons
-// import { GrRestaurant } from "react-icons/gr";
 import { RiMenuFoldLine, RiMenuUnfoldLine } from "react-icons/ri";
 
 import { Link } from "react-router-dom";
 import { Drawer, DrawerFooter, DrawerHeader } from "../components";
 import { DrawerData } from "./drawerData";
-// import AuthContext from "@contexts/AuthContext";
-// import useUser from "@/hooks/useUser";
+import useAuth from "@/hooks/useAuth";
+import useUser from "@/hooks/useUser";
+import Iconify from "@components/iconify";
 
 const AppDrawer: React.FC<{ open: boolean; toggleDrawer: () => void }> = ({
 	open,
 	toggleDrawer,
 }) => {
+	const { logout } = useAuth();
+	const user = useUser();
 	return (
 		<>
 			<Drawer
@@ -43,7 +45,7 @@ const AppDrawer: React.FC<{ open: boolean; toggleDrawer: () => void }> = ({
 						mb: "60px",
 					}}
 				>
-					{DrawerData()?.map?.((item, index) => (
+					{DrawerData(logout)?.map?.((item, index) => (
 						<List
 							key={item.title}
 							subheader={
@@ -89,11 +91,11 @@ const AppDrawer: React.FC<{ open: boolean; toggleDrawer: () => void }> = ({
 												mr: open ? 1.5 : "auto",
 												justifyContent: "center",
 												fontSize: "2rem",
-												bgcolor: "#00000010",
+												// bgcolor: "#00000010",
 												p: 1,
 												borderRadius: "4px",
 											}}
-											// className="bg-primary-50 text-primary-700"
+											className="text-primary-400"
 										>
 											{navbtn.icon}
 										</ListItemIcon>
@@ -134,34 +136,45 @@ const AppDrawer: React.FC<{ open: boolean; toggleDrawer: () => void }> = ({
 								columnGap: 1,
 							}}
 						>
-							{/* <ListItemText
-                primary={user?.restaurant?.name}
-                secondary={`${user?.firstName} # ${
-                  user?.role?.roleName?.split(" ### ")[0]
-                }`}
-                primaryTypographyProps={{
-                  variant: "subtitle2",
-                  sx: {
-                    width: "165px",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  },
-                }}
-                secondaryTypographyProps={{
-                  variant: "caption",
-                  sx: {
-                    width: "165px",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  },
-                }}
-              /> */}
+							<Avatar
+								variant={"rounded"}
+								sx={{
+									bgcolor: "background.default",
+									color: "primary.main",
+								}}
+								// className="border-solid border-2 border-slate-300 mr-2"
+							>
+								<Iconify icon={"material-symbols:person-rounded"} />
+							</Avatar>
+							<ListItemText
+								primary={`${user?.firstName} ${user?.lastName}`}
+								secondary={`${user?.role?.name}`}
+								primaryTypographyProps={{
+									variant: "subtitle2",
+									sx: {
+										width: "165px",
+										overflow: "hidden",
+										textOverflow: "ellipsis",
+									},
+								}}
+								secondaryTypographyProps={{
+									variant: "caption",
+									sx: {
+										width: "165px",
+										overflow: "hidden",
+										textOverflow: "ellipsis",
+									},
+								}}
+							/>
 							<IconButton onClick={toggleDrawer}>
 								{open ? <RiMenuFoldLine /> : <RiMenuUnfoldLine />}
 							</IconButton>
 						</Paper>
 					) : (
-						<IconButton onClick={toggleDrawer}>
+						<IconButton
+							onClick={toggleDrawer}
+							color="primary"
+						>
 							{open ? <RiMenuFoldLine /> : <RiMenuUnfoldLine />}
 						</IconButton>
 					)}

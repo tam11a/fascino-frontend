@@ -3,10 +3,18 @@ import { IUserId } from "@/types";
 export type IToken = string | null;
 
 export type IUser = {
-	userId: IUserId;
-	name: string;
-	accessRights: string[];
-	username: string;
+	_id: IUserId;
+	firstName: string;
+	lastName: string;
+	permissions: string[];
+	userName: string;
+	phone: string;
+	email: string;
+	gender: "male" | "female" | "others";
+	role: {
+		name: string;
+		_id: string;
+	};
 };
 
 export type IAuthContext = {

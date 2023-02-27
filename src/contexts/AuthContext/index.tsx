@@ -7,7 +7,7 @@ import { updateInstanceAuthorization } from "@/services";
 import useAreYouSure from "@/hooks/useAreYouSure";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useAccessContext } from "@tam11a/react-use-access";
+// import { useAccessContext } from "@tam11a/react-use-access";
 // import { IUserId } from "@/types";
 
 const defaultValues: IAuthContext = {
@@ -15,10 +15,18 @@ const defaultValues: IAuthContext = {
 	token: null,
 	setToken: () => {},
 	user: {
-		userId: "",
-		name: "",
-		accessRights: [],
-		username: "",
+		_id: "",
+		firstName: "",
+		lastName: "",
+		permissions: [],
+		userName: "",
+		phone: "",
+		email: "",
+		gender: "others",
+		role: {
+			_id: "",
+			name: "",
+		},
 	},
 	isLoading: false,
 	login: () => {},
@@ -52,7 +60,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
 	React.useEffect(() => {
 		if (!validationData) return;
-		setUser(validationData?.data);
+		setUser(validationData?.data?.data);
 	}, [validationData]);
 
 	React.useEffect(() => {
@@ -66,9 +74,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 		});
 		setTimeout(() => {
 			messageApi.destroy();
+			localStorage.clear();
+			sessionStorage.clear();
+			document.cookie = "";
 			localStorage.removeItem("token");
 			sessionStorage.removeItem("token");
-			localStorage.removeItem("r_lng");
 			setToken(null);
 			updateInstanceAuthorization();
 			messageApi.success("Logged out! Please sign in again");
@@ -87,7 +97,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 		password: string,
 		remember: boolean | false
 	) => {
-		console.log({ email, password });
 		messageApi.open({
 			type: "loading",
 			content: "Logging in..",
@@ -122,11 +131,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 		});
 		const res = await handleResponse(mutateLogout);
 		messageApi.destroy();
-		if (res.status) {
+		if (true) {
 			localStorage.clear();
 			sessionStorage.clear();
 			document.cookie = "";
-			localStorage.removeItem("r_lng");
 			localStorage.removeItem("token");
 			sessionStorage.removeItem("token");
 			setToken(null);
@@ -137,10 +145,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 		}
 	};
 
-	const { resetPermissions } = useAccessContext();
-	React.useEffect(() => {
-		resetPermissions(user.accessRights);
-	}, [user]);
+	// const { resetPermissions } = useAccessContext();
+	// React.useEffect(() => {
+	// 	resetPermissions(user.permissions);
+	// }, [user]);
 
 	const AreYouSure = useAreYouSure({ color: "error", title: "Logout" });
 
