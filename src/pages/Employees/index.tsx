@@ -2,7 +2,7 @@ import React from "react";
 // import useUser from "@/hooks/useUser";
 import { Button, Container, Grid, Typography } from "@mui/material";
 import { useToggle } from "@tam11a/react-use-hooks";
-// import CreateEmployee from "./components/CreateEmployee";
+import CreateEmployee from "./components/CreateEmployee";
 import EmployeeColumn from "./components/EmployeeColumn";
 // import { AccessMargin } from "@tam11a/react-use-access";
 // import defaultPermissions from "@/utilities/defaultPermissions";
@@ -54,7 +54,7 @@ const Employees: React.FC = () => {
         </Grid>
 
         {/* Dialog Box */}
-        {/* <CreateEmployee open={open} onClose={onClose} /> */}
+        <CreateEmployee open={open} onClose={onClose} />
       </Container>
     </>
   );

@@ -21,8 +21,13 @@
 }
 
 /* Ant Design Message Over Everything  */
-.ant-message {
-	z-index: 1220;
+.ant-message,
+.ant-menu-submenu.ant-menu-submenu-popup {
+	z-index: 1520;
+}
+.ant-picker-dropdown,
+.ant-select-dropdown {
+	z-index: 1400;
 }
 
 /* NProgess Color */

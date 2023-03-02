@@ -1,6 +1,6 @@
 import instance from "@/services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { IUpdateEmployee } from "./types";
+import { ICreateEmployee, IUpdateEmployee } from "./types";
 
 const getEmployees = () => {
   return instance.get(`/employee`, {
@@ -45,5 +45,16 @@ export const useUpdateEmployee = () => {
       queryClient.invalidateQueries(["get-all-employees"]);
       queryClient.invalidateQueries(["get-employees-by-id"]);
     },
+  });
+};
+
+const createEmployee = (data: ICreateEmployee) => {
+  return instance.post("/employee/register", data);
+};
+
+export const useCreateEmployee = () => {
+  const queryClient = useQueryClient();
+  return useMutation(createEmployee, {
+    onSuccess: () => queryClient.invalidateQueries(["get-all-employees"]),
   });
 };
