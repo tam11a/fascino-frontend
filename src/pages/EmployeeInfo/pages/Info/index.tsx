@@ -2,13 +2,14 @@ import handleResponse from "@/utilities/handleResponse";
 import { useGetEmployeesById, useUpdateEmployee } from "@/queries/employees";
 import Label from "@components/Label";
 import { Container } from "@mui/system";
-import { Input, message, Select } from "antd";
+import { Input, Select } from "antd";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetRoles } from "@/queries/role/types";
 import { IRole } from "@pages/Roles/Types/types";
+import { message } from "@components/antd/message";
 
 const Info: React.FC = ({}) => {
   const { eid } = useParams();
@@ -16,11 +17,9 @@ const Info: React.FC = ({}) => {
   const { reset, handleSubmit, control } = useForm({});
 
   const { data: employeeData } = useGetEmployeesById(eid);
-  const { mutateAsync: updateUser, isLoading: isSubmitting } =
-    useUpdateEmployee();
+  const { mutateAsync: updateUser } = useUpdateEmployee();
 
   const { data: roleData, isLoading: isRoleLoading } = useGetRoles();
-  console.log(roleData);
 
   React.useEffect(() => {
     if (!employeeData) return;

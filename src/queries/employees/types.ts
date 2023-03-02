@@ -11,3 +11,14 @@ export type IUpdateEmployee = {
   roleID: number;
   createdBy: string;
 };
+
+export type ICreateEmployee = {
+  userName: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  email: string;
+  phone: string;
+  password: string;
+  role: number;
+};
