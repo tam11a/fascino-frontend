@@ -15,4 +15,9 @@ export const privateRoutes = [
     Component: lazy(() => import("@pages/Employees")),
     // permissions: Object.values(defaultPermissions.EMPLOYEES),
   },
+  {
+    path: PRIVATE_ROUTES.EMPLOYEEINFO,
+    Component: lazy(() => import("@pages/Employees/components/UpdateEmployee")),
+    // permissions: Object.values(defaultPermissions.EMPLOYEES),
+  },
 ];

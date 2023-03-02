@@ -1,5 +1,5 @@
 // import defaultPermissions from "@/utilities/defaultPermissions";
-import { Chip, IconButton } from "@mui/material";
+import { Chip, IconButton, Typography } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { IDataTable } from "@pages/Employees/Types";
 // import { checkAccess } from "@tam11a/react-use-access";
@@ -113,11 +113,7 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
           <IconButton
             sx={{ fontSize: "large" }}
             color="primary"
-            onClick={() =>
-              navigate({
-                search: `?employeeDialog=${data.id}`,
-              })
-            }
+            onClick={() => navigate(`/app/employee/${data._id}`)}
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <FiEdit2 />
