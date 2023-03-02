@@ -1,5 +1,5 @@
 import instance from "@/services";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const getEmployees = () => {
   return instance.get(`/employee`, {
@@ -8,7 +8,20 @@ const getEmployees = () => {
 };
 
 export const useGetEmployees = () => {
-  return useQuery(["get-employees"], () => getEmployees(), {
+  return useQuery(["get-all-employees"], () => getEmployees(), {
+    // enabled: !!vendorId,
+    // select: (data: string) => data?.data || [],
+  });
+};
+
+const getEmployeesById = (id: any) => {
+  return instance.get(`/employee/${id}`, {
+    // params: {},
+  });
+};
+
+export const useGetEmployeesById = (id: any) => {
+  return useQuery(["get-employees-by-id"], () => getEmployeesById(id), {
     // enabled: !!vendorId,
     // select: (data: string) => data?.data || [],
   });

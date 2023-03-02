@@ -15,4 +15,5 @@ export type IDataTable = {
   rows: any;
   isLoading: boolean;
   getRowId?: any;
+  checked?: boolean;
 };
