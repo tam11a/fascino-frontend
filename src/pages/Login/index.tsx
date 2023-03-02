@@ -169,7 +169,7 @@ const Login: React.FC = () => {
 				<Stack className="flex flex-row items-center gap-1 ">
 					<Typography
 						component={Link}
-						to={"/privacy-policy"}
+						to={"/privacy"}
 						variant="caption"
 					>
 						Privacy Policy
@@ -178,7 +178,7 @@ const Login: React.FC = () => {
 					<Typography
 						variant="caption"
 						component={Link}
-						to={"/terms-and-conditions"}
+						to={"/terms"}
 					>
 						Terms and Conditions
 					</Typography>

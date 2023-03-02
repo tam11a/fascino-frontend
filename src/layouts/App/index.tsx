@@ -6,7 +6,7 @@ import AuthContext from "@/contexts/AuthContext";
 
 const AppDrawer = React.lazy(() => import("./Drawer"));
 const TemporaryDrawer = React.lazy(() => import("./Drawer/TemporaryDrawer"));
-// const AppHeader = lazy(() => import("./Header"));
+const AppFooter = React.lazy(() => import("./Footer"));
 
 const AppLayout: React.FC | any = () => {
 	const location = useLocation();
@@ -39,7 +39,10 @@ const AppLayout: React.FC | any = () => {
 						open={open}
 						onClose={toggleDrawer}
 					/>
-					{/* <AppFooter open={open} toggleDrawer={toggleDrawer} /> */}
+					<AppFooter
+						open={open}
+						toggleDrawer={toggleDrawer}
+					/>
 				</Hidden>
 			</Box>
 		</Box>
