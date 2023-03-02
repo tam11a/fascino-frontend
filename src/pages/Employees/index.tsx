@@ -14,7 +14,7 @@ const DataTable = React.lazy(() => import("./components/Datatable"));
 const Employees: React.FC = () => {
   //   const { user } = useUser();
   const { data, isLoading } = useGetEmployees();
-  console.log(data?.data?.data);
+  // console.log(data?.data?.data);
   const { state: open, toggleState: onClose } = useToggle(false);
 
   return (

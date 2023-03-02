@@ -1,5 +1,6 @@
 import instance from "@/services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { IUpdateEmployee } from "./types";
 
 const getEmployees = () => {
   return instance.get(`/employee`, {
@@ -24,5 +25,25 @@ export const useGetEmployeesById = (id: any) => {
   return useQuery(["get-employees-by-id"], () => getEmployeesById(id), {
     // enabled: !!vendorId,
     // select: (data: string) => data?.data || [],
+  });
+};
+
+const updateEmployee = ({
+  id,
+  data,
+}: {
+  id: string;
+  data: IUpdateEmployee;
+}) => {
+  return instance.patch(`/employee/${id}`, data);
+};
+
+export const useUpdateEmployee = () => {
+  const queryClient = useQueryClient();
+  return useMutation(updateEmployee, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["get-all-employees"]);
+      queryClient.invalidateQueries(["get-employees-by-id"]);
+    },
   });
 };
