@@ -1,63 +1,60 @@
 import React from "react";
 import {
-  Divider,
-  Drawer,
-  // Avatar,
-  // IconButton,
-  // List,
-  // ListItem,
-  // ListItemButton,
-  // ListItemIcon,
-  // ListItemText,
-  // ListSubheader,
-  // Tooltip,
+	Divider,
+	Drawer,
+	Avatar,
+	IconButton,
+	List,
+	ListItem,
+	ListItemButton,
+	ListItemIcon,
+	ListItemText,
+	ListSubheader,
+	Tooltip,
 } from "@mui/material";
-// import { DrawerData } from "./drawerData";
-// import { Link } from "react-router-dom";
-// import { GrRestaurant } from "react-icons/gr";
-// import { MdClose } from "react-icons/md";
+import { DrawerData } from "./drawerData";
+import { Link } from "react-router-dom";
+import { MdClose } from "react-icons/md";
+import useUser from "@/hooks/useUser";
+import useAuth from "@/hooks/useAuth";
 
 const TemporaryDrawer: React.FC<{ open: boolean; onClose: () => void }> = ({
-  open,
-  onClose,
+	open,
+	onClose,
 }) => {
-  return (
-    <>
-      <Drawer
-        variant="temporary"
-        open={open}
-        onClose={onClose}
-        PaperProps={{
-          sx: {
-            width: "95vw",
-            maxWidth: "350px",
-          },
-        }}
-      >
-        {/* <ListItem
+	const user = useUser();
+	const auth = useAuth();
+	return (
+		<>
+			<Drawer
+				variant="temporary"
+				open={open}
+				onClose={onClose}
+				PaperProps={{
+					sx: {
+						width: "95vw",
+						maxWidth: "350px",
+					},
+				}}
+			>
+				<ListItem
 					sx={{
 						columnGap: 1,
 					}}
 				>
 					<Avatar
-						src={previewGalleryImage(
-							user?.vendorId,
-							user?.restaurant?.profileImage
-						)}
+						src={"favicon.svg"}
 						variant={"rounded"}
 						sx={{
 							bgcolor: "#fff",
 							color: "primary.main",
 						}}
 						// className="border-solid border-2 border-slate-300 mr-2"
-					>
-						<GrRestaurant />
-					</Avatar>
+					/>
+
 					<ListItemText
-						primary={user?.restaurant?.name}
-						secondary={`${user?.firstName} # ${
-							user?.role?.roleName?.split(" ### ")[0]
-						}`}
+						primary={`${user?.firstName} ${user?.lastName}`}
+						secondary={`${user?.role?.name}`}
 						primaryTypographyProps={{
 							variant: "subtitle2",
 							noWrap: true,
@@ -73,9 +70,9 @@ const TemporaryDrawer: React.FC<{ open: boolean; onClose: () => void }> = ({
 					>
 						<MdClose />
 					</IconButton>
-				</ListItem> */}
-        <Divider />
-        {/* {DrawerData(auth.logout)?.map?.((item, index) => (
+				</ListItem>
+				<Divider />
+				{DrawerData(auth.logout)?.map?.((item, index) => (
 					<List
 						sx={{ mt: 1 }}
 						key={item.title}
@@ -125,7 +122,6 @@ const TemporaryDrawer: React.FC<{ open: boolean; onClose: () => void }> = ({
 													minWidth: 0,
 													mr: open ? 1.5 : "auto",
 													justifyContent: "center",
-													bgcolor: "#E9E3EE",
 													color: "primary.main",
 													fontSize: "1.5rem",
 													p: 1,
@@ -149,10 +145,10 @@ const TemporaryDrawer: React.FC<{ open: boolean; onClose: () => void }> = ({
 								)
 						)}
 					</List>
-				))} */}
-      </Drawer>
-    </>
-  );
+				))}
+			</Drawer>
+		</>
+	);
 };
 
 export default TemporaryDrawer;

@@ -31,16 +31,16 @@
 }
 
 #nprogress .bar {
-	background: #664980 !important;
+	background: #f699bb !important;
 	height: 4px !important;
 }
 
 #nprogress .spinner-icon {
-	border-top-color: #664980 !important;
-	border-left-color: #664980 !important;
+	border-top-color: #93556b !important;
+	border-left-color: #93556b !important;
 	/* z-index: 1000000000 !important; */
 }
 
 #nprogress .peg {
-	box-shadow: 0 0 10px #33164d, 0 0 5px #33164d !important;
+	box-shadow: 0 0 10px #623948, 0 0 5px #dd80a1 !important;
 }
