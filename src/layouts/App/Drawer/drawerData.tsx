@@ -14,7 +14,7 @@ export const DrawerData = (logout?: () => void): IDrawerData[] => [
       {
         name: "Products",
         icon: <Icon icon="circum:shopping-basket" />,
-        to: "/products",
+        to: "/app/products",
       },
       {
         name: "Customers",
@@ -29,22 +29,22 @@ export const DrawerData = (logout?: () => void): IDrawerData[] => [
       {
         name: "Sales",
         icon: <Icon icon="carbon:report-data" />,
-        to: "/app/employees",
+        to: "/app/sales",
       },
       {
         name: "Branches",
         icon: <Icon icon="ph:git-branch-light" />,
-        to: "/app/employees",
+        to: "/app/branches",
       },
       {
         name: "Suppliers",
         icon: <Icon icon="ph:package-light" />,
-        to: "/app/employees",
+        to: "/app/suppliers",
       },
       {
         name: "Roles",
         icon: <Icon icon="fluent:person-key-20-regular" />,
-        to: "/app/employees",
+        to: "/app/roles",
       },
       {
         name: "Employees",

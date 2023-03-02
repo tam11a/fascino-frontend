@@ -23,7 +23,7 @@ const getEmployeesById = (id: any) => {
 
 export const useGetEmployeesById = (id: any) => {
   return useQuery(["get-employees-by-id"], () => getEmployeesById(id), {
-    // enabled: !!vendorId,
+    enabled: !!id,
     // select: (data: string) => data?.data || [],
   });
 };
@@ -32,7 +32,7 @@ const updateEmployee = ({
   id,
   data,
 }: {
-  id: string;
+  id: string | undefined;
   data: IUpdateEmployee;
 }) => {
   return instance.patch(`/employee/${id}`, data);

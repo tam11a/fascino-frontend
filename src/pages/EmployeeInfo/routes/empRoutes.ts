@@ -7,7 +7,11 @@ export const empRoutes = [
     Component: lazy(() => import("../pages/Info")),
   },
   {
-    path: Employee_ROUTES.NOTFOUND,
-    Component: lazy(() => import("@pages/NotFound")),
+    path: Employee_ROUTES.ADDITIONAL,
+    Component: lazy(() => import("../pages/Additional")),
   },
+  // {
+  //   path: Employee_ROUTES.NOTFOUND,
+  //   Component: lazy(() => import("@pages/NotFound")),
+  // },
 ];

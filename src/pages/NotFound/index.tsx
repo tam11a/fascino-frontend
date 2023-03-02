@@ -12,9 +12,8 @@ const NotFound: React.FC = () => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: "90vw",
-          maxWidth: "350px",
-          height: "90vw",
-          maxHeight: "380px",
+          maxWidth: "780px",
+          height: "auto",
         }}
         variant={"square"}
       />

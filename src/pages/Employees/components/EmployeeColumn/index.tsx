@@ -40,7 +40,7 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
       minWidth: 150,
       flex: 1,
       renderCell: (data: any) =>
-        data.row?.role?.Name ? <Chip label={data.row?.role?.name} /> : "-",
+        data.row?.role?.name ? <Chip label={data.row?.role?.name} /> : "-",
     },
     {
       headerName: "Phone",
@@ -72,9 +72,9 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
         data.row?.createdBy?.userName ? (
           <Chip
             label={data.row?.createdBy?.userName}
-            sx={{
-              textTransform: "uppercase",
-            }}
+            // sx={{
+            //   textTransform: "uppercase",
+            // }}
           />
         ) : (
           "-"
@@ -92,9 +92,9 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
         data.row?.updatedBy?.userName ? (
           <Chip
             label={data.row?.updatedBy?.userName}
-            sx={{
-              textTransform: "uppercase",
-            }}
+            // sx={{
+            //   textTransform: "uppercase",
+            // }}
           />
         ) : (
           "-"

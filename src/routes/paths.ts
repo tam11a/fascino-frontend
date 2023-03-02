@@ -7,5 +7,5 @@ export const PRIVATE_ROUTES = {
   DASHBOARD: "",
   NOTFOUND: "*",
   EMPLOYEES: "employees",
-  EMPLOYEEINFO: "employee/:eid",
+  EMPLOYEEINFO: "employee/:eid/*",
 };

@@ -1,22 +1,26 @@
-import useUser from "@/hooks/useUser";
 import handleResponse from "@/utilities/handleResponse";
 import { useGetEmployeesById, useUpdateEmployee } from "@/queries/employees";
 import Label from "@components/Label";
 import { Container } from "@mui/system";
-import { Input, message } from "antd";
+import { Input, message, Select } from "antd";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { useGetRoles } from "@/queries/role/types";
+import { IRole } from "@pages/Roles/Types/types";
 
 const Info: React.FC = ({}) => {
   const { eid } = useParams();
 
   const { reset, handleSubmit, control } = useForm({});
 
-  const { data: employeeData, isLoading } = useGetEmployeesById(eid);
+  const { data: employeeData } = useGetEmployeesById(eid);
   const { mutateAsync: updateUser, isLoading: isSubmitting } =
     useUpdateEmployee();
+
+  const { data: roleData, isLoading: isRoleLoading } = useGetRoles();
+  console.log(roleData);
 
   React.useEffect(() => {
     if (!employeeData) return;
@@ -26,12 +30,13 @@ const Info: React.FC = ({}) => {
       lastName: employeeData?.data?.data?.lastName,
       phone: employeeData?.data?.data?.phone,
       email: employeeData?.data?.data?.email,
+      gender: employeeData?.data?.data?.gender,
       dob: employeeData?.data?.data?.dob,
       hireDate: employeeData?.data?.data?.hireDate,
       workHour: employeeData?.data?.data?.workHour,
       bank: employeeData?.data?.data?.bank,
       bKash: employeeData?.data?.data?.bKash,
-      role: employeeData?.data?.data?.role,
+      role: employeeData?.data?.data?.role?._id,
     });
   }, [employeeData]);
 
@@ -58,14 +63,14 @@ const Info: React.FC = ({}) => {
   };
   return (
     <>
-      <Container maxWidth={"lg"}>
+      <Container maxWidth={"xs"}>
         <form
           className="py-3 grid grid-cols-1 mt-3"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <div className="flex flex-col">
-              <Label isRequired>First Name</Label>
+              <Label>First Name</Label>
               <Controller
                 control={control}
                 name={"firstName"}
@@ -86,7 +91,7 @@ const Info: React.FC = ({}) => {
               />
             </div>
             <div className="flex flex-col">
-              <Label isRequired>Last Name</Label>
+              <Label>Last Name</Label>
               <Controller
                 control={control}
                 name={"lastName"}
@@ -109,7 +114,27 @@ const Info: React.FC = ({}) => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
             <div className="flex flex-col">
-              <Label info="Phone number can't be updated">Phone</Label>
+              <Label>Username</Label>
+              <Controller
+                control={control}
+                name={"userName"}
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error },
+                }) => (
+                  <Input
+                    placeholder="Username"
+                    size="large"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    status={error ? "error" : ""}
+                  />
+                )}
+              />
+            </div>
+            <div className="flex flex-col">
+              <Label>Phone</Label>
               <Controller
                 control={control}
                 name={"phone"}
@@ -124,12 +149,112 @@ const Info: React.FC = ({}) => {
                     onBlur={onBlur}
                     value={value}
                     status={error ? "error" : ""}
-                    disabled
                   />
                 )}
               />
             </div>
-
+          </div>
+          <div className="flex flex-col">
+            <Label info="Email can't be updated">Email</Label>
+            <Controller
+              control={control}
+              name={"email"}
+              render={({
+                field: { onChange, onBlur, value },
+                fieldState: { error },
+              }) => (
+                <Input
+                  placeholder="Email"
+                  size="large"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  status={error ? "error" : ""}
+                  disabled
+                />
+              )}
+            />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+            <div className="flex flex-col">
+              <Label>Role</Label>
+              <Controller
+                control={control}
+                name={"role"}
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error },
+                }) => (
+                  //
+                  <Select
+                    placeholder={"Role"}
+                    size={"large"}
+                    className="role"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    options={roleData?.data?.data?.map((rd: IRole) => {
+                      return {
+                        value: rd._id,
+                        label: rd.name,
+                      };
+                    })}
+                    status={error ? "error" : ""}
+                    disabled={isRoleLoading}
+                  />
+                )}
+              />
+            </div>
+            <div className="flex flex-col">
+              <Label>Gender</Label>
+              <Controller
+                control={control}
+                name={"gender"}
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error },
+                }) => (
+                  <Select
+                    placeholder={"Gender"}
+                    size={"large"}
+                    className="gender"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    options={[
+                      { value: "male", label: "Male" },
+                      { value: "female", label: "Female" },
+                      { value: "others", label: "Others" },
+                    ]}
+                    status={error ? "error" : ""}
+                    // disabled={isRoleLoading}
+                    loading={isRoleLoading}
+                  />
+                )}
+              />
+            </div>
+          </div>
+          {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+            <div className="flex flex-col">
+              <Label>Date Of Birth</Label>
+              <Controller
+                control={control}
+                name={"dob"}
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error },
+                }) => (
+                  <Input
+                    placeholder="dob"
+                    size="large"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    status={error ? "error" : ""}
+                  />
+                )}
+              />
+            </div>
             <div className="flex flex-col">
               <Label isRequired>Email</Label>
               <Controller
@@ -150,30 +275,8 @@ const Info: React.FC = ({}) => {
                 )}
               />
             </div>
-          </div>
-          <div>
-            <Label isRequired>Address</Label>
-            <Controller
-              control={control}
-              name={"address"}
-              render={({
-                field: { onChange, onBlur, value },
-                fieldState: { error },
-              }) => (
-                <Input.TextArea
-                  placeholder="Address"
-                  showCount
-                  maxLength={1000}
-                  autoSize={{ minRows: 4 }}
-                  size="large"
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  status={error ? "error" : ""}
-                />
-              )}
-            />
-          </div>
+          </div> */}
+
           <Button
             variant="contained"
             size="large"
