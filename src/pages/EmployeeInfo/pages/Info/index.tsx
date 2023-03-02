@@ -70,10 +70,11 @@ const Info: React.FC = ({}) => {
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <div className="flex flex-col">
-              <Label>First Name</Label>
+              <Label isRequired>First Name</Label>
               <Controller
                 control={control}
                 name={"firstName"}
+                rules={{ required: true }}
                 render={({
                   field: { onChange, onBlur, value },
                   fieldState: { error },
@@ -91,10 +92,11 @@ const Info: React.FC = ({}) => {
               />
             </div>
             <div className="flex flex-col">
-              <Label>Last Name</Label>
+              <Label isRequired>Last Name</Label>
               <Controller
                 control={control}
                 name={"lastName"}
+                rules={{ required: true }}
                 render={({
                   field: { onChange, onBlur, value },
                   fieldState: { error },
@@ -114,10 +116,11 @@ const Info: React.FC = ({}) => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
             <div className="flex flex-col">
-              <Label>Username</Label>
+              <Label isRequired>Username</Label>
               <Controller
                 control={control}
                 name={"userName"}
+                rules={{ required: true }}
                 render={({
                   field: { onChange, onBlur, value },
                   fieldState: { error },
@@ -134,10 +137,11 @@ const Info: React.FC = ({}) => {
               />
             </div>
             <div className="flex flex-col">
-              <Label>Phone</Label>
+              <Label isRequired>Phone</Label>
               <Controller
                 control={control}
                 name={"phone"}
+                rules={{ required: true }}
                 render={({
                   field: { onChange, onBlur, value },
                   fieldState: { error },
@@ -159,6 +163,7 @@ const Info: React.FC = ({}) => {
             <Controller
               control={control}
               name={"email"}
+              rules={{ required: true }}
               render={({
                 field: { onChange, onBlur, value },
                 fieldState: { error },
@@ -177,10 +182,11 @@ const Info: React.FC = ({}) => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
             <div className="flex flex-col">
-              <Label>Role</Label>
+              <Label isRequired>Role</Label>
               <Controller
                 control={control}
                 name={"role"}
+                rules={{ required: true }}
                 render={({
                   field: { onChange, onBlur, value },
                   fieldState: { error },
@@ -206,10 +212,11 @@ const Info: React.FC = ({}) => {
               />
             </div>
             <div className="flex flex-col">
-              <Label>Gender</Label>
+              <Label isRequired>Gender</Label>
               <Controller
                 control={control}
                 name={"gender"}
+                rules={{ required: true }}
                 render={({
                   field: { onChange, onBlur, value },
                   fieldState: { error },
@@ -227,56 +234,12 @@ const Info: React.FC = ({}) => {
                       { value: "others", label: "Others" },
                     ]}
                     status={error ? "error" : ""}
-                    // disabled={isRoleLoading}
                     loading={isRoleLoading}
                   />
                 )}
               />
             </div>
           </div>
-          {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-            <div className="flex flex-col">
-              <Label>Date Of Birth</Label>
-              <Controller
-                control={control}
-                name={"dob"}
-                render={({
-                  field: { onChange, onBlur, value },
-                  fieldState: { error },
-                }) => (
-                  <Input
-                    placeholder="dob"
-                    size="large"
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    status={error ? "error" : ""}
-                  />
-                )}
-              />
-            </div>
-            <div className="flex flex-col">
-              <Label isRequired>Email</Label>
-              <Controller
-                control={control}
-                name={"email"}
-                render={({
-                  field: { onChange, onBlur, value },
-                  fieldState: { error },
-                }) => (
-                  <Input
-                    placeholder="Email"
-                    size="large"
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    status={error ? "error" : ""}
-                  />
-                )}
-              />
-            </div>
-          </div> */}
-
           <Button
             variant="contained"
             size="large"
