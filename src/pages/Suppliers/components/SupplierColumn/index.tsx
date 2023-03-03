@@ -103,7 +103,7 @@ const SupplierColumn = (): GridColumns<IDataTable> => {
           <IconButton
             sx={{ fontSize: "large" }}
             color="primary"
-            onClick={() => navigate(`/app/Supplier/${data.row?._id}`)}
+            onClick={() => navigate(`/app/supplier/${data.row?._id}`)}
             // disabled={!checkAccess(defaultPermissions.SupplierS.FULL)}
           >
             <FiEdit2 />
