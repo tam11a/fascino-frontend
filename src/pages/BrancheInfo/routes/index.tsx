@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { branchRoutes } from "./branchRoutes";
 
-const EmployeeRoutes: React.FC = () => {
+const BranchRoutes: React.FC = () => {
   return (
     <Routes>
       {branchRoutes?.map?.(({ path, Component }) => (
@@ -21,4 +21,4 @@ const EmployeeRoutes: React.FC = () => {
   );
 };
 
-export default EmployeeRoutes;
+export default BranchRoutes;

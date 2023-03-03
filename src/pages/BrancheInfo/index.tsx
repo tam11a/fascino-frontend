@@ -1,14 +1,14 @@
 import React from "react";
 import Navigator from "./Navigator";
 import { Container } from "@mui/material";
-import { branchRoutes } from "./routes/paths";
+import BranchRoutes from "./routes";
 
 const BranchInfo: React.FC = () => {
   return (
     <>
       <Navigator />
       <Container>
-        <branchRoutes />
+        <BranchRoutes />
       </Container>
     </>
   );
