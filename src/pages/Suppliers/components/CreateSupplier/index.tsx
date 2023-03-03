@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Input, Select } from "antd";
+import { Input } from "antd";
 import { MdClose } from "react-icons/md";
 import Label from "@components/Label";
 import handleResponse from "@/utilities/handleResponse";
@@ -101,10 +101,10 @@ const CreateSupplier: React.FC<{ open: boolean; onClose: () => void }> = ({
           <DialogContent>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <div className="flex flex-col relative">
-                <Label isRequired>First Name</Label>
+                <Label isRequired>Name</Label>
                 <Controller
                   control={control}
-                  name={"firstName"}
+                  name={"name"}
                   rules={{ required: true }}
                   render={({
                     field: { onChange, onBlur, value },
@@ -112,52 +112,7 @@ const CreateSupplier: React.FC<{ open: boolean; onClose: () => void }> = ({
                   }) => (
                     <Input
                       // className="w-1/2"
-                      placeholder="First Name"
-                      size="large"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      status={error ? "error" : ""}
-                    />
-                  )}
-                />
-              </div>
-              <div className="flex flex-col">
-                <Label isRequired>Last Name</Label>
-                <Controller
-                  control={control}
-                  name={"lastName"}
-                  rules={{ required: true }}
-                  render={({
-                    field: { onChange, onBlur, value },
-                    fieldState: { error },
-                  }) => (
-                    <Input
-                      // className="w-1/2"
-                      placeholder="Last Name"
-                      size="large"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      status={error ? "error" : ""}
-                    />
-                  )}
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-              <div className="flex flex-col">
-                <Label isRequired>Username</Label>
-                <Controller
-                  control={control}
-                  name={"userName"}
-                  rules={{ required: true }}
-                  render={({
-                    field: { onChange, onBlur, value },
-                    fieldState: { error },
-                  }) => (
-                    <Input
-                      placeholder="Username"
+                      placeholder="Name"
                       size="large"
                       onChange={onChange}
                       onBlur={onBlur}
@@ -178,9 +133,9 @@ const CreateSupplier: React.FC<{ open: boolean; onClose: () => void }> = ({
                     fieldState: { error },
                   }) => (
                     <Input
+                      // className="w-1/2"
                       placeholder="Phone"
                       size="large"
-                      autoComplete="new-phone"
                       onChange={onChange}
                       onBlur={onBlur}
                       value={value}
@@ -190,79 +145,49 @@ const CreateSupplier: React.FC<{ open: boolean; onClose: () => void }> = ({
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-              <div className="flex flex-col">
-                <Label isRequired>Password</Label>
-                <Controller
-                  control={control}
-                  name={"password"}
-                  rules={{ required: true }}
-                  render={({
-                    field: { onChange, onBlur, value },
-                    fieldState: { error },
-                  }) => (
-                    <Input.Password
-                      placeholder="Password"
-                      autoComplete="new-password"
-                      size="large"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      status={error ? "error" : ""}
-                    />
-                  )}
-                />
-              </div>
-              <div className="flex flex-col">
-                <Label isRequired>Email</Label>
-                <Controller
-                  control={control}
-                  name={"email"}
-                  rules={{ required: true }}
-                  render={({
-                    field: { onChange, onBlur, value },
-                    fieldState: { error },
-                  }) => (
-                    <Input
-                      placeholder="Email"
-                      size="large"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      status={error ? "error" : ""}
-                    />
-                  )}
-                />
-              </div>
+            <div className="flex flex-col">
+              <Label>Email</Label>
+              <Controller
+                control={control}
+                name={"email"}
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error },
+                }) => (
+                  <Input
+                    placeholder="Email"
+                    size="large"
+                    autoComplete="new-phone"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    status={error ? "error" : ""}
+                  />
+                )}
+              />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-              <div className="flex flex-col">
-                <Label isRequired>Gender</Label>
-                <Controller
-                  control={control}
-                  name={"gender"}
-                  rules={{ required: true }}
-                  render={({
-                    field: { onChange, onBlur, value },
-                    fieldState: { error },
-                  }) => (
-                    <Select
-                      placeholder={"Gender"}
-                      size={"large"}
-                      className="gender relative"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      options={[
-                        { value: "male", label: "Male" },
-                        { value: "female", label: "Female" },
-                        { value: "others", label: "Others" },
-                      ]}
-                      status={error ? "error" : ""}
-                    />
-                  )}
-                />
-              </div>
+            <div>
+              <Label>Address</Label>
+              <Controller
+                control={control}
+                name={"address"}
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error },
+                }) => (
+                  <Input.TextArea
+                    placeholder="Enter address"
+                    showCount
+                    maxLength={1000}
+                    autoSize={{ minRows: 4 }}
+                    size="large"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    status={error ? "error" : ""}
+                  />
+                )}
+              />
             </div>
           </DialogContent>
           <Divider />
