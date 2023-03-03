@@ -9,4 +9,6 @@ export const PRIVATE_ROUTES = {
 	EMPLOYEES: "employees",
 	EMPLOYEEINFO: "employee/:eid/*",
 	ROLES: "roles/*",
+  BRANCHINFO: "branch/:bid/*",
+  BRANCHES: "branches",
 };

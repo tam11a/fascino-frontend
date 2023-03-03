@@ -8,6 +8,7 @@ import { FiEdit2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 const EmployeeColumn = (): GridColumns<IDataTable> => {
+
 	const navigate = useNavigate();
 	return [
 		{
@@ -107,7 +108,6 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
 			// flex: 1,
 			headerAlign: "center",
 			align: "center",
-
 			renderCell: (data: any) => (
 				<>
 					<IconButton

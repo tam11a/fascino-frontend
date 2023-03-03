@@ -16,6 +16,16 @@ export const privateRoutes = [
 		Component: lazy(() => import("@pages/EmployeeInfo")),
 		// permissions: Object.values(defaultPermissions.EMPLOYEES),
 	},
+    {
+    path: PRIVATE_ROUTES.BRANCHES,
+    Component: lazy(() => import("@pages/Branches")),
+    // permissions: Object.values(defaultPermissions.EMPLOYEES),
+  },
+  {
+    path: PRIVATE_ROUTES.BRANCHINFO,
+    Component: lazy(() => import("@pages/BrancheInfo")),
+    // permissions: Object.values(defaultPermissions.EMPLOYEES),
+  },
 	{
 		path: PRIVATE_ROUTES.ROLES,
 		Component: lazy(() => import("@pages/Roles")),
@@ -25,4 +35,5 @@ export const privateRoutes = [
 		path: PRIVATE_ROUTES.NOTFOUND,
 		Component: lazy(() => import("@pages/NotFound")),
 	},
+
 ];

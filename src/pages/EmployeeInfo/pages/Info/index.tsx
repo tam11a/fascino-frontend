@@ -9,7 +9,9 @@ import { Button } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetRoles } from "@/queries/role";
 import { IRole } from "@pages/Roles/Types/types";
+
 import { message } from "@components/antd/message";
+import { useGetRole } from "@/queries/role";
 
 const Info: React.FC = ({}) => {
 	const { eid } = useParams();
@@ -18,7 +20,6 @@ const Info: React.FC = ({}) => {
 
 	const { data: employeeData } = useGetEmployeesById(eid);
 	const { mutateAsync: updateUser } = useUpdateEmployee();
-
 	const { data: roleData, isLoading: isRoleLoading } = useGetRoles();
 
 	React.useEffect(() => {

@@ -3,17 +3,17 @@ import { Icon } from "@iconify/react";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Employee_ROUTES } from "./routes/paths";
+import { Branch_ROUTES } from "./routes/paths";
 
 const items: MenuProps["items"] = [
   {
-    label: "Personal",
-    key: Employee_ROUTES.INFO,
-    icon: <Icon icon="clarity:employee-line" className="text-xl" />,
+    label: "Branch",
+    key: Branch_ROUTES.INFO,
+    icon: <Icon icon="fluent:building-shop-20-regular" className="text-xl" />,
   },
   {
     label: "Additional",
-    key: Employee_ROUTES.ADDITIONAL,
+    key: Branch_ROUTES.ADDITIONAL,
     icon: <Icon icon="mdi:information-slab-box-outline" className="text-xl" />,
   },
 ];
