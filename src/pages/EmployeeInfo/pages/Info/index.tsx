@@ -11,7 +11,6 @@ import { useGetRoles } from "@/queries/role";
 import { IRole } from "@pages/Roles/Types/types";
 
 import { message } from "@components/antd/message";
-import { useGetRole } from "@/queries/role";
 
 const Info: React.FC = ({}) => {
 	const { eid } = useParams();
