@@ -3,15 +3,15 @@ import { Button, Container, Grid, Typography } from "@mui/material";
 import { useToggle } from "@tam11a/react-use-hooks";
 // import { AccessMargin } from "@tam11a/react-use-access";
 // import defaultPermissions from "@/utilities/defaultPermissions";
-import { useGetEmployees } from "@/queries/employees";
 import CustomerColumn from "./components/CustomerColumn";
 import CreateCustomer from "./components/CreateCustomer";
+import { useGetCustomers } from "@/queries/customer";
 // import { t } from "i18next";
 
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Customer: React.FC = () => {
-  const { data, isLoading } = useGetEmployees();
+  const { data, isLoading } = useGetCustomers();
   const { state: open, toggleState: onClose } = useToggle(false);
 
   return (

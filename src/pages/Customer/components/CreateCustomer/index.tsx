@@ -18,6 +18,7 @@ import useUser from "@/hooks/useUser";
 import { message } from "@components/antd/message";
 import useAreYouSure from "@/hooks/useAreYouSure";
 import { useCreateCustomer } from "@/queries/customer";
+import DatePicker from "@components/antd/DatePicker";
 
 const CreateCustomer: React.FC<{ open: boolean; onClose: () => void }> = ({
   open,
@@ -204,20 +205,12 @@ const CreateCustomer: React.FC<{ open: boolean; onClose: () => void }> = ({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
                   }) => (
-                    <Select
-                      placeholder={"Date Of Birth"}
-                      size={"large"}
-                      className="gender relative"
+                    <DatePicker
+                      size="large"
                       onChange={onChange}
                       onBlur={onBlur}
                       value={value}
-                      options={[
-                        { value: "male", label: "Male" },
-                        { value: "female", label: "Female" },
-                        { value: "others", label: "Others" },
-                      ]}
                       status={error ? "error" : ""}
-                      // loading={isLoading}
                     />
                   )}
                 />

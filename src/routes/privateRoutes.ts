@@ -17,6 +17,11 @@ export const privateRoutes = [
     // permissions: Object.values(defaultPermissions.EMPLOYEES),
   },
   {
+    path: PRIVATE_ROUTES.CUSTOMERINFO,
+    Component: lazy(() => import("@pages/CustomeInfo")),
+    // permissions: Object.values(defaultPermissions.EMPLOYEES),
+  },
+  {
     path: PRIVATE_ROUTES.CUSTOMER,
     Component: lazy(() => import("@pages/Customer")),
     // permissions: Object.values(defaultPermissions.EMPLOYEES),

@@ -8,6 +8,7 @@ export const PRIVATE_ROUTES = {
   NOTFOUND: "*",
   BRANCHINFO: "branch/:bid/*",
   BRANCHES: "branches",
+  CUSTOMERINFO: "customer/:cid/*",
   CUSTOMER: "customer",
   EMPLOYEES: "employees",
   EMPLOYEEINFO: "employee/:eid/*",

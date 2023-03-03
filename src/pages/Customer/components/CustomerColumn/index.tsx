@@ -23,24 +23,13 @@ const CustomerColumn = (): GridColumns<IDataTable> => {
     {
       headerName: "Name",
       headerAlign: "center",
-      field: "firstName",
+      field: "name",
       align: "center",
       width: 150,
       minWidth: 150,
       flex: 1,
-      renderCell: (data: any) => `${data.row.firstName} ${data.row.lastName}`,
     },
-    {
-      headerName: "Role",
-      headerAlign: "center",
-      field: "role",
-      align: "center",
-      width: 150,
-      minWidth: 150,
-      flex: 1,
-      renderCell: (data: any) =>
-        data.row?.role?.name ? <Chip label={data.row?.role?.name} /> : "-",
-    },
+
     {
       headerName: "Phone",
       headerAlign: "center",
@@ -59,6 +48,44 @@ const CustomerColumn = (): GridColumns<IDataTable> => {
       flex: 1.5,
       align: "center",
     },
+    {
+      headerName: "Addess",
+      headerAlign: "center",
+      field: "address",
+      width: 250,
+      minWidth: 250,
+      align: "center",
+    },
+    {
+      headerName: "Gender",
+      headerAlign: "center",
+      field: "gender",
+      width: 100,
+      minWidth: 100,
+      align: "center",
+      renderCell: (data: any) =>
+        data.row?.gender ? (
+          <Chip
+            label={data.row?.gender}
+            // sx={{
+            //   textTransform: "uppercase",
+            // }}
+          />
+        ) : (
+          "-"
+        ),
+    },
+    // {
+    //   headerName: "Date of Birth",
+    //   headerAlign: "center",
+    //   field: "dob",
+    //   width: 250,
+    //   minWidth: 250,
+    //   flex: 1.5,
+    //   align: "center",
+    //   renderCell: (data: any) =>
+    //     data.row?.dob ? moment(data.row?.dob).format("L") : "-",
+    // },
     {
       headerName: "Created by",
       field: "createdBy",
@@ -112,7 +139,7 @@ const CustomerColumn = (): GridColumns<IDataTable> => {
           <IconButton
             sx={{ fontSize: "large" }}
             color="primary"
-            onClick={() => navigate(`/app/employee/${data.row?._id}`)}
+            onClick={() => navigate(`/app/customer/${data.row?._id}`)}
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <FiEdit2 />
