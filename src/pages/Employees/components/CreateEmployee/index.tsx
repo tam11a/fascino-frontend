@@ -17,9 +17,9 @@ import handleResponse from "@/utilities/handleResponse";
 import { useCreateEmployee } from "@/queries/employees";
 import useUser from "@/hooks/useUser";
 import { message } from "@components/antd/message";
-import { IRole } from "@pages/Roles/Types/types";
-import { useGetRoles } from "@/queries/role/types";
+import { IRole } from "@pages/Roles/types/types";
 import useAreYouSure from "@/hooks/useAreYouSure";
+import { useGetRole } from "@/queries/role";
 
 const CreateEmployee: React.FC<{ open: boolean; onClose: () => void }> = ({
   open,
@@ -37,7 +37,7 @@ const CreateEmployee: React.FC<{ open: boolean; onClose: () => void }> = ({
   const { mutateAsync: createEmployee, isLoading: employeeLoading } =
     useCreateEmployee();
 
-  const { data: roleData, isLoading: isRoleLoading } = useGetRoles();
+  const { data: roleData, isLoading: isRoleLoading } = useGetRole();
 
   const onSubmit = async (data: any) => {
     message.open({

@@ -8,7 +8,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetRoles } from "@/queries/role/types";
-import { IRole } from "@pages/Roles/Types/types";
+import { IRole } from "@pages/Roles/types/types";
 import { message } from "@components/antd/message";
 
 const Info: React.FC = ({}) => {
