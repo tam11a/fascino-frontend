@@ -2,17 +2,15 @@ import instance from "@/services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ICreateEmployee, IUpdateEmployee } from "./types";
 
-const getEmployees = () => {
-  return instance.get(`/employee`, {
-    // params: {},
-  });
+
+const getEmployees = (params: any) => {
+	return instance.get(`/employee`, {
+		params,
+	});
 };
 
-export const useGetEmployees = () => {
-  return useQuery(["get-all-employees"], () => getEmployees(), {
-    // enabled: !!vendorId,
-    // select: (data: string) => data?.data || [],
-  });
+export const useGetEmployees = (params: any) => {
+	return useQuery(["get-all-employees", params], () => getEmployees(params));
 };
 
 const getEmployeesById = (id: any) => {
@@ -22,10 +20,10 @@ const getEmployeesById = (id: any) => {
 };
 
 export const useGetEmployeesById = (id: any) => {
-  return useQuery(["get-employees-by-id", id], () => getEmployeesById(id), {
-    enabled: !!id,
-    // select: (data: string) => data?.data || [],
-  });
+	return useQuery(["get-employees-by-id", id], () => getEmployeesById(id), {
+		enabled: !!id,
+		// select: (data: string) => data?.data || [],
+	});
 };
 
 const updateEmployee = ({

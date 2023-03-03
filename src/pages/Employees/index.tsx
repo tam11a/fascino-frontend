@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Container, Grid, Typography } from "@mui/material";
-import { useToggle } from "@tam11a/react-use-hooks";
+import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 import CreateEmployee from "./components/CreateEmployee";
 import EmployeeColumn from "./components/EmployeeColumn";
 // import { AccessMargin } from "@tam11a/react-use-access";
@@ -11,9 +11,10 @@ import { useGetEmployees } from "@/queries/employees";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Employees: React.FC = () => {
-	const { data, isLoading } = useGetEmployees();
-	const { state: open, toggleState: onClose } = useToggle(false);
+	const { limit, setLimit, page, setPage, getQueryParams } = usePaginate();
 
+	const { data, isLoading } = useGetEmployees(getQueryParams());
+	const { state: open, toggleState: onClose } = useToggle(false);
 
 	return (
 		<>
@@ -57,7 +58,14 @@ const Employees: React.FC = () => {
 							columns={EmployeeColumn()}
 							rows={data?.data?.data || []}
 							isLoading={isLoading}
-							getRowId={(r: any) => r?._id || r.id}
+							getRowId={(r: any) => r?._id}
+							// ss pagination
+							rowCount={data?.data?.total || 0}
+							paginationMode={"server"}
+							page={page}
+							onPageChange={setPage}
+							pageSize={limit}
+							onPageSizeChange={setLimit}
 						/>
 					</Grid>
 				</Grid>
