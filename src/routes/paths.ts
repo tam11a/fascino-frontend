@@ -10,8 +10,9 @@ export const PRIVATE_ROUTES = {
   BRANCHES: "branches",
   CUSTOMERINFO: "customer/:cid/*",
   CUSTOMER: "customer",
-  EMPLOYEES: "employees",
   SUPPLIERS: "suppliers",
+  SUPPLIERINFO: "supplier/:sid",
+  EMPLOYEES: "employees",
   EMPLOYEEINFO: "employee/:eid/*",
   ROLES: "roles/*",
 };
