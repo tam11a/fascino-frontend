@@ -1,17 +1,17 @@
 import React from "react";
-import EmployeeRoutes from "./routes";
 import Navigator from "./Navigator";
 import { Container } from "@mui/material";
+import { branchRoutes } from "./routes/paths";
 
-const employeeInfo: React.FC = () => {
+const BranchInfo: React.FC = () => {
   return (
     <>
       <Navigator />
       <Container>
-        <EmployeeRoutes />
+        <branchRoutes />
       </Container>
     </>
   );
 };
 
-export default employeeInfo;
+export default BranchInfo;

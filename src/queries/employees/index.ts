@@ -22,7 +22,7 @@ const getEmployeesById = (id: any) => {
 };
 
 export const useGetEmployeesById = (id: any) => {
-  return useQuery(["get-employees-by-id"], () => getEmployeesById(id), {
+  return useQuery(["get-employees-by-id", id], () => getEmployeesById(id), {
     enabled: !!id,
     // select: (data: string) => data?.data || [],
   });

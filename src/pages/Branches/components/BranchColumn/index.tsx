@@ -28,18 +28,15 @@ const BranchColumn = (): GridColumns<IDataTable> => {
       width: 150,
       minWidth: 150,
       flex: 1,
-      renderCell: (data: any) => `${data.row.firstName} ${data.row.lastName}`,
     },
     {
       headerName: "Address",
       headerAlign: "center",
-      field: "role",
+      field: "address",
       align: "center",
       width: 150,
       minWidth: 150,
       flex: 1,
-      renderCell: (data: any) =>
-        data.row?.role?.name ? <Chip label={data.row?.role?.name} /> : "-",
     },
     {
       headerName: "Phone",
@@ -49,15 +46,6 @@ const BranchColumn = (): GridColumns<IDataTable> => {
       flex: 1,
       width: 160,
       minWidth: 150,
-    },
-    {
-      headerName: "Email",
-      headerAlign: "center",
-      field: "email",
-      width: 250,
-      minWidth: 250,
-      flex: 1.5,
-      align: "center",
     },
     {
       headerName: "Created by",
@@ -113,7 +101,7 @@ const BranchColumn = (): GridColumns<IDataTable> => {
           <IconButton
             sx={{ fontSize: "large" }}
             color="primary"
-            onClick={() => navigate(`/app/employee/${data.row?._id}`)}
+            onClick={() => navigate(`/app/branch/${data.row?._id}`)}
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <FiEdit2 />

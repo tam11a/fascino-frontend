@@ -22,7 +22,7 @@ const getBranchById = (id: any) => {
 };
 
 export const useGetBranchById = (id: any) => {
-  return useQuery(["get-branch-by-id"], () => getBranchById(id), {
+  return useQuery(["get-branch-by-id", id], () => getBranchById(id), {
     enabled: !!id,
     // select: (data: string) => data?.data || [],
   });
