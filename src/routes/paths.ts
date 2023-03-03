@@ -1,11 +1,12 @@
 export const PUBLIC_ROUTES = {
-  HOME: "",
-  NOTFOUND: "*",
+	HOME: "",
+	NOTFOUND: "*",
 };
 
 export const PRIVATE_ROUTES = {
-  DASHBOARD: "",
-  NOTFOUND: "*",
-  EMPLOYEES: "employees",
-  EMPLOYEEINFO: "employee/:eid/*",
+	DASHBOARD: "",
+	NOTFOUND: "*",
+	EMPLOYEES: "employees",
+	EMPLOYEEINFO: "employee/:eid/*",
+	ROLES: "roles/*",
 };
