@@ -122,11 +122,11 @@ const TemporaryDrawer: React.FC<{ open: boolean; onClose: () => void }> = ({
 													minWidth: 0,
 													mr: open ? 1.5 : "auto",
 													justifyContent: "center",
-													color: "primary.main",
 													fontSize: "1.5rem",
 													p: 1,
 													borderRadius: "4px",
 												}}
+												className="bg-primary-50 bg-opacity-50 text-primary-800"
 											>
 												{navbtn.icon}
 											</ListItemIcon>
