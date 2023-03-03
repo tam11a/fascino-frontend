@@ -16,7 +16,7 @@ export const DrawerData = (logout?: () => void): IDrawerData[] => [
 				icon: (
 					<Icon
 						icon="fontisto:shopping-pos-machine"
-						className="mx-1"
+						className="mx-[0.3rem]"
 					/>
 				),
 				to: "/app/pos",
