@@ -7,7 +7,7 @@ import { IDataTable } from "@pages/Employees/Types";
 import { FiEdit2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
-const EmployeeColumn = (): GridColumns<IDataTable> => {
+const BranchColumn = (): GridColumns<IDataTable> => {
   const navigate = useNavigate();
   return [
     {
@@ -23,14 +23,15 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
     {
       headerName: "Name",
       headerAlign: "center",
-      field: "fullName",
+      field: "name",
       align: "center",
       width: 150,
       minWidth: 150,
       flex: 1,
+      renderCell: (data: any) => `${data.row.firstName} ${data.row.lastName}`,
     },
     {
-      headerName: "Role",
+      headerName: "Address",
       headerAlign: "center",
       field: "role",
       align: "center",
@@ -123,4 +124,4 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
   ];
 };
 
-export default EmployeeColumn;
+export default BranchColumn;

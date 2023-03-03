@@ -9,12 +9,11 @@ import EmployeeColumn from "./components/EmployeeColumn";
 import { useGetEmployees } from "@/queries/employees";
 // import { t } from "i18next";
 
-const DataTable = React.lazy(() => import("./components/Datatable"));
+const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Employees: React.FC = () => {
   //   const { user } = useUser();
   const { data, isLoading } = useGetEmployees();
-  // console.log(data?.data?.data);
   const { state: open, toggleState: onClose } = useToggle(false);
 
   return (
