@@ -72,10 +72,7 @@ const CreateEmployee: React.FC<{ open: boolean; onClose: () => void }> = ({
     openClose(
       onClose,
       <>
-        <>
-          You may have some unsaved changes which will be lost closing the
-          dialog.
-        </>
+        You may have some unsaved changes which will be lost closing the dialog.
       </>
     );
   {
@@ -106,7 +103,7 @@ const CreateEmployee: React.FC<{ open: boolean; onClose: () => void }> = ({
               }}
               className="p-0 m-0"
             />
-            <IconButton size="small" onClick={onClose}>
+            <IconButton size="small" onClick={handleClose}>
               <MdClose />
             </IconButton>
           </DialogTitle>
