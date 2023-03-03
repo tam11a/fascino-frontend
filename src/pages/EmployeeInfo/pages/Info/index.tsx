@@ -7,9 +7,9 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useGetRoles } from "@/queries/role/types";
 import { IRole } from "@pages/Roles/types/types";
 import { message } from "@components/antd/message";
+import { useGetRole } from "@/queries/role";
 
 const Info: React.FC = ({}) => {
   const { eid } = useParams();
@@ -19,7 +19,7 @@ const Info: React.FC = ({}) => {
   const { data: employeeData } = useGetEmployeesById(eid);
   const { mutateAsync: updateUser } = useUpdateEmployee();
 
-  const { data: roleData, isLoading: isRoleLoading } = useGetRoles();
+  const { data: roleData, isLoading: isRoleLoading } = useGetRole();
 
   React.useEffect(() => {
     if (!employeeData) return;

@@ -5,7 +5,9 @@ export const PUBLIC_ROUTES = {
 
 export const PRIVATE_ROUTES = {
   DASHBOARD: "",
-  NOTFOUND: "*",
+  BRANCHINFO: "branch/:bid/*",
+  BRANCHES: "branches",
   EMPLOYEES: "employees",
   EMPLOYEEINFO: "employee/:eid/*",
+  NOTFOUND: "*",
 };

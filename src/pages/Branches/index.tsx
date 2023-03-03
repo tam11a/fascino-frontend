@@ -1,19 +1,13 @@
 import React from "react";
-// import useUser from "@/hooks/useUser";
 import { Button, Container, Grid, Typography } from "@mui/material";
 import { useToggle } from "@tam11a/react-use-hooks";
-import CreateEmployee from "./components/CreateEmployee";
-import EmployeeColumn from "./components/EmployeeColumn";
-// import { AccessMargin } from "@tam11a/react-use-access";
-// import defaultPermissions from "@/utilities/defaultPermissions";
-import { useGetEmployees } from "@/queries/employees";
-// import { t } from "i18next";
-
+import CreateBranch from "./components/CreateBranch";
+import BranchColumn from "./components/BranchColumn";
+import { useGetBranch } from "@/queries/branch";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
-const Employees: React.FC = () => {
-  //   const { user } = useUser();
-  const { data, isLoading } = useGetEmployees();
+const Branches: React.FC = () => {
+  const { data, isLoading } = useGetBranch();
   const { state: open, toggleState: onClose } = useToggle(false);
 
   return (
@@ -33,18 +27,18 @@ const Employees: React.FC = () => {
           >
             <Typography variant="subtitle1" fontWeight={700}>
               {/* {t("employee:EmployeeList")} */}
-              Employee List
+              Branches
             </Typography>
             {/* <AccessMargin to={defaultPermissions.EMPLOYEES.FULL}> */}
             <Button variant="contained" onClick={() => onClose()}>
               {/* {t("employee:CreateEmployee")} */}
-              Create Employee
+              Create Branch
             </Button>
             {/* </AccessMargin> */}
           </Grid>
           <Grid item>
             <DataTable
-              columns={EmployeeColumn()}
+              columns={BranchColumn()}
               rows={data?.data?.data || []}
               isLoading={isLoading}
               getRowId={(r: any) => r?._id || r.id}
@@ -53,10 +47,10 @@ const Employees: React.FC = () => {
         </Grid>
 
         {/* Dialog Box */}
-        <CreateEmployee open={open} onClose={onClose} />
+        <CreateBranch open={open} onClose={onClose} />
       </Container>
     </>
   );
 };
 
-export default Employees;
+export default Branches;

@@ -7,7 +7,7 @@ import { IDataTable } from "@pages/Employees/Types";
 import { FiEdit2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
-const EmployeeColumn = (): GridColumns<IDataTable> => {
+const BranchColumn = (): GridColumns<IDataTable> => {
   const navigate = useNavigate();
   return [
     {
@@ -23,22 +23,20 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
     {
       headerName: "Name",
       headerAlign: "center",
-      field: "fullName",
+      field: "name",
       align: "center",
       width: 150,
       minWidth: 150,
       flex: 1,
     },
     {
-      headerName: "Role",
+      headerName: "Address",
       headerAlign: "center",
-      field: "role",
+      field: "address",
       align: "center",
       width: 150,
       minWidth: 150,
       flex: 1,
-      renderCell: (data: any) =>
-        data.row?.role?.name ? <Chip label={data.row?.role?.name} /> : "-",
     },
     {
       headerName: "Phone",
@@ -48,15 +46,6 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
       flex: 1,
       width: 160,
       minWidth: 150,
-    },
-    {
-      headerName: "Email",
-      headerAlign: "center",
-      field: "email",
-      width: 250,
-      minWidth: 250,
-      flex: 1.5,
-      align: "center",
     },
     {
       headerName: "Created by",
@@ -112,7 +101,7 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
           <IconButton
             sx={{ fontSize: "large" }}
             color="primary"
-            onClick={() => navigate(`/app/employee/${data.row?._id}`)}
+            onClick={() => navigate(`/app/branch/${data.row?._id}`)}
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <FiEdit2 />
@@ -123,4 +112,4 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
   ];
 };
 
-export default EmployeeColumn;
+export default BranchColumn;

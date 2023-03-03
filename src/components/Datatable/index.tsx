@@ -1,7 +1,7 @@
 import React from "react";
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
-import CustomNoRowsOverlay from "../CustomNoOverlay";
+import CustomNoRowsOverlay from "@/components/CustomNoOverlay";
 import { Paper } from "@mui/material";
 import { IDataTable } from "@pages/Employees/Types";
 
