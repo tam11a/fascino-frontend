@@ -1,19 +1,19 @@
 import React from "react";
 import { Button, Container, Grid, Typography } from "@mui/material";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
-import CreateEmployee from "./components/CreateEmployee";
-import EmployeeColumn from "./components/EmployeeColumn";
+import { useGetSuppliers } from "@/queries/suppliers";
+import SupplierColumn from "./components/SupplierColumn";
+import CreateSupplier from "./components/CreateSupplier";
 // import { AccessMargin } from "@tam11a/react-use-access";
 // import defaultPermissions from "@/utilities/defaultPermissions";
-import { useGetEmployees } from "@/queries/employees";
 // import { t } from "i18next";
 
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
-const Employees: React.FC = () => {
+const Suppliers: React.FC = () => {
   const { limit, setLimit, page, setPage, getQueryParams } = usePaginate();
 
-  const { data, isLoading } = useGetEmployees(getQueryParams());
+  const { data, isLoading } = useGetSuppliers(getQueryParams());
   const { state: open, toggleState: onClose } = useToggle(false);
 
   return (
@@ -32,19 +32,19 @@ const Employees: React.FC = () => {
             alignItems="center"
           >
             <Typography variant="subtitle1" fontWeight={700}>
-              {/* {t("employee:EmployeeList")} */}
-              Employee List
+              {/* {t("Supplier:SupplierList")} */}
+              Supplier List
             </Typography>
-            {/* <AccessMargin to={defaultPermissions.EMPLOYEES.FULL}> */}
+            {/* <AccessMargin to={defaultPermissions.SupplierS.FULL}> */}
             <Button variant="contained" onClick={() => onClose()}>
-              {/* {t("employee:CreateEmployee")} */}
-              Create Employee
+              {/* {t("Supplier:CreateSupplier")} */}
+              Create Supplier
             </Button>
             {/* </AccessMargin> */}
           </Grid>
           <Grid item>
             <DataTable
-              columns={EmployeeColumn()}
+              columns={SupplierColumn()}
               rows={data?.data?.data || []}
               isLoading={isLoading}
               getRowId={(r: any) => r?._id}
@@ -60,10 +60,10 @@ const Employees: React.FC = () => {
         </Grid>
 
         {/* Dialog Box */}
-        <CreateEmployee open={open} onClose={onClose} />
+        <CreateSupplier open={open} onClose={onClose} />
       </Container>
     </>
   );
 };
 
-export default Employees;
+export default Suppliers;

@@ -11,6 +11,7 @@ export const PRIVATE_ROUTES = {
   CUSTOMERINFO: "customer/:cid/*",
   CUSTOMER: "customer",
   EMPLOYEES: "employees",
+  SUPPLIERS: "suppliers",
   EMPLOYEEINFO: "employee/:eid/*",
   ROLES: "roles/*",
 };

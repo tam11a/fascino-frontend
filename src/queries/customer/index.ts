@@ -1,6 +1,6 @@
 import instance from "@/services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ICreateEmployee, IUpdateEmployee } from "./types";
+import { ICreateCustomer, IUpdateCustomer } from "./types";
 
 const getCustomers = () => {
   return instance.get(`/customer`, {
@@ -33,7 +33,7 @@ const updateCustomer = ({
   data,
 }: {
   id: string | undefined;
-  data: IUpdateEmployee;
+  data: IUpdateCustomer;
 }) => {
   return instance.patch(`/customer/${id}`, data);
 };
@@ -48,7 +48,7 @@ export const useUpdateCustomer = () => {
   });
 };
 
-const createCustomer = (data: ICreateEmployee) => {
+const createCustomer = (data: ICreateCustomer) => {
   return instance.post("/customer", data);
 };
 
