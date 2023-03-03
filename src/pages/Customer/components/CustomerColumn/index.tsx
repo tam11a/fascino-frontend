@@ -7,7 +7,7 @@ import { IDataTable } from "@pages/Employees/types";
 import { FiEdit2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
-const BranchColumn = (): GridColumns<IDataTable> => {
+const CustomerColumn = (): GridColumns<IDataTable> => {
   const navigate = useNavigate();
   return [
     {
@@ -29,15 +29,7 @@ const BranchColumn = (): GridColumns<IDataTable> => {
       minWidth: 150,
       flex: 1,
     },
-    {
-      headerName: "Address",
-      headerAlign: "center",
-      field: "address",
-      align: "center",
-      width: 150,
-      minWidth: 150,
-      flex: 1,
-    },
+
     {
       headerName: "Phone",
       headerAlign: "center",
@@ -47,6 +39,53 @@ const BranchColumn = (): GridColumns<IDataTable> => {
       width: 160,
       minWidth: 150,
     },
+    {
+      headerName: "Email",
+      headerAlign: "center",
+      field: "email",
+      width: 250,
+      minWidth: 250,
+      flex: 1.5,
+      align: "center",
+    },
+    {
+      headerName: "Addess",
+      headerAlign: "center",
+      field: "address",
+      width: 250,
+      minWidth: 250,
+      align: "center",
+    },
+    {
+      headerName: "Gender",
+      headerAlign: "center",
+      field: "gender",
+      width: 100,
+      minWidth: 100,
+      align: "center",
+      renderCell: (data: any) =>
+        data.row?.gender ? (
+          <Chip
+            label={data.row?.gender}
+            // sx={{
+            //   textTransform: "uppercase",
+            // }}
+          />
+        ) : (
+          "-"
+        ),
+    },
+    // {
+    //   headerName: "Date of Birth",
+    //   headerAlign: "center",
+    //   field: "dob",
+    //   width: 250,
+    //   minWidth: 250,
+    //   flex: 1.5,
+    //   align: "center",
+    //   renderCell: (data: any) =>
+    //     data.row?.dob ? moment(data.row?.dob).format("L") : "-",
+    // },
     {
       headerName: "Created by",
       field: "createdBy",
@@ -95,13 +134,12 @@ const BranchColumn = (): GridColumns<IDataTable> => {
       // flex: 1,
       headerAlign: "center",
       align: "center",
-
       renderCell: (data: any) => (
         <>
           <IconButton
             sx={{ fontSize: "large" }}
             color="primary"
-            onClick={() => navigate(`/app/branch/${data.row?._id}`)}
+            onClick={() => navigate(`/app/customer/${data.row?._id}`)}
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <FiEdit2 />
@@ -112,4 +150,4 @@ const BranchColumn = (): GridColumns<IDataTable> => {
   ];
 };
 
-export default BranchColumn;
+export default CustomerColumn;

@@ -39,7 +39,7 @@ export const DrawerData = (logout?: () => void): IDrawerData[] => [
 			{
 				name: "Customers",
 				icon: <Icon icon="fluent:people-20-regular" />,
-				to: "/app/roles",
+				to: "/app/customer",
 			},
 			{
 				name: "Suppliers",
