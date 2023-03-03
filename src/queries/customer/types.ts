@@ -1,4 +1,4 @@
-export type IUpdateEmployee = {
+export type IUpdateCustomer = {
   firstName: string;
   lastName: string;
   type: string;
@@ -12,13 +12,13 @@ export type IUpdateEmployee = {
   createdBy: string;
 };
 
-export type ICreateEmployee = {
-  userName: string;
-  firstName: string;
-  lastName: string;
-  gender: "male" | "female" | "others";
-  email: string;
+export type ICreateCustomer = {
+  name: string;
   phone: string;
-  password: string;
-  role: number;
+  address: string;
+  email: string;
+  gender: "male" | "female" | "others";
+  dob: Date;
+  bank: string;
+  bkash: string;
 };
