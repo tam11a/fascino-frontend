@@ -4,6 +4,7 @@ import { useToggle } from "@tam11a/react-use-hooks";
 import CreateBranch from "./components/CreateBranch";
 import BranchColumn from "./components/BranchColumn";
 import { useGetBranch } from "@/queries/branch";
+import BackButton from "@components/BackButton";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Branches: React.FC = () => {
@@ -25,10 +26,13 @@ const Branches: React.FC = () => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography variant="subtitle1" fontWeight={700}>
-              {/* {t("employee:EmployeeList")} */}
-              Branches
-            </Typography>
+            <div className="flex flex-row">
+              <BackButton />
+              <Typography variant="subtitle1" fontWeight={700}>
+                {/* {t("employee:EmployeeList")} */}
+                Branches
+              </Typography>
+            </div>
             {/* <AccessMargin to={defaultPermissions.EMPLOYEES.FULL}> */}
             <Button variant="contained" onClick={() => onClose()}>
               {/* {t("employee:CreateEmployee")} */}
