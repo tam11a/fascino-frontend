@@ -4,6 +4,7 @@ import DataTable from "@components/Datatable";
 import { Button, Container, Grid, Typography } from "@mui/material";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 import React from "react";
+import CreateProduct from "./components/CreateProduct";
 import ProductColumn from "./components/ProductColumn";
 
 const Products: React.FC = () => {
@@ -56,6 +57,7 @@ const Products: React.FC = () => {
             />
           </Grid>
         </Grid>
+        <CreateProduct open={open} onClose={onClose} />
       </Container>
     </>
   );

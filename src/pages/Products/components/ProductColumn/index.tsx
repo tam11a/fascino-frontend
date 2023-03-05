@@ -27,8 +27,8 @@ const ProductColumn = (): GridColumns<IDataTable> => {
       headerAlign: "center",
       field: "name",
       align: "center",
-      width: 150,
-      minWidth: 150,
+      width: 250,
+      minWidth: 200,
       flex: 1,
     },
     {
@@ -109,7 +109,7 @@ const ProductColumn = (): GridColumns<IDataTable> => {
       headerName: "Action",
       field: "action",
       width: 80,
-      minWidth: 60,
+      minWidth: 80,
       flex: 1,
       headerAlign: "center",
       align: "center",
@@ -118,7 +118,7 @@ const ProductColumn = (): GridColumns<IDataTable> => {
           <IconButton
             sx={{ fontSize: "large" }}
             color="primary"
-            onClick={() => navigate(`/app/employee/${data.row?._id}`)}
+            onClick={() => navigate(`/app/product/${data.row?._id}`)}
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <FiEdit2 />
