@@ -8,7 +8,7 @@ import { IDataTable } from "@pages/Employees/Types";
 import { FiEdit2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
-const EmployeeColumn = (): GridColumns<IDataTable> => {
+const ProductColumn = (): GridColumns<IDataTable> => {
   const navigate = useNavigate();
 
   return [
@@ -25,41 +25,50 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
     {
       headerName: "Name",
       headerAlign: "center",
-      field: "firstName",
+      field: "name",
+      align: "center",
+      width: 250,
+      minWidth: 200,
+      flex: 1,
+    },
+    {
+      headerName: "Price",
+      headerAlign: "center",
+      field: "price",
       align: "center",
       width: 150,
       minWidth: 150,
       flex: 1,
-      renderCell: (data: any) => `${data.row.firstName} ${data.row.lastName}`,
     },
     {
-      headerName: "Role",
+      headerName: "Category",
       headerAlign: "center",
-      field: "role",
+      field: "category",
       align: "center",
       width: 150,
       minWidth: 150,
       flex: 1,
       renderCell: (data: any) =>
-        data.row?.role?.name ? <Chip label={data.row?.role?.name} /> : "-",
+        data.row?.category?.name ? (
+          <Chip label={data.row?.category?.name} />
+        ) : (
+          "-"
+        ),
     },
     {
-      headerName: "Phone",
+      headerName: "Subcategory",
       headerAlign: "center",
-      field: "phone",
+      field: "subcategory",
       align: "center",
-      flex: 1,
-      width: 160,
+      width: 150,
       minWidth: 150,
-    },
-    {
-      headerName: "Email",
-      headerAlign: "center",
-      field: "email",
-      width: 250,
-      minWidth: 250,
-      flex: 1.5,
-      align: "center",
+      flex: 1,
+      renderCell: (data: any) =>
+        data.row?.subcategory?.name ? (
+          <Chip label={data.row?.subcategory?.name} />
+        ) : (
+          "-"
+        ),
     },
     {
       headerName: "Created by",
@@ -71,12 +80,7 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
       flex: 1,
       renderCell: (data: any) =>
         data.row?.createdBy?.userName ? (
-          <Chip
-            label={data.row?.createdBy?.userName}
-            // sx={{
-            //   textTransform: "uppercase",
-            // }}
-          />
+          <Chip label={data.row?.createdBy?.userName} />
         ) : (
           "-"
         ),
@@ -105,7 +109,7 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
       headerName: "Action",
       field: "action",
       width: 80,
-      minWidth: 60,
+      minWidth: 80,
       flex: 1,
       headerAlign: "center",
       align: "center",
@@ -114,7 +118,7 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
           <IconButton
             sx={{ fontSize: "large" }}
             color="primary"
-            onClick={() => navigate(`/app/employee/${data.row?._id}`)}
+            onClick={() => navigate(`/app/product/${data.row?._id}`)}
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <FiEdit2 />
@@ -135,4 +139,4 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
   ];
 };
 
-export default EmployeeColumn;
+export default ProductColumn;
