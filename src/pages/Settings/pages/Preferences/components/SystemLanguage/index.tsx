@@ -36,9 +36,11 @@ const SystemLanguage: React.FC = () => {
         className="w-full"
         size="large"
         // onChange={(v) => {
-        //   i18n.changeLanguage(v);
-        //   localStorage.setItem("r_lng", v);
-        // }}
+          //   i18n.changeLanguage(v);
+          //   localStorage.setItem("r_lng", v);
+          // }}
+          value={"en"}
+          disabled
       />
     </>
   );

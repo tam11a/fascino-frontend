@@ -1,5 +1,6 @@
 export const CUSTOMER_ROUTES = {
-  INFO: "",
-  ADDITIONAL: "additional",
-  // NOTFOUND: "*",
+	INFO: "",
+	ADDITIONAL: "additional",
+	HISTORY: "history",
+	NOTFOUND: "*",
 };
