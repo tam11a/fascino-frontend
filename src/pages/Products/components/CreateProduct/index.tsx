@@ -26,8 +26,7 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
 	const user = useUser();
 
 	const { handleSubmit, control } = useForm({});
-	const { mutateAsync: createProduct, isLoading: createLoading } =
-		useCreateProducts();
+	const { mutateAsync: createProduct } = useCreateProducts();
 
 	const onSubmit = async (data: any) => {
 		message.open({
