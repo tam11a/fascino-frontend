@@ -19,7 +19,7 @@ const UnderDevelopment: React.FC = () => {
 				severity="error"
 				className="mx-auto max-w-fit"
 			>
-				This Section is Under Development Phase.
+				This Section is in Development Phase.
 			</Alert>
 		</Container>
 	);
