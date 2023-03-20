@@ -1,12 +1,12 @@
-import Iconify from "@components/iconify";
+// import Iconify from "@components/iconify";
 import {
   Button,
   Container,
-  IconButton,
+  //   IconButton,
   List,
   ListItem,
   ListItemText,
-  Tooltip,
+  //   Tooltip,
   Typography,
 } from "@mui/material";
 import { Empty } from "antd";
@@ -38,8 +38,8 @@ const Additional: React.FC = () => {
       <List disablePadding>
         <ListItem className="p-0">
           <ListItemText
-            primary={"Deactivate branch"}
-            secondary={"Deactivated branch can be activated at any time"}
+            primary={"Deactivate supplier"}
+            secondary={"Deactivated supplier can be activated at any time"}
           />
           <Button color={"error"} variant="outlined" disabled>
             Deactivate
@@ -47,9 +47,9 @@ const Additional: React.FC = () => {
         </ListItem>
         <ListItem className="px-0">
           <ListItemText
-            primary={"Delete branch"}
+            primary={"Delete supplier"}
             secondary={
-              "After deletation, the branch is permanently removed and can't be restored. All the history will be mentioned as 'Deleted Branch'."
+              "After deletation, the supplier is permanently removed and can't be restored. All the history will be mentioned as 'Deleted Supplier'."
             }
           />
           <Button color={"error"} variant="contained" disabled>
