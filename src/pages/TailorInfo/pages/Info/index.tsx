@@ -2,43 +2,42 @@ import React from "react";
 import handleResponse from "@/utilities/handleResponse";
 import Label from "@components/Label";
 import { Container } from "@mui/system";
-import { Cascader, Input } from "antd";
+import { Input } from "antd";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 import { message } from "@components/antd/message";
-import { useGetProductById, useUpdateProduct } from "@/queries/products";
+import { useGetTailorById, useUpdateTailor } from "@/queries/tailor";
 
 const Info: React.FC = ({}) => {
-  const { pid } = useParams();
+  const { tid } = useParams();
 
   const { reset, handleSubmit, control } = useForm({});
 
-  const { data: productData } = useGetProductById(pid);
-  const { mutateAsync: updateProduct } = useUpdateProduct();
+  const { data: tailorData } = useGetTailorById(tid);
+  const { mutateAsync: updateTailor } = useUpdateTailor();
 
   React.useEffect(() => {
-    if (!productData) return;
+    if (!tailorData) return;
     reset({
-      name: productData?.data?.data?.name,
-      description: productData?.data?.data?.firstName,
-      category: productData?.data?.data?.category,
-      subcategory: productData?.data?.data?.subcategory,
-      price: productData?.data?.data?.price,
+      name: tailorData?.data?.data?.name,
+      ownerName: tailorData?.data?.data?.ownerName,
+      phone: tailorData?.data?.data?.phone,
+      address: tailorData?.data?.data?.address,
     });
-  }, [productData]);
+  }, [tailorData]);
 
   const onSubmit = async (data: any) => {
     message.open({
       type: "loading",
-      content: "Updating Employee Information..",
+      content: "Updating Tailor Information..",
       duration: 0,
     });
     const res = await handleResponse(
       () =>
-        updateProduct({
-          id: pid,
+        updateTailor({
+          id: tid,
           data,
         }),
       [200]
@@ -59,7 +58,7 @@ const Info: React.FC = ({}) => {
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <div className="flex flex-col relative">
-              <Label>Name</Label>
+              <Label>Tailor Name</Label>
               <Controller
                 control={control}
                 name={"name"}
@@ -69,7 +68,7 @@ const Info: React.FC = ({}) => {
                 }) => (
                   <Input
                     // className="w-1/2"
-                    placeholder="Product Name"
+                    placeholder="Tailor Name"
                     size="large"
                     onChange={onChange}
                     onBlur={onBlur}
@@ -80,17 +79,17 @@ const Info: React.FC = ({}) => {
               />
             </div>
             <div>
-              <Label>Price</Label>
+              <Label>Owner</Label>
               <Controller
                 control={control}
-                name={"price"}
+                name={"ownerName"}
                 render={({
                   field: { onChange, onBlur, value },
                   fieldState: { error },
                 }) => (
                   <Input
                     // className="w-1/2"
-                    placeholder="Product Price"
+                    placeholder="Owner Name"
                     size="large"
                     onChange={onChange}
                     onBlur={onBlur}
@@ -102,44 +101,41 @@ const Info: React.FC = ({}) => {
             </div>
           </div>
           <div className="flex flex-col">
-            <Label>Category</Label>
+            <Label>Phone</Label>
             <Controller
               control={control}
-              name={"gender"}
-              render={({
-                field: { onChange, onBlur, value },
-                fieldState: { error },
-              }) => (
-                <Cascader
-                  size="large"
-                  placeholder="Select a category"
-                  // expandTrigger="hover"
-                  allowClear={false}
-                  value={value}
-                  showSearch
-                  //   loading={isLoading}
-                  //   options={catOptions}
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  className="w-full"
-                  status={error ? "error" : ""}
-                  //   disabled={isLoading}
-                />
-              )}
-            />
-          </div>
-          <div className="flex flex-col">
-            <Label>Description</Label>
-            <Controller
-              control={control}
-              name={"description"}
+              name={"phone"}
               render={({
                 field: { onChange, onBlur, value },
                 fieldState: { error },
               }) => (
                 <Input
                   // className="w-1/2"
-                  placeholder="Description.."
+                  placeholder="Phone Number"
+                  size="large"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  status={error ? "error" : ""}
+                />
+              )}
+            />
+          </div>
+          <div className="flex flex-col">
+            <Label>Address</Label>
+            <Controller
+              control={control}
+              name={"address"}
+              render={({
+                field: { onChange, onBlur, value },
+                fieldState: { error },
+              }) => (
+                <Input.TextArea
+                  // className="w-1/2"
+                  placeholder="Address.."
+                  showCount
+                  maxLength={1000}
+                  autoSize={{ minRows: 4 }}
                   size="large"
                   onChange={onChange}
                   onBlur={onBlur}
@@ -155,8 +151,6 @@ const Info: React.FC = ({}) => {
             fullWidth
             className="my-4"
             type="submit"
-            disabled
-            //need to add category system
           >
             Update Information
           </Button>
