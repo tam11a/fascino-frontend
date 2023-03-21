@@ -1,41 +1,43 @@
+import React from "react";
 import handleResponse from "@/utilities/handleResponse";
 import Label from "@components/Label";
 import { Container } from "@mui/system";
 import { Input } from "antd";
-import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { message } from "@components/antd/message";
-import { useGetBranchById, useUpdateBranch } from "@/queries/branch";
 
-const Info: React.FC = () => {
-  const { bid } = useParams();
+import { message } from "@components/antd/message";
+import { useGetTailorById, useUpdateTailor } from "@/queries/tailor";
+
+const Info: React.FC = ({}) => {
+  const { tid } = useParams();
 
   const { reset, handleSubmit, control } = useForm({});
 
-  const { data: branchData } = useGetBranchById(bid);
-  const { mutateAsync: updateBranch } = useUpdateBranch();
+  const { data: tailorData } = useGetTailorById(tid);
+  const { mutateAsync: updateTailor } = useUpdateTailor();
 
   React.useEffect(() => {
-    if (!branchData) return;
+    if (!tailorData) return;
     reset({
-      name: branchData?.data?.data?.name,
-      phone: branchData?.data?.data?.phone,
-      address: branchData?.data?.data?.address,
+      name: tailorData?.data?.data?.name,
+      ownerName: tailorData?.data?.data?.ownerName,
+      phone: tailorData?.data?.data?.phone,
+      address: tailorData?.data?.data?.address,
     });
-  }, [branchData]);
+  }, [tailorData]);
 
   const onSubmit = async (data: any) => {
     message.open({
       type: "loading",
-      content: "Updating Branch Information..",
+      content: "Updating Tailor Information..",
       duration: 0,
     });
     const res = await handleResponse(
       () =>
-        updateBranch({
-          id: bid,
+        updateTailor({
+          id: tid,
           data,
         }),
       [200]
@@ -55,19 +57,18 @@ const Info: React.FC = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <div className="flex flex-col">
-              <Label isRequired>Branch Name</Label>
+            <div className="flex flex-col relative">
+              <Label>Tailor Name</Label>
               <Controller
                 control={control}
                 name={"name"}
-                rules={{ required: true }}
                 render={({
                   field: { onChange, onBlur, value },
                   fieldState: { error },
                 }) => (
                   <Input
                     // className="w-1/2"
-                    placeholder="Branch Name"
+                    placeholder="Tailor Name"
                     size="large"
                     onChange={onChange}
                     onBlur={onBlur}
@@ -77,19 +78,18 @@ const Info: React.FC = () => {
                 )}
               />
             </div>
-            <div className="flex flex-col">
-              <Label isRequired>Phone</Label>
+            <div>
+              <Label>Owner</Label>
               <Controller
                 control={control}
-                name={"phone"}
-                rules={{ required: true }}
+                name={"ownerName"}
                 render={({
                   field: { onChange, onBlur, value },
                   fieldState: { error },
                 }) => (
                   <Input
                     // className="w-1/2"
-                    placeholder="Phone"
+                    placeholder="Owner Name"
                     size="large"
                     onChange={onChange}
                     onBlur={onBlur}
@@ -100,18 +100,39 @@ const Info: React.FC = () => {
               />
             </div>
           </div>
-          <div>
+          <div className="flex flex-col">
+            <Label>Phone</Label>
+            <Controller
+              control={control}
+              name={"phone"}
+              render={({
+                field: { onChange, onBlur, value },
+                fieldState: { error },
+              }) => (
+                <Input
+                  // className="w-1/2"
+                  placeholder="Phone Number"
+                  size="large"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  status={error ? "error" : ""}
+                />
+              )}
+            />
+          </div>
+          <div className="flex flex-col">
             <Label>Address</Label>
             <Controller
               control={control}
               name={"address"}
-              rules={{ required: true }}
               render={({
                 field: { onChange, onBlur, value },
                 fieldState: { error },
               }) => (
                 <Input.TextArea
-                  placeholder="Enter address"
+                  // className="w-1/2"
+                  placeholder="Address.."
                   showCount
                   maxLength={1000}
                   autoSize={{ minRows: 4 }}

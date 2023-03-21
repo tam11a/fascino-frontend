@@ -21,7 +21,7 @@ export const DrawerData = (logout?: () => void): IDrawerData[] => [
     ],
   },
   {
-    title: "Informations",
+    title: "Inventory",
     sublist: [
       {
         name: "Products",
@@ -44,9 +44,9 @@ export const DrawerData = (logout?: () => void): IDrawerData[] => [
         to: "/app/suppliers",
       },
       {
-        name: "Tailor",
-        icon: <Icon icon="ph:package-light" />,
-        to: "/app/tailor",
+        name: "Tailors",
+        icon: <Icon icon="game-icons:sewing-machine" />,
+        to: "/app/tailors",
       },
     ],
   },

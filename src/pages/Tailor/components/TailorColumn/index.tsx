@@ -107,7 +107,7 @@ const TailorColumn = (): GridColumns<IDataTable> => {
           <IconButton
             sx={{ fontSize: "large" }}
             color="primary"
-            onClick={() => navigate(`/app/tailor/${data.row?._id}`)}
+            onClick={() => navigate(`/app/tailors/${data.row?._id}`)}
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <FiEdit2 />
