@@ -1,5 +1,13 @@
 import React from "react";
-import { Button, Container, Grid, Paper, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  Grid,
+  IconButton,
+  Paper,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 // import { AccessMargin } from "@tam11a/react-use-access";
 // import defaultPermissions from "@/utilities/defaultPermissions";
@@ -7,8 +15,9 @@ import CustomerColumn from "./components/CustomerColumn";
 import CreateCustomer from "./components/CreateCustomer";
 import { useGetCustomers } from "@/queries/customer";
 import BackButton from "@components/BackButton";
-import { Input, Select } from "antd";
+import { FloatButton, Input, Select } from "antd";
 import { BsSearch } from "react-icons/bs";
+import Iconify from "@components/iconify";
 // import { t } from "i18next";
 
 const DataTable = React.lazy(() => import("@/components/Datatable"));
@@ -28,46 +37,25 @@ const Customer: React.FC = () => {
         }}
       >
         <Grid container rowGap={1} direction="column" marginTop={4}>
-          <Grid className="flex flex-row">
-            <div className="flex flex-row">
+          <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex flex-row items-center ">
               <BackButton />
               <Typography variant="subtitle1" fontWeight={700}>
                 {/* {t("employee:EmployeeList")} */}
                 Customers
               </Typography>
             </div>
-            {/* <AccessMargin to={defaultPermissions.EMPLOYEES.FULL}> */}
-
-            {/* </AccessMargin> */}
+            <Input
+              className="w-full sm:max-w-xs"
+              placeholder="Search Customers"
+              suffix={<BsSearch />}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{ width: "auto" }}
+              size="large"
+            />
           </Grid>
-          <Paper
-            elevation={0}
-            sx={{
-              p: 1,
-              border: "1px solid #ccc",
-              my: 1,
-            }}
-          >
-            <Grid container className="flex flex-row gap-2">
-              <Input
-                className="grow"
-                placeholder="Search Customers"
-                suffix={<BsSearch />}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                style={{ width: "auto" }}
-                size="large"
-              />
-              <Select className="grow" size="large" style={{ minWidth: 250 }} />
-              <Button
-                size="large"
-                variant="contained"
-                onClick={() => onClose()}
-              >
-                Create Customers
-              </Button>
-            </Grid>
-          </Paper>
+
           <Grid item>
             <DataTable
               columns={CustomerColumn()}
@@ -83,7 +71,15 @@ const Customer: React.FC = () => {
             />
           </Grid>
         </Grid>
-
+        <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
+          <FloatButton
+            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+          />
+          <FloatButton
+            icon={<Iconify icon={"material-symbols:add"} />}
+            onClick={() => onClose()}
+          />
+        </FloatButton.Group>
         {/* Dialog Box */}
         <CreateCustomer open={open} onClose={onClose} />
       </Container>

@@ -56,12 +56,7 @@ const Branches: React.FC = () => {
                 size="large"
               />
               <Select className="grow" size="large" style={{ minWidth: 250 }} />
-              <Button
-                size="large"
-                variant="contained"
-                onClick={() => onClose()}
-              >
-                {/* {t("employee:CreateEmployee")} */}
+              <Button variant="contained" onClick={() => onClose()}>
                 Create Branch
               </Button>
             </Grid>
