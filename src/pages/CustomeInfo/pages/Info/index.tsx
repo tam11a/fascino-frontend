@@ -71,7 +71,7 @@ const Info: React.FC = () => {
                 }) => (
                   <Input
                     // className="w-1/2"
-                    placeholder="Branch Name"
+                    placeholder="Customer Name"
                     size="large"
                     onChange={onChange}
                     onBlur={onBlur}

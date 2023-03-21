@@ -6,7 +6,8 @@ import BranchColumn from "./components/BranchColumn";
 import { useGetBranch } from "@/queries/branch";
 import BackButton from "@components/BackButton";
 import { BsSearch } from "react-icons/bs";
-import { Input, Select } from "antd";
+import { FloatButton, Input, Select } from "antd";
+import Iconify from "@components/iconify";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Branches: React.FC = () => {
@@ -25,43 +26,24 @@ const Branches: React.FC = () => {
         }}
       >
         <Grid container rowGap={1} direction="column" marginTop={4}>
-          <Grid className="flex flex-row">
-            <div className="flex flex-row">
+          <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex flex-row items-center ">
               <BackButton />
               <Typography variant="subtitle1" fontWeight={700}>
                 {/* {t("employee:EmployeeList")} */}
-                Branches
+                Branch
               </Typography>
             </div>
-            {/* <AccessMargin to={defaultPermissions.EMPLOYEES.FULL}> */}
-
-            {/* </AccessMargin> */}
+            <Input
+              className="w-full sm:max-w-xs"
+              placeholder="Search Customers"
+              suffix={<BsSearch />}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{ width: "auto" }}
+              size="large"
+            />
           </Grid>
-          <Paper
-            elevation={0}
-            sx={{
-              p: 1,
-              border: "1px solid #ccc",
-              my: 1,
-            }}
-          >
-            <Grid container className="flex flex-row gap-2">
-              <Input
-                className="grow"
-                placeholder="Search Branch"
-                suffix={<BsSearch />}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                style={{ width: "auto" }}
-                size="large"
-              />
-              <Select className="grow" size="large" style={{ minWidth: 250 }} />
-              <Button variant="contained" onClick={() => onClose()}>
-                Create Branch
-              </Button>
-            </Grid>
-          </Paper>
-
           <Grid item>
             <DataTable
               columns={BranchColumn()}
@@ -77,6 +59,16 @@ const Branches: React.FC = () => {
             />
           </Grid>
         </Grid>
+
+        <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
+          <FloatButton
+            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+          />
+          <FloatButton
+            icon={<Iconify icon={"material-symbols:add"} />}
+            onClick={() => onClose()}
+          />
+        </FloatButton.Group>
 
         {/* Dialog Box */}
         <CreateBranch open={open} onClose={onClose} />
