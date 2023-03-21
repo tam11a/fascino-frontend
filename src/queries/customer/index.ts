@@ -2,14 +2,14 @@ import instance from "@/services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ICreateCustomer, IUpdateCustomer } from "./types";
 
-const getCustomers = () => {
+const getCustomers = (params: any) => {
   return instance.get(`/customer`, {
-    // params: {},
+    params,
   });
 };
 
-export const useGetCustomers = () => {
-  return useQuery(["get-all-customer"], () => getCustomers(), {
+export const useGetCustomers = (params: any) => {
+  return useQuery(["get-all-customer", params], () => getCustomers(params), {
     // enabled: !!vendorId,
     // select: (data: string) => data?.data || [],
   });

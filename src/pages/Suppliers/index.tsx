@@ -1,9 +1,13 @@
 import React from "react";
-import { Button, Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 import { useGetSuppliers } from "@/queries/suppliers";
 import SupplierColumn from "./components/SupplierColumn";
 import CreateSupplier from "./components/CreateSupplier";
+import BackButton from "@components/BackButton";
+import { FloatButton, Input } from "antd";
+import { BsSearch } from "react-icons/bs";
+import Iconify from "@components/iconify";
 // import { AccessMargin } from "@tam11a/react-use-access";
 // import defaultPermissions from "@/utilities/defaultPermissions";
 // import { t } from "i18next";
@@ -11,7 +15,8 @@ import CreateSupplier from "./components/CreateSupplier";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Suppliers: React.FC = () => {
-  const { limit, setLimit, page, setPage, getQueryParams } = usePaginate();
+  const { search, setSearch, getQueryParams, limit, setLimit, page, setPage } =
+    usePaginate();
 
   const { data, isLoading } = useGetSuppliers(getQueryParams());
   const { state: open, toggleState: onClose } = useToggle(false);
@@ -25,22 +30,23 @@ const Suppliers: React.FC = () => {
         }}
       >
         <Grid container rowGap={2} direction="column" marginTop={4}>
-          <Grid
-            container
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Typography variant="subtitle1" fontWeight={700}>
-              {/* {t("Supplier:SupplierList")} */}
-              Supplier List
-            </Typography>
-            {/* <AccessMargin to={defaultPermissions.SupplierS.FULL}> */}
-            <Button variant="contained" onClick={() => onClose()}>
-              {/* {t("Supplier:CreateSupplier")} */}
-              Create Supplier
-            </Button>
-            {/* </AccessMargin> */}
+          <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex flex-row items-center ">
+              <BackButton />
+              <Typography variant="subtitle1" fontWeight={700}>
+                {/* {t("employee:EmployeeList")} */}
+                Suppliers
+              </Typography>
+            </div>
+            <Input
+              className="w-full sm:max-w-xs"
+              placeholder="Search Suppliers"
+              suffix={<BsSearch />}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{ width: "auto" }}
+              size="large"
+            />
           </Grid>
           <Grid item>
             <DataTable
@@ -58,6 +64,15 @@ const Suppliers: React.FC = () => {
             />
           </Grid>
         </Grid>
+        <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
+          <FloatButton
+            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+          />
+          <FloatButton
+            icon={<Iconify icon={"material-symbols:add"} />}
+            onClick={() => onClose()}
+          />
+        </FloatButton.Group>
 
         {/* Dialog Box */}
         <CreateSupplier open={open} onClose={onClose} />
