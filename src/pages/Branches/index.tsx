@@ -36,7 +36,7 @@ const Branches: React.FC = () => {
             </div>
             <Input
               className="w-full sm:max-w-xs"
-              placeholder="Search Customers"
+              placeholder="Search Branch"
               suffix={<BsSearch />}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
