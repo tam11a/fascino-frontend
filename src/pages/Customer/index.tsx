@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Container,
-  Grid,
-  IconButton,
-  Paper,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 // import { AccessMargin } from "@tam11a/react-use-access";
 // import defaultPermissions from "@/utilities/defaultPermissions";
@@ -15,7 +7,7 @@ import CustomerColumn from "./components/CustomerColumn";
 import CreateCustomer from "./components/CreateCustomer";
 import { useGetCustomers } from "@/queries/customer";
 import BackButton from "@components/BackButton";
-import { FloatButton, Input, Select } from "antd";
+import { FloatButton, Input } from "antd";
 import { BsSearch } from "react-icons/bs";
 import Iconify from "@components/iconify";
 // import { t } from "i18next";

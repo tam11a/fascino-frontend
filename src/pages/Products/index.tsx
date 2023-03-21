@@ -2,7 +2,7 @@ import { useGetProducts } from "@/queries/products";
 import BackButton from "@components/BackButton";
 import DataTable from "@components/Datatable";
 import Iconify from "@components/iconify";
-import { Button, Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 import { FloatButton, Input } from "antd";
 import React from "react";
