@@ -7,6 +7,7 @@ export const PRIVATE_ROUTES = {
   DASHBOARD: "",
   NOTFOUND: "*",
   POS: "pos",
+  TAILOR: "tailor",
   PRODUCTS: "products",
   PRODUCTINFO: "product/:pid/*",
   BRANCHINFO: "branch/:bid/*",

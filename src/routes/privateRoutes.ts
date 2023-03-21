@@ -19,6 +19,10 @@ export const privateRoutes = [
     Component: lazy(() => import("@pages/ProductInfo")),
   },
   {
+    path: PRIVATE_ROUTES.TAILOR,
+    Component: lazy(() => import("@pages/Tailor")),
+  },
+  {
     path: PRIVATE_ROUTES.BRANCHES,
     Component: lazy(() => import("@pages/Branches")),
     // permissions: Object.values(defaultPermissions.EMPLOYEES),

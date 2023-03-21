@@ -43,6 +43,11 @@ export const DrawerData = (logout?: () => void): IDrawerData[] => [
         icon: <Icon icon="ph:package-light" />,
         to: "/app/suppliers",
       },
+      {
+        name: "Tailor",
+        icon: <Icon icon="ph:package-light" />,
+        to: "/app/tailor",
+      },
     ],
   },
   {
