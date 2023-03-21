@@ -2,14 +2,14 @@ import instance from "@/services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { IBranch } from "./types";
 
-const getBranch = () => {
+const getBranch = (params: any) => {
   return instance.get(`/branch`, {
-    // params: {},
+    params,
   });
 };
 
-export const useGetBranch = () => {
-  return useQuery(["get-all-branch"], () => getBranch(), {
+export const useGetBranch = (params: any) => {
+  return useQuery(["get-all-branch", params], () => getBranch(params), {
     // enabled: !!vendorId,
     // select: (data: string) => data?.data || [],
   });
