@@ -1,4 +1,4 @@
-import { useGetProducts } from "@/queries/products";
+import { useGetShipment } from "@/queries/shipment";
 import BackButton from "@components/BackButton";
 import DataTable from "@components/Datatable";
 import Iconify from "@components/iconify";
@@ -7,14 +7,14 @@ import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 import { FloatButton, Input } from "antd";
 import React from "react";
 import { BsSearch } from "react-icons/bs";
-import CreateProduct from "./components/CreateProduct";
-import ProductColumn from "./components/ProductColumn";
+import CreateShipment from "./components/CreateShipment";
+import ShipmentColumn from "./components/ShipmentColumn";
 
-const Products: React.FC = () => {
+const Shipments: React.FC = () => {
   const { limit, setLimit, page, setPage, getQueryParams, setSearch, search } =
     usePaginate();
 
-  const { data, isLoading } = useGetProducts(getQueryParams());
+  const { data, isLoading } = useGetShipment(getQueryParams());
   console.log(data);
 
   const { state: open, toggleState: onClose } = useToggle(false);
@@ -49,7 +49,7 @@ const Products: React.FC = () => {
 
           <Grid item>
             <DataTable
-              columns={ProductColumn()}
+              columns={ShipmentColumn()}
               rows={data?.data?.data || []}
               isLoading={isLoading}
               getRowId={(r: any) => r?._id}
@@ -74,10 +74,10 @@ const Products: React.FC = () => {
           />
         </FloatButton.Group>
 
-        <CreateProduct open={open} onClose={onClose} />
+        <CreateShipment open={open} onClose={onClose} />
       </Container>
     </>
   );
 };
 
-export default Products;
+export default Shipments;
