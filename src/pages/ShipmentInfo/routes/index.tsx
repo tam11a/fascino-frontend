@@ -1,12 +1,12 @@
 import NProgressSuspense from "@components/NProgressSuspense";
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import { branchRoutes } from "./branchRoutes";
+import { shipmentRoutes } from "./shipmentRoutes";
 
-const BranchRoutes: React.FC = () => {
+const ShipmentRoutes: React.FC = () => {
   return (
     <Routes>
-      {branchRoutes?.map?.(({ path, Component }) => (
+      {shipmentRoutes?.map?.(({ path, Component }) => (
         <Route
           key={path}
           path={path}
@@ -21,4 +21,4 @@ const BranchRoutes: React.FC = () => {
   );
 };
 
-export default BranchRoutes;
+export default ShipmentRoutes;

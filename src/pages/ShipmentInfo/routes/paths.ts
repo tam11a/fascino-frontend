@@ -1,5 +1,5 @@
-export const Branch_ROUTES = {
-	INFO: "",
-	ADDITIONAL: "additional",
-	// NOTFOUND: "*",
+export const SHIPMENT_ROUTES = {
+  INFO: "",
+  //   ADDITIONAL: "additional",
+  // NOTFOUND: "*",
 };

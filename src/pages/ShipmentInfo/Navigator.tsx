@@ -3,18 +3,13 @@ import { Icon } from "@iconify/react";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Branch_ROUTES } from "./routes/paths";
+import { SHIPMENT_ROUTES } from "./routes/paths";
 
 const items: MenuProps["items"] = [
   {
-    label: "Branch",
-    key: Branch_ROUTES.INFO,
-    icon: <Icon icon="fluent:building-shop-20-regular" className="text-xl" />,
-  },
-  {
-    label: "Additional",
-    key: Branch_ROUTES.ADDITIONAL,
-    icon: <Icon icon="mdi:information-slab-box-outline" className="text-xl" />,
+    label: "Products",
+    key: SHIPMENT_ROUTES.INFO,
+    icon: <Icon icon="circum:shopping-basket" className="text-xl" />,
   },
 ];
 

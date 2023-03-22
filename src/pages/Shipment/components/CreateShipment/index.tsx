@@ -17,26 +17,26 @@ import handleResponse from "@/utilities/handleResponse";
 import useUser from "@/hooks/useUser";
 import { message } from "@components/antd/message";
 import useAreYouSure from "@/hooks/useAreYouSure";
-import { useCreateProducts } from "@/queries/products";
+import { useCreateshipment } from "@/queries/shipment";
 
-const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
+const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
   open,
   onClose,
 }) => {
   const user = useUser();
 
   const { handleSubmit, control } = useForm({});
-  const { mutateAsync: createProduct } = useCreateProducts();
+  const { mutateAsync: createShipment } = useCreateshipment();
 
   const onSubmit = async (data: any) => {
     message.open({
       type: "loading",
-      content: "Creating Product..",
+      content: "Creating Shipment..",
       duration: 0,
     });
     const res = await handleResponse(
       () =>
-        createProduct({
+        createShipment({
           ...data,
           createdBy: user.userName,
         }),
@@ -44,7 +44,7 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
     );
     message.destroy();
     if (res.status) {
-      message.success("Product created successfully!");
+      message.success("Shipment created successfully!");
       onClose();
     } else {
       message.error(res.message);
@@ -83,8 +83,8 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogTitle className={"flex flex-row items-center justify-between"}>
             <ListItemText
-              primary={"Product"}
-              secondary={`Create a New Product`}
+              primary={"Shipment"}
+              secondary={`Create a New Shipment`}
               primaryTypographyProps={{
                 fontWeight: "700",
                 color: "#000",
@@ -97,12 +97,12 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
           </DialogTitle>
           <Divider />
           <DialogContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-1 gap-2">
               <div className="flex flex-col relative">
-                <Label isRequired>Name</Label>
+                <Label>Supplier Name</Label>
                 <Controller
                   control={control}
-                  name={"name"}
+                  name={"supplier"}
                   rules={{ required: true }}
                   render={({
                     field: { onChange, onBlur, value },
@@ -110,28 +110,7 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
                   }) => (
                     <Input
                       // className="w-1/2"
-                      placeholder="Product Name"
-                      size="large"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      status={error ? "error" : ""}
-                    />
-                  )}
-                />
-              </div>
-              <div>
-                <Label>Price</Label>
-                <Controller
-                  control={control}
-                  name={"price"}
-                  render={({
-                    field: { onChange, onBlur, value },
-                    fieldState: { error },
-                  }) => (
-                    <Input
-                      // className="w-1/2"
-                      placeholder="Product Price"
+                      placeholder="Supplier Name"
                       size="large"
                       onChange={onChange}
                       onBlur={onBlur}
@@ -142,63 +121,152 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
                 />
               </div>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-              <div className="flex flex-col">
-                <Label isRequired>Category</Label>
+            <div className="grid grid-cols-1 sm:grid-cols-1 gap-2 mt-2">
+              <div>
+                <Label isRequired>Product Name</Label>
                 <Controller
                   control={control}
-                  name={"gender"}
-                  rules={{ required: true }}
-                  render={({
-                    field: { onChange, onBlur, value },
-                    fieldState: { error },
-                  }) => (
-                    <Cascader
-                      size="large"
-                      placeholder="Select a category"
-                      // expandTrigger="hover"
-                      allowClear={false}
-                      value={value}
-                      showSearch
-                      //   loading={isLoading}
-                      //   options={catOptions}
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      className="w-full"
-                      status={error ? "error" : ""}
-                      //   disabled={isLoading}
-                    />
-                    // <Select
-                    //   placeholder={"Category"}
-                    //   size={"large"}
-                    //   className="gender relative"
-                    //   onChange={onChange}
-                    //   onBlur={onBlur}
-                    //   value={value}
-                    //   options={[
-                    //     { value: "male", label: "Male" },
-                    //     { value: "female", label: "Female" },
-                    //     { value: "others", label: "Others" },
-                    //   ]}
-                    //   status={error ? "error" : ""}
-                    //   //   loading={isRoleLoading}
-                    // />
-                  )}
-                />
-              </div>
-              <div className="flex flex-col">
-                <Label>Description</Label>
-                <Controller
-                  control={control}
-                  name={"description"}
+                  name={"product"}
                   render={({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
                   }) => (
                     <Input
                       // className="w-1/2"
-                      placeholder="Description.."
+                      placeholder="Enter Product Name"
+                      size="large"
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      status={error ? "error" : ""}
+                    />
+                  )}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+              <div>
+                <Label isRequired>Weight</Label>
+                <Controller
+                  control={control}
+                  name={"weight"}
+                  render={({
+                    field: { onChange, onBlur, value },
+                    fieldState: { error },
+                  }) => (
+                    <Input
+                      // className="w-1/2"
+                      placeholder="Enter Weight"
+                      size="large"
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      status={error ? "error" : ""}
+                    />
+                  )}
+                />
+              </div>
+              <div>
+                <Label isRequired>Shipment Cost</Label>
+                <Controller
+                  control={control}
+                  name={"shipmentCost"}
+                  render={({
+                    field: { onChange, onBlur, value },
+                    fieldState: { error },
+                  }) => (
+                    <Input
+                      // className="w-1/2"
+                      placeholder="Enter Shipment Cost"
+                      size="large"
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      status={error ? "error" : ""}
+                    />
+                  )}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+              <div>
+                <Label isRequired>Buying Price</Label>
+                <Controller
+                  control={control}
+                  name={"buyingPrice"}
+                  render={({
+                    field: { onChange, onBlur, value },
+                    fieldState: { error },
+                  }) => (
+                    <Input
+                      // className="w-1/2"
+                      placeholder="Enter Buying Price"
+                      size="large"
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      status={error ? "error" : ""}
+                    />
+                  )}
+                />
+              </div>
+              <div>
+                <Label isRequired>Selling Price</Label>
+                <Controller
+                  control={control}
+                  name={"sellPrice"}
+                  render={({
+                    field: { onChange, onBlur, value },
+                    fieldState: { error },
+                  }) => (
+                    <Input
+                      // className="w-1/2"
+                      placeholder="Enter Sell Price"
+                      size="large"
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      status={error ? "error" : ""}
+                    />
+                  )}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+              <div>
+                <Label isRequired>Tax</Label>
+                <Controller
+                  control={control}
+                  name={"tax"}
+                  render={({
+                    field: { onChange, onBlur, value },
+                    fieldState: { error },
+                  }) => (
+                    <Input
+                      // className="w-1/2"
+                      placeholder="Enter Tax"
+                      size="large"
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      status={error ? "error" : ""}
+                    />
+                  )}
+                />
+              </div>
+
+              <div>
+                <Label isRequired>Supplier Commision</Label>
+                <Controller
+                  control={control}
+                  name={"supplierCommision"}
+                  render={({
+                    field: { onChange, onBlur, value },
+                    fieldState: { error },
+                  }) => (
+                    <Input
+                      // className="w-1/2"
+                      placeholder="Enter Supplier Commision"
                       size="large"
                       onChange={onChange}
                       onBlur={onBlur}
@@ -215,7 +283,6 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
             <Button
               variant={"contained"}
               // disabled={createLoading}
-              disabled
               type={"submit"}
             >
               Create
@@ -230,4 +297,4 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
   );
 };
 
-export default CreateProduct;
+export default CreateShipment;
