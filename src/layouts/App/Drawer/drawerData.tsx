@@ -48,6 +48,11 @@ export const DrawerData = (logout?: () => void): IDrawerData[] => [
         icon: <Icon icon="game-icons:sewing-machine" />,
         to: "/app/tailors",
       },
+      {
+        name: "Shipment",
+        icon: <Icon icon="carbon:delivery" />,
+        to: "/app/shipment",
+      },
     ],
   },
   {
