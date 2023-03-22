@@ -15,7 +15,13 @@ const AuthProvider = lazy(() =>
 	}))
 );
 
-const query = new QueryClient();
+const query = new QueryClient({
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false,
+		},
+	},
+});
 
 const App: React.FC = () => {
 	return (
