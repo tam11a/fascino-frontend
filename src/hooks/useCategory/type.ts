@@ -4,4 +4,5 @@ export interface IOption {
 	children?: IOption[];
 	isLeaf?: boolean;
 	loading?: boolean;
+	data?: any;
 }
