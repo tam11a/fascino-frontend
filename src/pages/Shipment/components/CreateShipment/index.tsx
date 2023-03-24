@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Cascader, Input } from "antd";
+import { Input } from "antd";
 import { MdClose } from "react-icons/md";
 import Label from "@components/Label";
 import handleResponse from "@/utilities/handleResponse";
