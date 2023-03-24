@@ -13,6 +13,8 @@ export const PRIVATE_ROUTES = {
   PRODUCTINFO: "product/:pid/*",
   BRANCHINFO: "branch/:bid/*",
   BRANCHES: "branches",
+  SHIPMENTINFO: "shipment/:shid",
+  SHIPMENT: "shipment",
   CUSTOMERINFO: "customer/:cid/*",
   CUSTOMER: "customer",
   EMPLOYEES: "employees",
