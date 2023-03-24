@@ -11,10 +11,13 @@ import {
 	Avatar,
 } from "@mui/material";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
-import { Badge, FloatButton, Select } from "antd";
+import { Badge, FloatButton, Select, Spin } from "antd";
 import React from "react";
 import { useGetCustomers } from "@/queries/customer";
 import CreateCustomer from "@pages/Customer/components/CreateCustomer";
+// import { BarcodeScanner } from "@itexperts/barcode-scanner";
+import { onBarcodeRead } from "physical-barcode-reader-observer";
+import { message } from "@components/antd/message";
 
 const POS: React.FC = () => {
 	const { setSearch: setBranchSearch, getQueryParams: getBranchQueryParams } =
@@ -85,6 +88,36 @@ const POS: React.FC = () => {
 
 	console.log(selectedCustomer);
 
+	const { state: searchProducts, toggleState: onSearchProducts } =
+		useToggle(false);
+
+	let reader = onBarcodeRead();
+	// const [products, setProducts] = React.useState<{ [id: string]: {} }>({});
+
+	React.useEffect(() => {
+		let event: any;
+		if (searchProducts) {
+			event = reader.subscribe((result) => {
+				const barcode = result.barcode;
+				const type = result.type;
+				const lastTarget = result.target;
+				console.log(barcode, type, lastTarget, result);
+				message.success(`Scanned ${barcode}`);
+			});
+			message.loading({
+				content: "Scanning Barcode...",
+				duration: 5,
+				onClose: () => onSearchProducts(),
+			});
+		} else {
+			event?.unsubscribe?.();
+		}
+
+		return () => {
+			event?.unsubscribe?.();
+		};
+	}, [searchProducts]);
+
 	return (
 		<>
 			{/* <Container className="py-4"> */}
@@ -133,17 +166,26 @@ const POS: React.FC = () => {
 						</div>
 
 						<FloatButton.Group
-							className="relative top-0 left-0"
+							className="relative top-0 left-0 flex flex-row w-fit"
 							shape="square"
 						>
-							<FloatButton icon={<Iconify icon="ph:barcode-duotone" />} />
+							<FloatButton
+								icon={<Iconify icon="ph:barcode-duotone" />}
+								onClick={() => onSearchProducts()}
+							/>
+							<FloatButton
+								icon={<Iconify icon="mdi:cursor-text" />}
+								// onClick={() => onSearchProducts()}
+							/>
 						</FloatButton.Group>
 					</div>
-					<Avatar
-						src={"/boxs.svg"}
-						variant="square"
-						className="w-9/12 max-w-md h-auto mx-auto"
-					/>
+					<Spin spinning={searchProducts}>
+						<Avatar
+							src={"/boxs.svg"}
+							variant="square"
+							className="w-9/12 max-w-md h-auto mx-auto my-5"
+						/>
+					</Spin>
 				</div>
 				<Divider
 					flexItem
@@ -192,7 +234,7 @@ const POS: React.FC = () => {
 									variant="subtitle2"
 									className="font-bold"
 								>
-									{selectedCustomer?.Email || "N/A"}
+									{selectedCustomer?.email || "N/A"}
 								</Typography>
 							</div>
 							<div>
