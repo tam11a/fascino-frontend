@@ -3,12 +3,12 @@ import React from "react";
 
 const NotFound: React.FC = () => {
 	return (
-		<div className="h-[70vh] max-h-full flex flex-col items-center justify-center gap-2">
+		<div className="min-h-[90vh] flex flex-col items-center justify-center gap-2">
 			<Avatar
 				src={"/404.svg"}
 				sx={{
 					width: "90%",
-					maxWidth: "780px",
+					maxWidth: "680px",
 					height: "auto",
 				}}
 				variant={"square"}
