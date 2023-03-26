@@ -40,10 +40,20 @@ import { useGetTailor } from "@/queries/tailor";
 import { SegmentedValue } from "antd/es/segmented";
 import { useReactToPrint } from "react-to-print";
 import { Preview, print } from "react-html2pdf";
+import short from "short-uuid";
+import { usePostOrder } from "@/queries/order";
 
 const POS: React.FC = () => {
   const { state: open, toggleState: onClose } = useToggle(false);
   const { state: openInvoice, toggleState: onInvoiceClose } = useToggle(false);
+
+  const [posInvoice, setPosInvoice] = React.useState(
+    localStorage?.getItem("posInvoiceId") || short.generate()
+  );
+
+  React.useEffect(() => {
+    localStorage.setItem("posInvoiceId", posInvoice);
+  }, [posInvoice]);
 
   //Print Function
 
@@ -83,7 +93,7 @@ const POS: React.FC = () => {
     );
   }, [branchData]);
 
-  const [selectedBranch, setSelectedBranch] = React.useState<any>(
+  const [selectedBranch, setSelectedBranch] = React.useState<IOption>(
     localStorage.getItem("sbpos")
       ? JSON.parse(localStorage.getItem("sbpos") || "{}")
       : null
@@ -116,6 +126,15 @@ const POS: React.FC = () => {
       }))
     );
   }, [tailorData]);
+
+  const [selectedTailor, setSelectedTailor] = React.useState<IOption>(
+    localStorage.getItem("stpos")
+      ? JSON.parse(localStorage.getItem("stpos") || "{}")
+      : null
+  );
+  React.useEffect(() => {
+    localStorage.setItem("stpos", JSON.stringify(selectedTailor));
+  }, [selectedTailor]);
 
   //Customers Section
   const {
@@ -160,7 +179,6 @@ const POS: React.FC = () => {
       ? JSON.parse(localStorage.getItem("scpos") || "{}")
       : null
   );
-  console.log(selectedCustomer);
 
   React.useEffect(() => {
     localStorage.setItem("scpos", JSON.stringify(selectedCustomer));
@@ -258,8 +276,11 @@ const POS: React.FC = () => {
   //   paid
   // );
 
-  const submitToSave = () => {
-    console.log({
+  const { mutateAsync: postOrder, isLoading: orderLoading } = usePostOrder();
+
+  const submitToSave = async () => {
+    const data = {
+      invoice: posInvoice,
       customer: selectedCustomer?._id,
       type: online ? "online" : "offline",
       discount: discount || 0,
@@ -267,14 +288,23 @@ const POS: React.FC = () => {
       method: payMethod,
       products: Array.from(Object.values(posProducts), (p: any) => ({
         id: p._id,
+        price: p.product.price,
         stitch: p.tailor
           ? {
+              size: p.tailor?.size,
               fee: p.tailor?.fee,
             }
           : undefined,
       })),
-      tailor: "someone",
-    });
+      tailor: selectedTailor?.value,
+    };
+
+    const res = await handleResponse(() => postOrder(data), [201]);
+    if (res.status) {
+      message.success(res.message);
+    } else {
+      message.error(res.message);
+    }
   };
 
   return (
@@ -736,6 +766,7 @@ const POS: React.FC = () => {
                   ],
                 }}
                 className={"w-fit"}
+                loading={orderLoading}
               >
                 Invoice
               </Dropdown.Button>
@@ -762,6 +793,8 @@ const POS: React.FC = () => {
             size="large"
             onClear={() => setTailorSearch("")}
             onSearch={(v) => setTailorSearch(v)}
+            value={selectedTailor?.value}
+            onSelect={(_v, o) => setSelectedTailor(o)}
             loading={isTailorLoading}
             options={tailors}
             filterOption={false}
@@ -782,7 +815,7 @@ const POS: React.FC = () => {
               {Object.values(posProducts)?.map?.(
                 (product: any) =>
                   !!product?.tailor && (
-                    <ListItem key={product?._id}>
+                    <ListItem key={product?._id} className="gap-2">
                       <ListItemText
                         primary={product?.product?.name}
                         secondary={`${product?.product?.category?.name}/${product?.product?.subcategory?.name}`}
@@ -793,7 +826,22 @@ const POS: React.FC = () => {
                           className: "text-xs font-bold",
                         }}
                       />
-
+                      <Input
+                        className="max-w-[5rem]"
+                        value={product?.tailor?.size}
+                        onChange={(e) => {
+                          setPosProducts((p) => ({
+                            ...p,
+                            [product._id]: {
+                              ...product,
+                              tailor: {
+                                ...product.tailor,
+                                size: e.target.value,
+                              },
+                            },
+                          }));
+                        }}
+                      />
                       <InputNumber
                         addonAfter={<Iconify icon={"tabler:currency-taka"} />}
                         min={0}
@@ -816,7 +864,7 @@ const POS: React.FC = () => {
                       <IconButton
                         size="small"
                         color="error"
-                        className="rounded ml-2"
+                        className="rounded"
                         onClick={() => {
                           setPosProducts((p) => ({
                             ...p,
