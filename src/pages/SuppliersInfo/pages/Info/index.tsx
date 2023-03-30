@@ -22,6 +22,7 @@ const Info: React.FC = () => {
     reset({
       name: supplierData?.data?.data?.name,
       phone: supplierData?.data?.data?.phone,
+      email: supplierData?.data?.data?.email,
       address: supplierData?.data?.data?.address,
     });
   }, [supplierData]);
@@ -56,11 +57,10 @@ const Info: React.FC = () => {
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <div className="flex flex-col">
-              <Label isRequired>Supplier Name</Label>
+              <Label>Supplier Name</Label>
               <Controller
                 control={control}
                 name={"name"}
-                rules={{ required: true }}
                 render={({
                   field: { onChange, onBlur, value },
                   fieldState: { error },
@@ -78,11 +78,10 @@ const Info: React.FC = () => {
               />
             </div>
             <div className="flex flex-col">
-              <Label isRequired>Phone</Label>
+              <Label>Phone</Label>
               <Controller
                 control={control}
                 name={"phone"}
-                rules={{ required: true }}
                 render={({
                   field: { onChange, onBlur, value },
                   fieldState: { error },
@@ -100,12 +99,32 @@ const Info: React.FC = () => {
               />
             </div>
           </div>
+          <div className="flex flex-col">
+            <Label>Email</Label>
+            <Controller
+              control={control}
+              name={"email"}
+              render={({
+                field: { onChange, onBlur, value },
+                fieldState: { error },
+              }) => (
+                <Input
+                  // className="w-1/2"
+                  placeholder="Email"
+                  size="large"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  status={error ? "error" : ""}
+                />
+              )}
+            />
+          </div>
           <div>
             <Label>Address</Label>
             <Controller
               control={control}
               name={"address"}
-              rules={{ required: true }}
               render={({
                 field: { onChange, onBlur, value },
                 fieldState: { error },

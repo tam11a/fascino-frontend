@@ -142,7 +142,6 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
                 />
               </div>
             </div>
-
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
               <div className="flex flex-col">
                 <Label isRequired>Category</Label>
