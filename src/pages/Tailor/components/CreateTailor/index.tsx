@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Cascader, Input } from "antd";
+import { Input } from "antd";
 import { MdClose } from "react-icons/md";
 import Label from "@components/Label";
 import handleResponse from "@/utilities/handleResponse";
@@ -26,17 +26,18 @@ const CreateTailor: React.FC<{ open: boolean; onClose: () => void }> = ({
   const user = useUser();
 
   const { handleSubmit, control } = useForm({});
-  const { mutateAsync: createProduct } = useCreateTailor();
+  const { mutateAsync: createTailor, isLoading: createLoading } =
+    useCreateTailor();
 
   const onSubmit = async (data: any) => {
     message.open({
       type: "loading",
-      content: "Creating Product..",
+      content: "Creating Tailor..",
       duration: 0,
     });
     const res = await handleResponse(
       () =>
-        createProduct({
+        createTailor({
           ...data,
           createdBy: user.userName,
         }),
@@ -44,7 +45,7 @@ const CreateTailor: React.FC<{ open: boolean; onClose: () => void }> = ({
     );
     message.destroy();
     if (res.status) {
-      message.success("Product created successfully!");
+      message.success("Tailor created successfully!");
       onClose();
     } else {
       message.error(res.message);
@@ -83,8 +84,8 @@ const CreateTailor: React.FC<{ open: boolean; onClose: () => void }> = ({
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogTitle className={"flex flex-row items-center justify-between"}>
             <ListItemText
-              primary={"Product"}
-              secondary={`Create a New Product`}
+              primary={"Tailor"}
+              secondary={`Create a New Tailor`}
               primaryTypographyProps={{
                 fontWeight: "700",
                 color: "#000",
@@ -97,20 +98,42 @@ const CreateTailor: React.FC<{ open: boolean; onClose: () => void }> = ({
           </DialogTitle>
           <Divider />
           <DialogContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <div className="flex flex-col relative">
-                <Label isRequired>Name</Label>
+            {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-2"></div> */}
+            <div className="flex flex-col relative">
+              <Label isRequired>Tailor's Name</Label>
+              <Controller
+                control={control}
+                name={"name"}
+                rules={{ required: true }}
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error },
+                }) => (
+                  <Input
+                    // className="w-1/2"
+                    placeholder="Tailor Name"
+                    size="large"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    status={error ? "error" : ""}
+                  />
+                )}
+              />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+              <div>
+                <Label>Owner</Label>
                 <Controller
                   control={control}
-                  name={"name"}
-                  rules={{ required: true }}
+                  name={"ownerName"}
                   render={({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
                   }) => (
                     <Input
                       // className="w-1/2"
-                      placeholder="Product Name"
+                      placeholder="Owner Of the Tailor"
                       size="large"
                       onChange={onChange}
                       onBlur={onBlur}
@@ -120,18 +143,19 @@ const CreateTailor: React.FC<{ open: boolean; onClose: () => void }> = ({
                   )}
                 />
               </div>
-              <div>
-                <Label>Price</Label>
+              <div className="flex flex-col">
+                <Label isRequired>Phone</Label>
                 <Controller
                   control={control}
-                  name={"price"}
+                  name={"phone"}
+                  rules={{ required: true }}
                   render={({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
                   }) => (
                     <Input
                       // className="w-1/2"
-                      placeholder="Product Price"
+                      placeholder="Phone"
                       size="large"
                       onChange={onChange}
                       onBlur={onBlur}
@@ -142,80 +166,36 @@ const CreateTailor: React.FC<{ open: boolean; onClose: () => void }> = ({
                 />
               </div>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-              <div className="flex flex-col">
-                <Label isRequired>Category</Label>
-                <Controller
-                  control={control}
-                  name={"gender"}
-                  rules={{ required: true }}
-                  render={({
-                    field: { onChange, onBlur, value },
-                    fieldState: { error },
-                  }) => (
-                    <Cascader
-                      size="large"
-                      placeholder="Select a category"
-                      // expandTrigger="hover"
-                      allowClear={false}
-                      value={value}
-                      showSearch
-                      //   loading={isLoading}
-                      //   options={catOptions}
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      className="w-full"
-                      status={error ? "error" : ""}
-                      //   disabled={isLoading}
-                    />
-                    // <Select
-                    //   placeholder={"Category"}
-                    //   size={"large"}
-                    //   className="gender relative"
-                    //   onChange={onChange}
-                    //   onBlur={onBlur}
-                    //   value={value}
-                    //   options={[
-                    //     { value: "male", label: "Male" },
-                    //     { value: "female", label: "Female" },
-                    //     { value: "others", label: "Others" },
-                    //   ]}
-                    //   status={error ? "error" : ""}
-                    //   //   loading={isRoleLoading}
-                    // />
-                  )}
-                />
-              </div>
-              <div className="flex flex-col">
-                <Label>Description</Label>
-                <Controller
-                  control={control}
-                  name={"description"}
-                  render={({
-                    field: { onChange, onBlur, value },
-                    fieldState: { error },
-                  }) => (
-                    <Input
-                      // className="w-1/2"
-                      placeholder="Description.."
-                      size="large"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      status={error ? "error" : ""}
-                    />
-                  )}
-                />
-              </div>
+            <div className="flex flex-col">
+              <Label>Address</Label>
+              <Controller
+                control={control}
+                name={"address"}
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error },
+                }) => (
+                  <Input.TextArea
+                    // className="w-1/2"
+                    placeholder="Address.."
+                    showCount
+                    maxLength={1000}
+                    autoSize={{ minRows: 4 }}
+                    size="large"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    status={error ? "error" : ""}
+                  />
+                )}
+              />
             </div>
           </DialogContent>
           <Divider />
           <DialogActions>
             <Button
               variant={"contained"}
-              // disabled={createLoading}
-              disabled
+              disabled={createLoading}
               type={"submit"}
             >
               Create
