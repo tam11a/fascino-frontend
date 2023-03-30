@@ -3,13 +3,18 @@ import { Icon } from "@iconify/react";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { SHIPMENT_ROUTES } from "./routes/paths";
+import { Category_ROUTES } from "./routes/paths";
 
 const items: MenuProps["items"] = [
   {
-    label: "Info",
-    key: SHIPMENT_ROUTES.INFO,
-    icon: <Icon icon="carbon:delivery" className="text-xl" />,
+    label: "Category Info",
+    key: Category_ROUTES.INFO,
+    icon: <Icon icon="mdi:tags" className="text-xl" />,
+  },
+  {
+    label: "Subcategory",
+    key: Category_ROUTES.SUBCATEGORY,
+    icon: <Icon icon="mdi:information-slab-box-outline" className="text-xl" />,
   },
 ];
 

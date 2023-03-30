@@ -30,11 +30,11 @@ const Navigator: React.FC = () => {
       key: SETTINGS_ROUTES.SECURITY,
       icon: <Icon icon="ic:twotone-lock-person" className="text-xl" />,
     },
-    {
-      label: "Preferences",
-      key: SETTINGS_ROUTES.PREFERENCES,
-      icon: <Icon icon="pajamas:preferences" className="text-xl" />,
-    },
+    // {
+    //   label: "Preferences",
+    //   key: SETTINGS_ROUTES.PREFERENCES,
+    //   icon: <Icon icon="pajamas:preferences" className="text-xl" />,
+    // },
   ];
 
   return (

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Input } from "antd";
+import { Cascader, Input } from "antd";
 import { MdClose } from "react-icons/md";
 import Label from "@components/Label";
 import handleResponse from "@/utilities/handleResponse";
@@ -18,6 +18,8 @@ import useUser from "@/hooks/useUser";
 import { message } from "@components/antd/message";
 import useAreYouSure from "@/hooks/useAreYouSure";
 import { useCreateshipment } from "@/queries/shipment";
+import useSupplier from "@/hooks/useSupplier";
+import useProduct from "@/hooks/useProduct";
 
 const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
   open,
@@ -27,6 +29,8 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
 
   const { handleSubmit, control } = useForm({});
   const { mutateAsync: createShipment } = useCreateshipment();
+  const { Supplier, isSupplierLoading, searchSupplier } = useSupplier();
+  const { product, isproductLoading, searchProduct } = useProduct();
 
   const onSubmit = async (data: any) => {
     message.open({
@@ -108,20 +112,26 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
                   }) => (
-                    <Input
-                      // className="w-1/2"
-                      placeholder="Supplier Name"
+                    <Cascader
                       size="large"
+                      placeholder="Search category, subcategory.."
+                      allowClear={false}
+                      value={value}
+                      showSearch
+                      options={Supplier}
+                      onSearch={searchSupplier}
+                      loading={isSupplierLoading}
                       onChange={onChange}
                       onBlur={onBlur}
-                      value={value}
+                      className="w-full"
                       status={error ? "error" : ""}
+                      //   disabled={isLoading}
                     />
                   )}
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-1 gap-2 mt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
               <div>
                 <Label isRequired>Product Name</Label>
                 <Controller
@@ -131,9 +141,36 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
                   }) => (
+                    <Cascader
+                      size="large"
+                      placeholder="Search category, subcategory.."
+                      allowClear={false}
+                      value={value}
+                      showSearch
+                      options={product}
+                      onSearch={searchProduct}
+                      loading={isproductLoading}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      className="w-full"
+                      status={error ? "error" : ""}
+                      //   disabled={isLoading}
+                    />
+                  )}
+                />
+              </div>
+              <div>
+                <Label isRequired>Quantity</Label>
+                <Controller
+                  control={control}
+                  name={"quantity"}
+                  render={({
+                    field: { onChange, onBlur, value },
+                    fieldState: { error },
+                  }) => (
                     <Input
                       // className="w-1/2"
-                      placeholder="Enter Product Name"
+                      placeholder="Enter Quantity Number"
                       size="large"
                       onChange={onChange}
                       onBlur={onBlur}
@@ -234,7 +271,7 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
               <div>
-                <Label isRequired>Tax</Label>
+                <Label>Tax</Label>
                 <Controller
                   control={control}
                   name={"tax"}

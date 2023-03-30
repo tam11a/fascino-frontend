@@ -7,36 +7,34 @@ import { Controller, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { message } from "@components/antd/message";
-import { useGetSuppliersById, useUpdateSupplier } from "@/queries/suppliers";
+import { useGetCategoriesById, useUpdateCategory } from "@/queries/category";
 
 const Info: React.FC = () => {
-  const { sid } = useParams();
+  const { catid } = useParams();
 
   const { reset, handleSubmit, control } = useForm({});
 
-  const { data: supplierData } = useGetSuppliersById(sid);
-  const { mutateAsync: updateSupplier } = useUpdateSupplier();
+  const { data: categoryData } = useGetCategoriesById(catid);
+  const { mutateAsync: updateCategory } = useUpdateCategory();
 
   React.useEffect(() => {
-    if (!supplierData) return;
+    if (!categoryData) return;
     reset({
-      name: supplierData?.data?.data?.name,
-      phone: supplierData?.data?.data?.phone,
-      email: supplierData?.data?.data?.email,
-      address: supplierData?.data?.data?.address,
+      name: categoryData?.data?.data?.name,
+      description: categoryData?.data?.data?.description,
     });
-  }, [supplierData]);
+  }, [categoryData]);
 
   const onSubmit = async (data: any) => {
     message.open({
       type: "loading",
-      content: "Updating Supplier Information..",
+      content: "Updating Category Information..",
       duration: 0,
     });
     const res = await handleResponse(
       () =>
-        updateSupplier({
-          id: sid,
+        updateCategory({
+          id: catid,
           data,
         }),
       [200]
@@ -55,62 +53,19 @@ const Info: React.FC = () => {
           className="py-3 grid grid-cols-1 mt-3"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <div className="flex flex-col">
-              <Label>Supplier Name</Label>
-              <Controller
-                control={control}
-                name={"name"}
-                render={({
-                  field: { onChange, onBlur, value },
-                  fieldState: { error },
-                }) => (
-                  <Input
-                    // className="w-1/2"
-                    placeholder="Branch Name"
-                    size="large"
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    status={error ? "error" : ""}
-                  />
-                )}
-              />
-            </div>
-            <div className="flex flex-col">
-              <Label>Phone</Label>
-              <Controller
-                control={control}
-                name={"phone"}
-                render={({
-                  field: { onChange, onBlur, value },
-                  fieldState: { error },
-                }) => (
-                  <Input
-                    // className="w-1/2"
-                    placeholder="Phone"
-                    size="large"
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    status={error ? "error" : ""}
-                  />
-                )}
-              />
-            </div>
-          </div>
           <div className="flex flex-col">
-            <Label>Email</Label>
+            <Label isRequired>category Name</Label>
             <Controller
               control={control}
-              name={"email"}
+              name={"name"}
+              rules={{ required: true }}
               render={({
                 field: { onChange, onBlur, value },
                 fieldState: { error },
               }) => (
                 <Input
                   // className="w-1/2"
-                  placeholder="Email"
+                  placeholder="Category Name"
                   size="large"
                   onChange={onChange}
                   onBlur={onBlur}
@@ -121,16 +76,17 @@ const Info: React.FC = () => {
             />
           </div>
           <div>
-            <Label>Address</Label>
+            <Label>Description</Label>
             <Controller
               control={control}
-              name={"address"}
+              name={"description"}
+              rules={{ required: true }}
               render={({
                 field: { onChange, onBlur, value },
                 fieldState: { error },
               }) => (
                 <Input.TextArea
-                  placeholder="Enter address"
+                  placeholder="Enter description"
                   showCount
                   maxLength={1000}
                   autoSize={{ minRows: 4 }}

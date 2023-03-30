@@ -16,12 +16,14 @@ import Label from "@components/Label";
 import handleResponse from "@/utilities/handleResponse";
 import { message } from "@components/antd/message";
 import useAreYouSure from "@/hooks/useAreYouSure";
-import { useCreateBranch } from "@/queries/branch";
+import { useCreateSubcategory } from "@/queries/subcategory";
+import { useParams } from "react-router-dom";
 
-const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
+const CreateSubcategory: React.FC<{ open: boolean; onClose: () => void }> = ({
   open,
   onClose,
 }) => {
+  const { catid } = useParams();
   const {
     // reset,
     handleSubmit,
@@ -29,25 +31,26 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
   } = useForm({
     // resolver: zodResolver(userInfoResolver),
   });
-  const { mutateAsync: createBranch, isLoading: BranchLoading } =
-    useCreateBranch();
+  const { mutateAsync: createSubcategory, isLoading: SubcategoryLoading } =
+    useCreateSubcategory();
 
   const onSubmit = async (data: any) => {
     message.open({
       type: "loading",
-      content: "Creating Category..",
+      content: "Creating Subcategory..",
       duration: 0,
     });
     const res = await handleResponse(
       () =>
-        createBranch({
+        createSubcategory({
           ...data,
+          category: catid,
         }),
       [201]
     );
     message.destroy();
     if (res.status) {
-      message.success("Branch created successfully!");
+      message.success("Subcategory created successfully!");
       onClose();
     } else {
       message.error(res.message);
@@ -87,8 +90,8 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogTitle className={"flex flex-row items-center justify-between"}>
             <ListItemText
-              primary={"Branch"}
-              secondary={`Create a New Branch`}
+              primary={"Subcategory"}
+              secondary={`Create a New Subcategory`}
               primaryTypographyProps={{
                 fontWeight: "700",
                 color: "#000",
@@ -101,64 +104,42 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
           </DialogTitle>
           <Divider />
           <DialogContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <div className="flex flex-col relative">
-                <Label isRequired>Name</Label>
-                <Controller
-                  control={control}
-                  name={"name"}
-                  rules={{ required: true }}
-                  render={({
-                    field: { onChange, onBlur, value },
-                    fieldState: { error },
-                  }) => (
-                    <Input
-                      // className="w-1/2"
-                      placeholder="Enter branch name"
-                      size="large"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      status={error ? "error" : ""}
-                    />
-                  )}
-                />
-              </div>
-              <div className="flex flex-col">
-                <Label isRequired>Phone</Label>
-                <Controller
-                  control={control}
-                  name={"phone"}
-                  rules={{ required: true }}
-                  render={({
-                    field: { onChange, onBlur, value },
-                    fieldState: { error },
-                  }) => (
-                    <Input
-                      // className="w-1/2"
-                      placeholder="Enter phone number"
-                      size="large"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      status={error ? "error" : ""}
-                    />
-                  )}
-                />
-              </div>
-            </div>
-            <div>
-              <Label>Address</Label>
+            {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-2"> */}
+            <div className="flex flex-col relative">
+              <Label isRequired>Name</Label>
               <Controller
                 control={control}
-                name={"address"}
+                name={"name"}
                 rules={{ required: true }}
                 render={({
                   field: { onChange, onBlur, value },
                   fieldState: { error },
                 }) => (
+                  <Input
+                    // className="w-1/2"
+                    placeholder="Enter Subcategory name"
+                    size="large"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    status={error ? "error" : ""}
+                  />
+                )}
+              />
+            </div>
+            {/* </div> */}
+
+            <div>
+              <Label>Description</Label>
+              <Controller
+                control={control}
+                name={"description"}
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error },
+                }) => (
                   <Input.TextArea
-                    placeholder="Enter address"
+                    placeholder="Enter Description"
                     showCount
                     maxLength={1000}
                     autoSize={{ minRows: 4 }}
@@ -176,7 +157,7 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
           <DialogActions>
             <Button
               variant={"contained"}
-              disabled={BranchLoading}
+              disabled={SubcategoryLoading}
               type={"submit"}
             >
               Create
@@ -191,4 +172,4 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
   );
 };
 
-export default CreateBranch;
+export default CreateSubcategory;
