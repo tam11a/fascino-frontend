@@ -137,6 +137,7 @@ const Personal: React.FC = () => {
               onChange={onChange}
               onBlur={onBlur}
               value={value}
+              disabled
             />
           )}
         />
