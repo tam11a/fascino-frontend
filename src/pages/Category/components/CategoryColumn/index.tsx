@@ -1,5 +1,5 @@
 // import defaultPermissions from "@/utilities/defaultPermissions";
-import { Chip, IconButton } from "@mui/material";
+import { Chip, IconButton, Typography } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { IDataTable } from "@pages/Employees/Types";
 // import { checkAccess } from "@tam11a/react-use-access";
@@ -30,20 +30,15 @@ const CategoryColumn = (): GridColumns<IDataTable> => {
       flex: 1,
     },
     {
-      headerName: "Description",
+      headerName: "Subcategory No",
       headerAlign: "center",
-      field: "description",
+      field: "totalSubcategory",
       width: 250,
       minWidth: 250,
       align: "center",
       renderCell: (data: any) =>
-        data.row?.description ? (
-          <Chip
-            label={data.row?.description}
-            // sx={{
-            //   textTransform: "uppercase",
-            // }}
-          />
+        data.row?.totalSubcategory ? (
+          <Typography>{data.row?.totalSubcategory}</Typography>
         ) : (
           "-"
         ),

@@ -23,6 +23,10 @@ export const privateRoutes = [
     Component: lazy(() => import("@pages/Category")),
   },
   {
+    path: PRIVATE_ROUTES.CATEGORYINFO,
+    Component: lazy(() => import("@pages/CategoryInfo")),
+  },
+  {
     path: PRIVATE_ROUTES.TAILOR,
     Component: lazy(() => import("@pages/Tailor")),
   },
