@@ -158,7 +158,7 @@ const Info: React.FC = () => {
             <Controller
               control={control}
               name={"address"}
-              rules={{ required: true }}
+              // rules={{ required: true }}
               render={({
                 field: { onChange, onBlur, value },
                 fieldState: { error },
