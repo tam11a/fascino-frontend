@@ -18,6 +18,7 @@ import useUser from "@/hooks/useUser";
 import { message } from "@components/antd/message";
 import useAreYouSure from "@/hooks/useAreYouSure";
 import { useCreateProducts } from "@/queries/products";
+import useCategory from "@/hooks/useCategory";
 
 const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
   open,
@@ -26,7 +27,9 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
   const user = useUser();
 
   const { handleSubmit, control } = useForm({});
-  const { mutateAsync: createProduct } = useCreateProducts();
+  const { mutateAsync: createProduct, isLoading: createLoading } =
+    useCreateProducts();
+  const { catNSubcat, searchCatNSubcat, isCatNSubcatLoading } = useCategory();
 
   const onSubmit = async (data: any) => {
     message.open({
@@ -39,9 +42,12 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
         createProduct({
           ...data,
           createdBy: user.userName,
+          category: data?.catNSubcat?.[0],
+          subcategory: data?.catNSubcat?.[1],
         }),
       [201]
     );
+    console.log(data);
     message.destroy();
     if (res.status) {
       message.success("Product created successfully!");
@@ -147,7 +153,7 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
                 <Label isRequired>Category</Label>
                 <Controller
                   control={control}
-                  name={"gender"}
+                  name={"catNSubcat"}
                   rules={{ required: true }}
                   render={({
                     field: { onChange, onBlur, value },
@@ -155,34 +161,19 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
                   }) => (
                     <Cascader
                       size="large"
-                      placeholder="Select a category"
-                      // expandTrigger="hover"
+                      placeholder="Search category, subcategory.."
                       allowClear={false}
                       value={value}
                       showSearch
-                      //   loading={isLoading}
-                      //   options={catOptions}
+                      options={catNSubcat}
+                      onSearch={searchCatNSubcat}
+                      loading={isCatNSubcatLoading}
                       onChange={onChange}
                       onBlur={onBlur}
                       className="w-full"
                       status={error ? "error" : ""}
                       //   disabled={isLoading}
                     />
-                    // <Select
-                    //   placeholder={"Category"}
-                    //   size={"large"}
-                    //   className="gender relative"
-                    //   onChange={onChange}
-                    //   onBlur={onBlur}
-                    //   value={value}
-                    //   options={[
-                    //     { value: "male", label: "Male" },
-                    //     { value: "female", label: "Female" },
-                    //     { value: "others", label: "Others" },
-                    //   ]}
-                    //   status={error ? "error" : ""}
-                    //   //   loading={isRoleLoading}
-                    // />
                   )}
                 />
               </div>
@@ -213,8 +204,8 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
           <DialogActions>
             <Button
               variant={"contained"}
-              // disabled={createLoading}
-              disabled
+              disabled={createLoading}
+              // disabled
               type={"submit"}
             >
               Create
