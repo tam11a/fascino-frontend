@@ -29,6 +29,11 @@ export const DrawerData = (logout?: () => void): IDrawerData[] => [
         to: "/app/products",
       },
       {
+        name: "Categories",
+        icon: <Icon icon="mdi:tags" />,
+        to: "/app/category",
+      },
+      {
         name: "Branches",
         icon: <Icon icon="ph:git-branch-light" />,
         to: "/app/branches",

@@ -10,6 +10,7 @@ export const PRIVATE_ROUTES = {
   TAILOR: "tailors",
   TAILORINFO: "tailors/:tid/*",
   PRODUCTS: "products",
+  CATEGORY: "category",
   PRODUCTINFO: "product/:pid/*",
   BRANCHINFO: "branch/:bid/*",
   BRANCHES: "branches",

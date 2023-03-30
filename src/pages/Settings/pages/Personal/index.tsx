@@ -19,30 +19,34 @@ import { useUpdateUserInfo } from "@/queries/auth";
 const Personal: React.FC = () => {
   const user = useUser();
   const [messageApi, contextHolder] = message.useMessage();
-  const { handleSubmit, control, setValue } = useForm({});
+  const {
+    reset,
+    handleSubmit,
+    control,
+    formState: { isDirty },
+  } = useForm({});
   const { mutateAsync: updateUser, isLoading: isSubmitting } =
     useUpdateUserInfo();
   // console.log(user);
 
   React.useEffect(() => {
-    if (!user) return;
-    setValue("userName", user.userName);
-    setValue("firstName", user.firstName);
-    setValue("lastName", user.lastName);
-    setValue("phone", user.phone);
-    setValue("email", user.email);
-    setValue("role", user.role);
+    if (!user || isDirty) return;
+    // setValue("userName", user.userName);
+    // setValue("firstName", user.firstName);
+    // setValue("lastName", user.lastName);
+    // setValue("phone", user.phone);
+    // setValue("email", user.email);
+    // setValue("role", user.role);
 
-    // reset({
-    //   userName: user.userName,
-    //   firstName: user?.firstName,
-    //   lastName: user?.lastName,
-    //   gender: user?.gender,
-    //   phone: user?.phone,
-    //   email: user?.email,
-    //   role: user?.role?._id,
-    // });
-  }, [user]);
+    reset({
+      userName: user.userName,
+      firstName: user?.firstName,
+      lastName: user?.lastName,
+      phone: user?.phone,
+      email: user?.email,
+      role: user?.role,
+    });
+  }, [user.userName, user?.firstName, user?.lastName, user?.email, user?.role]);
 
   const onValid = async (d: FieldValues) => {
     messageApi.open({
@@ -54,7 +58,7 @@ const Personal: React.FC = () => {
       () =>
         updateUser({
           userId: user._id,
-          data: user,
+          data: d,
         }),
       [201]
     );

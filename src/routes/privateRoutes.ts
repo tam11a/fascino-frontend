@@ -7,9 +7,9 @@ export const privateRoutes = [
     Component: lazy(() => import("@pages/Dashboard")),
   },
   {
-		path: PRIVATE_ROUTES.POS,
-		Component: lazy(() => import("@pages/POS")),
-	},
+    path: PRIVATE_ROUTES.POS,
+    Component: lazy(() => import("@pages/POS")),
+  },
   {
     path: PRIVATE_ROUTES.PRODUCTS,
     Component: lazy(() => import("@pages/Products")),
@@ -17,6 +17,10 @@ export const privateRoutes = [
   {
     path: PRIVATE_ROUTES.PRODUCTINFO,
     Component: lazy(() => import("@pages/ProductInfo")),
+  },
+  {
+    path: PRIVATE_ROUTES.CATEGORY,
+    Component: lazy(() => import("@pages/Category")),
   },
   {
     path: PRIVATE_ROUTES.TAILOR,
@@ -76,17 +80,17 @@ export const privateRoutes = [
     Component: lazy(() => import("@pages/EmployeeInfo")),
     // permissions: Object.values(defaultPermissions.EMPLOYEES),
   },
-	{
-		path: PRIVATE_ROUTES.ROLES,
-		Component: lazy(() => import("@pages/Roles")),
-		// permissions: Object.values(defaultPermissions.EMPLOYEES),
-	},
-	{
-		path: PRIVATE_ROUTES.NOTFOUND,
-		Component: lazy(() => import("@pages/NotFound")),
-	},
-	{
-		path: PRIVATE_ROUTES.SETTINGS,
-		Component: lazy(() => import("@pages/Settings")),
-	},
+  {
+    path: PRIVATE_ROUTES.ROLES,
+    Component: lazy(() => import("@pages/Roles")),
+    // permissions: Object.values(defaultPermissions.EMPLOYEES),
+  },
+  {
+    path: PRIVATE_ROUTES.NOTFOUND,
+    Component: lazy(() => import("@pages/NotFound")),
+  },
+  {
+    path: PRIVATE_ROUTES.SETTINGS,
+    Component: lazy(() => import("@pages/Settings")),
+  },
 ];

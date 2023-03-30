@@ -11,18 +11,6 @@ const Info: React.FC = ({}) => {
 
   const { data: shipmentData } = useGetShipmentById(shid);
   console.log(shipmentData);
-  // React.useEffect(() => {
-  //   if (!shipmentData) return;
-  //   reset({
-  //     name: shipmentData?.data?.data?.name,
-  //     description: shipmentData?.data?.data?.description,
-  //     catNSubcat: [
-  //       shipmentData?.data?.data?.category?._id,
-  //       shipmentData?.data?.data?.subcategory?._id,
-  //     ],
-  //     price: shipmentData?.data?.data?.price,
-  //   });
-  // }, [shipmentData]);
   return (
     <>
       <Container>
