@@ -1,17 +1,17 @@
 import React from "react";
 import Navigator from "./Navigator";
 import { Container } from "@mui/material";
-import BranchRoutes from "./routes";
+import ShipmentRoutes from "./routes";
 
-const BranchInfo: React.FC = () => {
+const ShipmentInfo: React.FC = () => {
   return (
     <>
       <Navigator />
       <Container>
-        <BranchRoutes />
+        <ShipmentRoutes />
       </Container>
     </>
   );
 };
 
-export default BranchInfo;
+export default ShipmentInfo;

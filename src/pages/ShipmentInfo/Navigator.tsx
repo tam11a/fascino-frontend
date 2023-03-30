@@ -7,9 +7,9 @@ import { SHIPMENT_ROUTES } from "./routes/paths";
 
 const items: MenuProps["items"] = [
   {
-    label: "Products",
+    label: "Info",
     key: SHIPMENT_ROUTES.INFO,
-    icon: <Icon icon="circum:shopping-basket" className="text-xl" />,
+    icon: <Icon icon="carbon:delivery" className="text-xl" />,
   },
 ];
 

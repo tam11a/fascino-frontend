@@ -30,7 +30,7 @@ export const useGetShipmentById = (id: any) => {
 //   data,
 // }: {
 //   id: string | undefined;
-
+//   data: any;
 // }) => {
 //   return instance.patch(`/shipment/${id}`, data);
 // };

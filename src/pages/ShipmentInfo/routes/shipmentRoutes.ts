@@ -4,10 +4,10 @@ import { SHIPMENT_ROUTES } from "./paths";
 export const shipmentRoutes = [
   {
     path: SHIPMENT_ROUTES.INFO,
-    Component: lazy(() => import("@pages/UnderDevelopment")),
+    Component: lazy(() => import("@pages/ShipmentInfo/pages/Info")),
   },
   // {
-  //   path: Employee_ROUTES.NOTFOUND,
+  //   path: SHIPMENT_ROUTES.NOTFOUND,
   //   Component: lazy(() => import("@pages/NotFound")),
   // },
 ];
