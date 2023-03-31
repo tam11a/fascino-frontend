@@ -12,8 +12,8 @@ const items: MenuProps["items"] = [
     icon: <Icon icon="fluent:building-shop-20-regular" className="text-xl" />,
   },
   {
-    label: "Additional",
-    key: Order_ROUTES.ADDITIONAL,
+    label: "Transecction",
+    key: Order_ROUTES.TRANSECTION,
     icon: <Icon icon="mdi:information-slab-box-outline" className="text-xl" />,
   },
 ];

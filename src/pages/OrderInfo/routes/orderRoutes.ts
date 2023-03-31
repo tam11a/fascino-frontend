@@ -7,8 +7,8 @@ export const orderRoutes = [
     Component: lazy(() => import("../pages/Info")),
   },
   {
-    path: Order_ROUTES.ADDITIONAL,
-    Component: lazy(() => import("../pages/Additional")),
+    path: Order_ROUTES.TRANSECTION,
+    Component: lazy(() => import("../pages/Transection")),
   },
   // {
   //   path: Employee_ROUTES.NOTFOUND,

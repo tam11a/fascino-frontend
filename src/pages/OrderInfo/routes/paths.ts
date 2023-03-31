@@ -1,5 +1,5 @@
 export const Order_ROUTES = {
   INFO: "",
-  ADDITIONAL: "additional",
+  TRANSECTION: "transecction",
   // NOTFOUND: "*",
 };

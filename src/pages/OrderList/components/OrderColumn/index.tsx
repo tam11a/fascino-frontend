@@ -65,9 +65,9 @@ const OrderColumn = (): GridColumns<IDataTable> => {
         ),
     },
     {
-      headerName: "Amount",
+      headerName: "Total",
       headerAlign: "center",
-      field: "amount",
+      field: "total",
       align: "center",
       flex: 1,
       width: 160,
