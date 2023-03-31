@@ -30,7 +30,7 @@ export const DrawerData = (logout?: () => void): IDrawerData[] => [
       },
       {
         name: "Orders",
-        icon: <Icon icon="solar:clipboard-list-linear" />,
+        icon: <Icon icon="system-uicons:cart" />,
         to: "/app/orders",
       },
       {
