@@ -27,7 +27,7 @@ const Transection: React.FC = () => {
         }}
       >
         <Grid container rowGap={1} direction="column" marginTop={4}>
-          <Grid className="flex flex-col sm:flex-row items-end sm:items-center justify-between gap-3">
+          <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex flex-row items-center ">
               <BackButton />
               <Typography
