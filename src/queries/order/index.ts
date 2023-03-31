@@ -48,7 +48,7 @@ export const useAddTransaction = () => {
   const queryClient = useQueryClient();
   return useMutation(addTransaction, {
     onSuccess: () => {
-      queryClient.invalidateQueries(["get-orders"]);
+      queryClient.invalidateQueries(["get-order-by-id"]);
     },
   });
 };

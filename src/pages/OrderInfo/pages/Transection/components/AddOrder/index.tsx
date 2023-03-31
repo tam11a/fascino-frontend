@@ -10,47 +10,39 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Cascader, Input } from "antd";
+import { Input, Select } from "antd";
 import { MdClose } from "react-icons/md";
 import Label from "@components/Label";
 import handleResponse from "@/utilities/handleResponse";
-import useUser from "@/hooks/useUser";
 import { message } from "@components/antd/message";
 import useAreYouSure from "@/hooks/useAreYouSure";
-import { useCreateProducts } from "@/queries/products";
-import useCategory from "@/hooks/useCategory";
+import { useParams } from "react-router-dom";
+import { useAddTransaction } from "@/queries/order";
 
 const AddTransaction: React.FC<{ open: boolean; onClose: () => void }> = ({
   open,
   onClose,
 }) => {
-  const user = useUser();
+  const { oid } = useParams();
 
   const { handleSubmit, control } = useForm({});
-  const { mutateAsync: createProduct, isLoading: createLoading } =
-    useCreateProducts();
-  const { catNSubcat, searchCatNSubcat, isCatNSubcatLoading } = useCategory();
+  const { mutateAsync: addTransaction, isLoading } = useAddTransaction();
 
   const onSubmit = async (data: any) => {
     message.open({
       type: "loading",
-      content: "Creating Product..",
+      content: "Adding Transaction..",
       duration: 0,
     });
-    const res = await handleResponse(
-      () =>
-        createProduct({
-          ...data,
-          createdBy: user.userName,
-          category: data?.catNSubcat?.[0],
-          subcategory: data?.catNSubcat?.[1],
-        }),
-      [201]
+    const res = await handleResponse(() =>
+      addTransaction({
+        id: oid,
+        data,
+      })
     );
-    console.log(data);
     message.destroy();
     if (res.status) {
-      message.success("Product created successfully!");
+      message.success("Transaction added successfully!");
       onClose();
     } else {
       message.error(res.message);
@@ -89,8 +81,8 @@ const AddTransaction: React.FC<{ open: boolean; onClose: () => void }> = ({
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogTitle className={"flex flex-row items-center justify-between"}>
             <ListItemText
-              primary={"Product"}
-              secondary={`Create a New Product`}
+              primary={"Transaction"}
+              secondary={`Add a New Transaction`}
               primaryTypographyProps={{
                 fontWeight: "700",
                 color: "#000",
@@ -105,10 +97,10 @@ const AddTransaction: React.FC<{ open: boolean; onClose: () => void }> = ({
           <DialogContent>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <div className="flex flex-col relative">
-                <Label isRequired>Name</Label>
+                <Label isRequired>Amount</Label>
                 <Controller
                   control={control}
-                  name={"name"}
+                  name={"amount"}
                   rules={{ required: true }}
                   render={({
                     field: { onChange, onBlur, value },
@@ -116,7 +108,7 @@ const AddTransaction: React.FC<{ open: boolean; onClose: () => void }> = ({
                   }) => (
                     <Input
                       // className="w-1/2"
-                      placeholder="Product Name"
+                      placeholder="Enter amount"
                       size="large"
                       onChange={onChange}
                       onBlur={onBlur}
@@ -127,69 +119,38 @@ const AddTransaction: React.FC<{ open: boolean; onClose: () => void }> = ({
                 />
               </div>
               <div>
-                <Label>Price</Label>
+                <Label isRequired>Payment Method</Label>
                 <Controller
                   control={control}
-                  name={"price"}
-                  render={({
-                    field: { onChange, onBlur, value },
-                    fieldState: { error },
-                  }) => (
-                    <Input
-                      // className="w-1/2"
-                      placeholder="Product Price"
-                      size="large"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      status={error ? "error" : ""}
-                    />
-                  )}
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-              <div className="flex flex-col">
-                <Label isRequired>Category</Label>
-                <Controller
-                  control={control}
-                  name={"catNSubcat"}
+                  name={"method"}
                   rules={{ required: true }}
                   render={({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
                   }) => (
-                    <Cascader
-                      size="large"
-                      placeholder="Search category, subcategory.."
-                      allowClear={false}
-                      value={value}
-                      showSearch
-                      options={catNSubcat}
-                      onSearch={searchCatNSubcat}
-                      loading={isCatNSubcatLoading}
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      className="w-full"
-                      status={error ? "error" : ""}
-                      //   disabled={isLoading}
-                    />
-                  )}
-                />
-              </div>
-              <div className="flex flex-col">
-                <Label>Description</Label>
-                <Controller
-                  control={control}
-                  name={"description"}
-                  render={({
-                    field: { onChange, onBlur, value },
-                    fieldState: { error },
-                  }) => (
-                    <Input
+                    <Select
                       // className="w-1/2"
-                      placeholder="Description.."
+                      placeholder="Payment Method"
                       size="large"
+                      options={[
+                        {
+                          label: "Card",
+                          value: "Card",
+                        },
+                        {
+                          label: "Cash",
+                          value: "Cash",
+                        },
+                        {
+                          label: "bKash",
+                          value: "bKash",
+                        },
+
+                        {
+                          label: "COD",
+                          value: "COD",
+                        },
+                      ]}
                       onChange={onChange}
                       onBlur={onBlur}
                       value={value}
@@ -204,11 +165,11 @@ const AddTransaction: React.FC<{ open: boolean; onClose: () => void }> = ({
           <DialogActions>
             <Button
               variant={"contained"}
-              disabled={createLoading}
+              disabled={isLoading}
               // disabled
               type={"submit"}
             >
-              Create
+              Add
             </Button>
             <Button variant={"outlined"} onClick={handleClose}>
               Cancel
