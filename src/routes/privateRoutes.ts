@@ -19,6 +19,14 @@ export const privateRoutes = [
     Component: lazy(() => import("@pages/ProductInfo")),
   },
   {
+    path: PRIVATE_ROUTES.ORDERS,
+    Component: lazy(() => import("@pages/OrderList")),
+  },
+  {
+    path: PRIVATE_ROUTES.ORDERINFO,
+    Component: lazy(() => import("@pages/OrderInfo")),
+  },
+  {
     path: PRIVATE_ROUTES.CATEGORY,
     Component: lazy(() => import("@pages/Category")),
   },

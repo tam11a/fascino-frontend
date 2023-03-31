@@ -9,6 +9,8 @@ export const PRIVATE_ROUTES = {
   POS: "pos",
   TAILOR: "tailors",
   TAILORINFO: "tailors/:tid/*",
+  ORDERS: "orders",
+  ORDERINFO: "orders/:oid/*",
   CATEGORY: "category",
   CATEGORYINFO: "category/:catid/*",
   PRODUCTS: "products",
