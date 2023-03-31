@@ -137,7 +137,7 @@ const OrderColumn = (): GridColumns<IDataTable> => {
           <IconButton
             sx={{ fontSize: "large" }}
             color="primary"
-            onClick={() => navigate(`/app/order/${data.row?._id}`)}
+            onClick={() => navigate(`/app/orders/${data.row?._id}`)}
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <FiEdit2 />

@@ -1,61 +1,77 @@
-import Iconify from "@components/iconify";
-import {
-  Button,
-  Container,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import { Empty } from "antd";
 import React from "react";
+import { Container, Grid, Typography } from "@mui/material";
+import { useGetOrderById } from "@/queries/order";
+import BackButton from "@components/BackButton";
+// import { BsSearch } from "react-icons/bs";
+import { FloatButton } from "antd";
+import Iconify from "@components/iconify";
+import TransectionColumn from "./components/TransectionColumn";
+import { useParams } from "react-router-dom";
+import { useToggle } from "@tam11a/react-use-hooks";
+import AddTransaction from "./components/AddOrder";
+const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Transection: React.FC = () => {
-  return (
-    <Container maxWidth={"xs"} className="flex flex-col gap-2 py-4">
-      <div className="flex flex-row items-center justify-between">
-        <Typography variant="h6" className="font-semibold">
-          Employees
-        </Typography>
-        <Tooltip title={"Assign Branch"}>
-          <IconButton disabled>
-            <Iconify icon={"material-symbols:add"} />
-          </IconButton>
-        </Tooltip>
-      </div>
-      <div className="flex flex-col items-center justify-center border-2 border-dashed p-3 py-12 mb-6">
-        <Empty />
-        TransectionHistory{" "}
-      </div>
+  const { oid } = useParams();
+  const { data, isLoading } = useGetOrderById(oid);
 
-      <Typography variant="h6" className="font-semibold">
-        Deletation
-      </Typography>
-      <List disablePadding>
-        <ListItem className="p-0">
-          <ListItemText
-            primary={"Deactivate branch"}
-            secondary={"Deactivated branch can be activated at any time"}
+  console.log(data?.data?.data?.transaction);
+  const { state: open, toggleState: onClose } = useToggle(false);
+
+  return (
+    <>
+      <Container
+        maxWidth={"lg"}
+        sx={{
+          maxWidth: "1500px !important",
+        }}
+      >
+        <Grid container rowGap={1} direction="column" marginTop={4}>
+          <Grid className="flex flex-col sm:flex-row items-end sm:items-center justify-between gap-3">
+            <div className="flex flex-row items-center ">
+              <BackButton />
+              <Typography
+                variant="subtitle1"
+                fontWeight={700}
+                className="whitespace-nowrap"
+              >
+                {/* {t("employee:EmployeeList")} */}
+                Transaction History
+              </Typography>
+            </div>
+            {/* <Input
+              className="w-full sm:max-w-xs"
+              placeholder="Search Order By Invoice Id"
+              suffix={<BsSearch />}
+              style={{ width: "auto" }}
+              size="large"
+              allowClear
+            /> */}
+          </Grid>
+          <Grid item>
+            <DataTable
+              columns={TransectionColumn()}
+              rows={data?.data?.data?.transaction || []}
+              isLoading={isLoading}
+              paginationMode={"server"}
+              getRowId={(r: any) => r?._id || r.id}
+              rowCount={data?.data?.total || 0}
+            />
+          </Grid>
+        </Grid>
+
+        <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
+          <FloatButton
+            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
           />
-          <Button color={"error"} variant="outlined" disabled>
-            Deactivate
-          </Button>
-        </ListItem>
-        <ListItem className="px-0">
-          <ListItemText
-            primary={"Delete branch"}
-            secondary={
-              "After deletation, the branch is permanently removed and can't be restored. All the history will be mentioned as 'Deleted Branch'."
-            }
+          <FloatButton
+            icon={<Iconify icon={"material-symbols:add"} />}
+            onClick={() => onClose()}
           />
-          <Button color={"error"} variant="contained" disabled>
-            Delete
-          </Button>
-        </ListItem>
-      </List>
-    </Container>
+        </FloatButton.Group>
+        <AddTransaction open={open} onClose={onClose} />
+      </Container>
+    </>
   );
 };
 

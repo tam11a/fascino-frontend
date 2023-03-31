@@ -39,3 +39,16 @@ export const usePostOrder = () => {
     },
   });
 };
+
+const addTransaction = ({ data, id }: { data: any; id: any }) => {
+  return instance.patch(`/order/${id}/transaction`, data);
+};
+
+export const useAddTransaction = () => {
+  const queryClient = useQueryClient();
+  return useMutation(addTransaction, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["get-orders"]);
+    },
+  });
+};

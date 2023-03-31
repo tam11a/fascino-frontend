@@ -7,7 +7,7 @@ export const orderRoutes = [
     Component: lazy(() => import("../pages/Info")),
   },
   {
-    path: Order_ROUTES.TRANSECTION,
+    path: Order_ROUTES.TRANSACTION,
     Component: lazy(() => import("../pages/Transection")),
   },
   // {
