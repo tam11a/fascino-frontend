@@ -218,44 +218,44 @@ const CreateCustomer: React.FC<{ open: boolean; onClose: () => void }> = ({
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
               <div className="flex flex-col">
-                <Label>Bank</Label>
-                <Controller
+                <Label>Division</Label>
+                {/* <Controller
                   control={control}
                   name={"bank"}
                   render={({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
-                  }) => (
-                    <Input
-                      placeholder="Bank"
-                      size="large"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      status={error ? "error" : ""}
-                    />
-                  )}
+                  }) => ( */}
+                <Input
+                  placeholder="Division"
+                  size="large"
+                  // onChange={onChange}
+                  // onBlur={onBlur}
+                  // value={value}
+                  // status={error ? "error" : ""}
                 />
+                {/* )}
+                /> */}
               </div>
               <div className="flex flex-col">
-                <Label>Bkash</Label>
-                <Controller
+                <Label>City</Label>
+                {/* <Controller
                   control={control}
                   name={"bKash"}
                   render={({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
-                  }) => (
-                    <Input
-                      placeholder="Bkash"
-                      size="large"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      status={error ? "error" : ""}
-                    />
-                  )}
+                  }) => ( */}
+                <Input
+                  placeholder="City"
+                  size="large"
+                  // onChange={onChange}
+                  // onBlur={onBlur}
+                  // value={value}
+                  // status={error ? "error" : ""}
                 />
+                {/* )}
+                /> */}
               </div>
             </div>
             <div className="flex flex-col">
