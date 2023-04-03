@@ -114,7 +114,7 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                   }) => (
                     <Cascader
                       size="large"
-                      placeholder="Search category, subcategory.."
+                      placeholder="Search supplier..."
                       allowClear={false}
                       value={value}
                       showSearch
@@ -143,7 +143,7 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                   }) => (
                     <Cascader
                       size="large"
-                      placeholder="Search category, subcategory.."
+                      placeholder="Search product..."
                       allowClear={false}
                       value={value}
                       showSearch
@@ -270,7 +270,7 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-              <div>
+              {/* <div>
                 <Label>Tax</Label>
                 <Controller
                   control={control}
@@ -290,7 +290,7 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                     />
                   )}
                 />
-              </div>
+              </div> */}
 
               <div>
                 <Label isRequired>Supplier Commision</Label>
