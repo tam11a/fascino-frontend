@@ -10,8 +10,8 @@ export const branchRoutes = [
     path: Branch_ROUTES.ADDITIONAL,
     Component: lazy(() => import("../pages/Additional")),
   },
-  // {
-  //   path: Employee_ROUTES.NOTFOUND,
-  //   Component: lazy(() => import("@pages/NotFound")),
-  // },
+  {
+    path: Branch_ROUTES.PETTYCASH,
+    Component: lazy(() => import("../pages/PettyCash")),
+  },
 ];

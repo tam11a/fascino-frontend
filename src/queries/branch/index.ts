@@ -28,6 +28,20 @@ export const useGetBranchById = (id: any) => {
   });
 };
 
+//get pettycash by branch
+const getPettyCash = (params: any) => {
+  return instance.get(`/petty-cash`, {
+    params,
+  });
+};
+
+export const useGetPettyCash = (params: any) => {
+  return useQuery(["get-all-petty-cash", params], () => getPettyCash(params), {
+    // enabled: !!vendorId,
+    // branch: (data: string) => data?.data || [],
+  });
+};
+
 const updateBranch = ({
   id,
   data,
