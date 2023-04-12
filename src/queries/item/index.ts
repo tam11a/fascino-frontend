@@ -8,7 +8,16 @@ const getItem = (params: any) => {
 };
 
 export const useGetItem = (params: any) => {
-  return useQuery(["get-all-item", params], () => getItem(params));
+  return useQuery(
+    [
+      "get-all-item",
+      params,
+      {
+        params,
+      },
+    ],
+    () => getItem(params)
+  );
 };
 
 const getItemById = (id: string) => {
