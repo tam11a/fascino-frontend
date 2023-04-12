@@ -37,16 +37,16 @@ const PettyCash: React.FC = () => {
       >
         <Grid container rowGap={1} direction="column" marginTop={4}>
           <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div className="flex flex-row items-center ">
+            <div className="flex flex-row items-center whitespace-pre ">
               <BackButton />
               <Typography variant="subtitle1" fontWeight={700}>
                 {/* {t("employee:EmployeeList")} */}
-                Branch
+                Petty Cash
               </Typography>
             </div>
             <Input
               className="w-full sm:max-w-xs"
-              placeholder="Search Branch"
+              placeholder="Search Petty Cash"
               suffix={<BsSearch />}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
