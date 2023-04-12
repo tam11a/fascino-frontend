@@ -44,8 +44,11 @@ const CreatePettyCash: React.FC<{ open: boolean; onClose: () => void }> = ({
     const res = await handleResponse(
       () =>
         createPettyCash({
-          ...data,
-          branchId: bid,
+          data: {
+            amount: data.amount,
+            reason: data.reason,
+          },
+          id: bid || "",
         }),
       [201]
     );

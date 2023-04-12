@@ -17,8 +17,14 @@ export const useGetPettyCash = (params: any) => {
 };
 
 //create pettycash
-const createPettyCash = (data: ICash) => {
-  return instance.post("/branch", data);
+const createPettyCash = ({ data, id }: { data: ICash; id: string }) => {
+  return instance.post(
+    `/petty-cash/${id}`,
+    {},
+    {
+      params: data,
+    }
+  );
 };
 
 export const useCreatePettyCash = () => {
