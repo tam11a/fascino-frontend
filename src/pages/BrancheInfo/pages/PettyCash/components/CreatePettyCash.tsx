@@ -16,9 +16,11 @@ import Label from "@components/Label";
 import handleResponse from "@/utilities/handleResponse";
 import { message } from "@components/antd/message";
 import useAreYouSure from "@/hooks/useAreYouSure";
-import { useCreateBranch } from "@/queries/branch";
+import { useCreatePettyCash } from "@/queries/pettyCash";
+import { useParams } from "react-router-dom";
+import { TbCurrencyTaka } from "react-icons/tb";
 
-const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
+const CreatePettyCash: React.FC<{ open: boolean; onClose: () => void }> = ({
   open,
   onClose,
 }) => {
@@ -29,25 +31,27 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
   } = useForm({
     // resolver: zodResolver(userInfoResolver),
   });
-  const { mutateAsync: createBranch, isLoading: BranchLoading } =
-    useCreateBranch();
+  const { bid } = useParams();
+  const { mutateAsync: createPettyCash, isLoading: PettyCashLoading } =
+    useCreatePettyCash();
 
   const onSubmit = async (data: any) => {
     message.open({
       type: "loading",
-      content: "Creating Branch..",
+      content: "Creating Petty Cash..",
       duration: 0,
     });
     const res = await handleResponse(
       () =>
-        createBranch({
+        createPettyCash({
           ...data,
+          branchId: bid,
         }),
       [201]
     );
     message.destroy();
     if (res.status) {
-      message.success("Branch created successfully!");
+      message.success("petty cash created successfully!");
       onClose();
     } else {
       message.error(res.message);
@@ -87,8 +91,8 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogTitle className={"flex flex-row items-center justify-between"}>
             <ListItemText
-              primary={"Branch"}
-              secondary={`Create a New Branch`}
+              primary={"Petty Cash"}
+              secondary={`Create a New Petty Cash`}
               primaryTypographyProps={{
                 fontWeight: "700",
                 color: "#000",
@@ -101,12 +105,12 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
           </DialogTitle>
           <Divider />
           <DialogContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-1 gap-2">
               <div className="flex flex-col relative">
-                <Label isRequired>Name</Label>
+                <Label isRequired>Amount</Label>
                 <Controller
                   control={control}
-                  name={"name"}
+                  name={"amount"}
                   rules={{ required: true }}
                   render={({
                     field: { onChange, onBlur, value },
@@ -114,30 +118,9 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
                   }) => (
                     <Input
                       // className="w-1/2"
-                      placeholder="Enter branch name"
+                      placeholder="Enter petty cash amount"
                       size="large"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      status={error ? "error" : ""}
-                    />
-                  )}
-                />
-              </div>
-              <div className="flex flex-col">
-                <Label isRequired>Phone</Label>
-                <Controller
-                  control={control}
-                  name={"phone"}
-                  rules={{ required: true }}
-                  render={({
-                    field: { onChange, onBlur, value },
-                    fieldState: { error },
-                  }) => (
-                    <Input
-                      // className="w-1/2"
-                      placeholder="Enter phone number"
-                      size="large"
+                      suffix={<TbCurrencyTaka />}
                       onChange={onChange}
                       onBlur={onBlur}
                       value={value}
@@ -148,17 +131,17 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
               </div>
             </div>
             <div>
-              <Label>Address</Label>
+              <Label>Reason</Label>
               <Controller
                 control={control}
-                name={"address"}
+                name={"reason"}
                 rules={{ required: true }}
                 render={({
                   field: { onChange, onBlur, value },
                   fieldState: { error },
                 }) => (
                   <Input.TextArea
-                    placeholder="Enter address"
+                    placeholder="Enter Reason"
                     showCount
                     maxLength={1000}
                     autoSize={{ minRows: 4 }}
@@ -176,7 +159,7 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
           <DialogActions>
             <Button
               variant={"contained"}
-              disabled={BranchLoading}
+              disabled={PettyCashLoading}
               type={"submit"}
             >
               Create
@@ -191,4 +174,4 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
   );
 };
 
-export default CreateBranch;
+export default CreatePettyCash;

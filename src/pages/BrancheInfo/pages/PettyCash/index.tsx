@@ -3,13 +3,14 @@ import { Container, Grid, Typography } from "@mui/material";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 // import CreateBranch from "./components/CreateBranch";
 // import BranchColumn from "./components/BranchColumn";
-import { useGetBranch, useGetPettyCash } from "@/queries/branch";
+import { useGetPettyCash } from "@/queries/pettyCash";
 import BackButton from "@components/BackButton";
 import { BsSearch } from "react-icons/bs";
 import { FloatButton, Input } from "antd";
 import Iconify from "@components/iconify";
-import PettyCashColumn from "./PettCashColumn";
+import PettyCashColumn from "./components/PettCashColumn";
 import { useParams } from "react-router-dom";
+import CreatePettyCash from "./components/CreatePettyCash";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const PettyCash: React.FC = () => {
@@ -81,10 +82,7 @@ const PettyCash: React.FC = () => {
         </FloatButton.Group>
 
         {/* Dialog Box */}
-        {/* <CreateBranch
-					open={open}
-					onClose={onClose}
-				/> */}
+        <CreatePettyCash open={open} onClose={onClose} />
       </Container>
     </>
   );

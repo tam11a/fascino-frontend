@@ -56,7 +56,7 @@ const PettyCashColumn = (): GridColumns<IDataTable> => {
       align: "center",
       flex: 1,
       renderCell: (data: any) =>
-        data.row ? moment(data.row?.createdAt).format("L") : "-",
+        data.row ? moment(data.row?.createdAt).format("LL") : "-",
     },
   ];
 };
