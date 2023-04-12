@@ -1,5 +1,15 @@
 import instance from "@/services";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
+const getItem = (params: any) => {
+  return instance.get(`/item`, {
+    params,
+  });
+};
+
+export const useGetItem = (params: any) => {
+  return useQuery(["get-all-item", params], () => getItem(params));
+};
 
 const getItemById = (id: string) => {
   return instance.get(`/item/${id}`);
