@@ -93,10 +93,12 @@ const POS: React.FC = () => {
     );
   }, [branchData]);
 
-  const [selectedBranch, setSelectedBranch] = React.useState<IOption>(
+  const [selectedBranch, setSelectedBranch] = React.useState<
+    IOption | undefined
+  >(
     localStorage.getItem("sbpos")
       ? JSON.parse(localStorage.getItem("sbpos") || "{}")
-      : null
+      : undefined
   );
 
   React.useEffect(() => {
@@ -344,7 +346,7 @@ const POS: React.FC = () => {
             showSearch
             defaultActiveFirstOption
             size="large"
-            onClear={() => setBranchSearch("")}
+            onClear={() => setSelectedBranch(undefined)}
             onSearch={(v) => setBranchSearch(v)}
             value={selectedBranch?.value}
             onSelect={(_v, o) => setSelectedBranch(o)}
@@ -813,7 +815,7 @@ const POS: React.FC = () => {
             showSearch
             defaultActiveFirstOption
             size="large"
-            onClear={() => setTailorSearch("")}
+            onClear={() => setSelectedTailor("")}
             onSearch={(v) => setTailorSearch(v)}
             value={selectedTailor?.value}
             onSelect={(_v, o) => setSelectedTailor(o)}

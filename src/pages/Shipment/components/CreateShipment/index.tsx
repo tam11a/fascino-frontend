@@ -27,7 +27,7 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
 }) => {
   const user = useUser();
 
-  const { handleSubmit, control } = useForm({});
+  const { handleSubmit, control, watch } = useForm({});
   const { mutateAsync: createShipment } = useCreateshipment();
   const { Supplier, isSupplierLoading, searchSupplier } = useSupplier();
   const { product, isproductLoading, searchProduct } = useProduct();
@@ -71,6 +71,8 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
   {
     ("");
   }
+
+  console.log();
   return (
     <>
       {closeContextHolder}
@@ -181,7 +183,7 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-2">
               <div>
                 <Label isRequired>Weight</Label>
                 <Controller
@@ -203,18 +205,19 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                   )}
                 />
               </div>
+
               <div>
-                <Label isRequired>Shipment Cost</Label>
+                <Label isRequired>Weight Cost</Label>
                 <Controller
                   control={control}
-                  name={"shipmentCost"}
+                  name={"weightCost"}
                   render={({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
                   }) => (
                     <Input
                       // className="w-1/2"
-                      placeholder="Enter Shipment Cost"
+                      placeholder="Enter Weight Cost"
                       size="large"
                       onChange={onChange}
                       onBlur={onBlur}
@@ -224,8 +227,18 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                   )}
                 />
               </div>
+              <div>
+                <Label>Shipment Cost</Label>
+                <Input
+                  // className="w-1/2"
+                  placeholder="Shipment Cost"
+                  size="large"
+                  value={watch("weight") * watch("weightCost") || 0}
+                  readOnly
+                />
+              </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-2">
               <div>
                 <Label isRequired>Buying Price</Label>
                 <Controller
@@ -248,17 +261,17 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                 />
               </div>
               <div>
-                <Label isRequired>Selling Price</Label>
+                <Label>Discount</Label>
                 <Controller
                   control={control}
-                  name={"sellPrice"}
+                  name={"buyingDiscount"}
                   render={({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
                   }) => (
                     <Input
                       // className="w-1/2"
-                      placeholder="Enter Sell Price"
+                      placeholder="Enter Discount"
                       size="large"
                       onChange={onChange}
                       onBlur={onBlur}
@@ -266,6 +279,16 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                       status={error ? "error" : ""}
                     />
                   )}
+                />
+              </div>
+              <div>
+                <Label>Price</Label>
+                <Input
+                  // className="w-1/2"
+                  placeholder="Shipment Cost"
+                  size="large"
+                  value={watch("buyingPrice") - watch("buyingDiscount") || 0}
+                  readOnly
                 />
               </div>
             </div>

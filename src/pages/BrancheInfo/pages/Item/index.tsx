@@ -1,12 +1,14 @@
 import React from "react";
 import { Container, Grid, Typography } from "@mui/material";
-import { usePaginate } from "@tam11a/react-use-hooks";
+import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 import { BsSearch } from "react-icons/bs";
 import { FloatButton, Input } from "antd";
 import Iconify from "@components/iconify";
 import ItemColumn from "./components/ItemColumn";
 import { useGetItem } from "@/queries/item";
 import { useParams } from "react-router-dom";
+import { GridSelectionModel } from "@mui/x-data-grid";
+import ItemDrawer from "./components/ItemDrawer";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Item: React.FC = () => {
@@ -19,9 +21,12 @@ const Item: React.FC = () => {
         },
       },
     });
-
   const { data, isLoading } = useGetItem(getQueryParams());
-  console.log(data);
+  const [rowSelectionModel, setRowSelectionModel] =
+    React.useState<GridSelectionModel>([]);
+  const { state: open, toggleState: onClose } = useToggle(false);
+
+  // console.log(rowSelectionModel);
   return (
     <>
       <Container
@@ -61,6 +66,11 @@ const Item: React.FC = () => {
               onPageChange={setPage}
               pageSize={limit}
               onPageSizeChange={setLimit}
+              checkboxSelection
+              onSelectionModelChange={(newRowSelectionModel) => {
+                setRowSelectionModel(newRowSelectionModel);
+              }}
+              selectionModel={rowSelectionModel}
             />
           </Grid>
         </Grid>
@@ -69,7 +79,29 @@ const Item: React.FC = () => {
           <FloatButton
             icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
           />
+          {!!rowSelectionModel.length ? (
+            <>
+              <FloatButton
+                icon={<Iconify icon={"mi:edit"} onClick={() => onClose()} />}
+              />
+              <FloatButton
+                icon={
+                  <Iconify
+                    icon={"material-symbols:print-add-outline-rounded"}
+                  />
+                }
+              />
+            </>
+          ) : (
+            ""
+          )}
         </FloatButton.Group>
+
+        <ItemDrawer
+          open={open}
+          onClose={onClose}
+          selectedRowData={rowSelectionModel}
+        />
       </Container>
     </>
   );
