@@ -1,6 +1,9 @@
 import React from "react";
 import { Container, Grid, Typography } from "@mui/material";
-import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
+import {
+  usePaginate,
+  //  useToggle
+} from "@tam11a/react-use-hooks";
 // import CreateBranch from "./components/CreateBranch";
 // import BranchColumn from "./components/BranchColumn";
 // import { useGetBranch } from "@/queries/branch";
@@ -25,7 +28,7 @@ const Item: React.FC = () => {
     });
 
   const { data, isLoading } = useGetItem(getQueryParams());
-  const { state: open, toggleState: onClose } = useToggle(false);
+  // const { toggleState: onClose } = useToggle(false);
   console.log(data);
 
   return (
@@ -76,14 +79,7 @@ const Item: React.FC = () => {
           <FloatButton
             icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
           />
-          <FloatButton
-            icon={<Iconify icon={"material-symbols:add"} />}
-            onClick={() => onClose()}
-          />
         </FloatButton.Group>
-
-        {/* Dialog Box */}
-        {/* <CreateBranch open={open} onClose={onClose} /> */}
       </Container>
     </>
   );

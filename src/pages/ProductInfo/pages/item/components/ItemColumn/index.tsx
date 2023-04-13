@@ -3,6 +3,7 @@ import { Icon } from "@iconify/react";
 import { Chip, IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { IDataTable } from "@pages/Employees/Types";
+import moment from "moment";
 // import { checkAccess } from "@tam11a/react-use-access";
 // import moment from "moment";
 import { FiEdit2 } from "react-icons/fi";
@@ -17,89 +18,50 @@ const ItemColumn = (): GridColumns<IDataTable> => {
       headerAlign: "center",
       field: "_id",
       align: "center",
-      width: 200,
+      width: 240,
       // flex: 1,
       sortable: false,
-      hide: true,
+      hide: false,
     },
+
     {
-      headerName: "Item Name",
+      headerName: "Branch",
       headerAlign: "center",
-      field: "name",
+      field: "branch",
       align: "center",
       width: 150,
       minWidth: 150,
       flex: 1,
-      renderCell: (data: any) => data.row.product.name,
+      renderCell: (data: any) =>
+        data.row?.branch ? <Chip label={data.row?.branch?.name} /> : "-",
     },
     {
-      headerName: "Category",
+      headerName: "Supplier",
       headerAlign: "center",
-      field: "category",
+      field: "supplier",
       align: "center",
-      width: 150,
-      minWidth: 150,
+      width: 200,
+      minWidth: 180,
       flex: 1,
-      renderCell: (data: any) => data.row?.product?.category?.name,
+      renderCell: (data: any) =>
+        data.row?.shipment?.supplier ? (
+          <Chip label={data.row?.shipment?.supplier?.name} />
+        ) : (
+          "-"
+        ),
     },
     {
-      headerName: "Subcategory",
-      headerAlign: "center",
-      field: "subcategory",
-      align: "center",
-      width: 150,
-      minWidth: 150,
-      flex: 1,
-      renderCell: (data: any) => data.row?.product?.subcategory?.name,
-    },
-    {
-      headerName: "Email",
-      headerAlign: "center",
-      field: "email",
-      width: 250,
-      minWidth: 250,
-      flex: 1.5,
-      align: "center",
-    },
-    {
-      headerName: "Created by",
-      field: "createdBy",
+      headerName: "Shipping Date",
+      field: "shippingDate",
       width: 170,
       minWidth: 150,
       headerAlign: "center",
       align: "center",
       flex: 1,
       renderCell: (data: any) =>
-        data.row?.createdBy?.userName ? (
-          <Chip
-            label={data.row?.createdBy?.userName}
-            // sx={{
-            //   textTransform: "uppercase",
-            // }}
-          />
-        ) : (
-          "-"
-        ),
-    },
-    {
-      headerName: "Updated By",
-      field: "updatedBy",
-      width: 180,
-      minWidth: 150,
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
-      renderCell: (data: any) =>
-        data.row?.updatedBy?.userName ? (
-          <Chip
-            label={data.row?.updatedBy?.userName}
-            // sx={{
-            //   textTransform: "uppercase",
-            // }}
-          />
-        ) : (
-          "-"
-        ),
+        data.row?.shipment
+          ? moment(data.row?.shipment?.createdAt).format("LL")
+          : "-",
     },
     {
       headerName: "Action",
