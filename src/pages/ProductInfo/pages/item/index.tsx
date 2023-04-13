@@ -29,7 +29,6 @@ const Item: React.FC = () => {
 
   const { data, isLoading } = useGetItem(getQueryParams());
   // const { toggleState: onClose } = useToggle(false);
-  console.log(data);
 
   return (
     <>
