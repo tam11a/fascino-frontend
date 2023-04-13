@@ -1,5 +1,6 @@
 import instance from "@/services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { IUpdateItem } from "./types";
 
 const getItem = (params: any) => {
   return instance.get(`/item`, {
@@ -26,6 +27,20 @@ const getItemById = (id: any) => {
 
 export const useGetItemById = (id: any) => {
   return useQuery(["get-item-by-id", id], () => getItemById(id));
+};
+
+const updateItem = ({ data }: { data: IUpdateItem }) => {
+  return instance.put("/item", data);
+};
+
+export const useUpdateItem = () => {
+  const queryClient = useQueryClient();
+  return useMutation(updateItem, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["get-all-item"]);
+      queryClient.invalidateQueries(["get-item-by-id"]);
+    },
+  });
 };
 
 const getScanById = (id: string) => {

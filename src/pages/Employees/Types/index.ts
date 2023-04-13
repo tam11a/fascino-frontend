@@ -1,4 +1,9 @@
-import { GridColumns, GridFeatureMode } from "@mui/x-data-grid";
+import {
+  GridCallbackDetails,
+  GridColumns,
+  GridFeatureMode,
+  GridSelectionModel,
+} from "@mui/x-data-grid";
 
 export type GridNativeColTypes =
   | "string"
@@ -22,4 +27,11 @@ export type IDataTable = {
   onPageChange?: (newPage: number) => void;
   pageSize?: number;
   onPageSizeChange?: (newLimit: number) => void;
+  checkboxSelection?: boolean;
+  onSelectionModelChange?: (
+    rowSelectionModel: GridSelectionModel,
+    details: GridCallbackDetails<any>
+  ) => void;
+  selectionModel?: GridSelectionModel;
+  keepNonExistentRowsSelected?: boolean;
 };
