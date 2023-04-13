@@ -65,8 +65,6 @@ const Info: React.FC = ({}) => {
             <br />
             <b>Shipment Cost:</b> {shipmentData?.data?.data?.shipmentCost}
             <br />
-            <b>Tax:</b> {shipmentData?.data?.data?.tax}
-            <br />
             <b>Weight:</b> {shipmentData?.data?.data?.weight}
           </Descriptions.Item>
         </Descriptions>

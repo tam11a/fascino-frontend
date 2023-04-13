@@ -23,7 +23,7 @@ const ShipmentColumn = (): GridColumns<IDataTable> => {
       hide: true,
     },
     {
-      headerName: "Name",
+      headerName: "S.Name",
       headerAlign: "center",
       field: "name",
       align: "center",
@@ -33,7 +33,7 @@ const ShipmentColumn = (): GridColumns<IDataTable> => {
       renderCell: (data: any) => data.row?.supplier?.name,
     },
     {
-      headerName: "Phone",
+      headerName: "S.Phone",
       headerAlign: "center",
       field: "phone",
       align: "center",
@@ -43,7 +43,7 @@ const ShipmentColumn = (): GridColumns<IDataTable> => {
       renderCell: (data: any) => data.row?.supplier?.phone,
     },
     {
-      headerName: "Email",
+      headerName: "S.Email",
       headerAlign: "center",
       field: "email",
       align: "center",
@@ -54,13 +54,21 @@ const ShipmentColumn = (): GridColumns<IDataTable> => {
         data.row?.supplier?.email ? data.row?.supplier?.email : "-",
     },
     {
-      headerName: "Avarage Weight",
+      headerName: "Quantity",
       headerAlign: "center",
-      field: "weight",
+      field: "quantity",
       align: "center",
       width: 150,
       minWidth: 150,
       flex: 1,
+    },
+    {
+      headerName: "Weight(gm)",
+      headerAlign: "center",
+      field: "weight",
+      align: "center",
+      width: 180,
+      minWidth: 150,
     },
     {
       headerName: "Buying Price",
@@ -98,15 +106,7 @@ const ShipmentColumn = (): GridColumns<IDataTable> => {
       minWidth: 150,
       flex: 1,
     },
-    {
-      headerName: "Tax",
-      headerAlign: "center",
-      field: "tax",
-      align: "center",
-      width: 150,
-      minWidth: 150,
-      flex: 1,
-    },
+
     {
       headerName: "Created by",
       field: "createdBy",
