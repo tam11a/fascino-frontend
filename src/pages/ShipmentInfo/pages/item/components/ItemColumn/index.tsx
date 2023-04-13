@@ -23,7 +23,17 @@ const ItemColumn = (): GridColumns<IDataTable> => {
       sortable: false,
       hide: false,
     },
-
+    {
+      headerName: "Product",
+      headerAlign: "center",
+      field: "product",
+      align: "center",
+      width: 250,
+      minWidth: 150,
+      flex: 1,
+      renderCell: (data: any) =>
+        data.row?.product ? data.row?.product?.name : "-",
+    },
     {
       headerName: "Branch",
       headerAlign: "center",
