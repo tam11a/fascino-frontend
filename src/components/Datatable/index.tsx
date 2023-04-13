@@ -102,10 +102,10 @@ const DataTable: React.FC<IDataTable> = ({
         onPageChange={onPageChange}
         pageSize={pageSize}
         onPageSizeChange={onPageSizeChange}
-        checkboxSelection
+        checkboxSelection={checkboxSelection}
         onSelectionModelChange={onSelectionModelChange}
         selectionModel={selectionModel}
-        keepNonExistentRowsSelected
+        keepNonExistentRowsSelected={keepNonExistentRowsSelected}
       />
     </Paper>
   );
