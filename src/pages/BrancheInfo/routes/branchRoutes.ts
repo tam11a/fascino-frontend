@@ -14,4 +14,8 @@ export const branchRoutes = [
     path: Branch_ROUTES.PETTYCASH,
     Component: lazy(() => import("../pages/PettyCash")),
   },
+  {
+    path: Branch_ROUTES.ITEM,
+    Component: lazy(() => import("../pages/Item")),
+  },
 ];

@@ -1,21 +1,34 @@
 import React from "react";
 import { Container, Grid, Typography } from "@mui/material";
-import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
-import CreateBranch from "./components/CreateBranch";
-import BranchColumn from "./components/BranchColumn";
-import { useGetBranch } from "@/queries/branch";
+import {
+  usePaginate,
+  //  useToggle
+} from "@tam11a/react-use-hooks";
+// import CreateBranch from "./components/CreateBranch";
+// import BranchColumn from "./components/BranchColumn";
+// import { useGetBranch } from "@/queries/branch";
 import BackButton from "@components/BackButton";
 import { BsSearch } from "react-icons/bs";
 import { FloatButton, Input } from "antd";
 import Iconify from "@components/iconify";
+import ItemColumn from "./components/ItemColumn";
+import { useGetItem } from "@/queries/item";
+import { useParams } from "react-router-dom";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
-const Branches: React.FC = () => {
+const Item: React.FC = () => {
+  const { pid } = useParams();
   const { search, setSearch, getQueryParams, limit, setLimit, page, setPage } =
-    usePaginate();
+    usePaginate({
+      defaultParams: {
+        filters: {
+          product: pid || "",
+        },
+      },
+    });
 
-  const { data, isLoading } = useGetBranch(getQueryParams());
-  const { state: open, toggleState: onClose } = useToggle(false);
+  const { data, isLoading } = useGetItem(getQueryParams());
+  // const { toggleState: onClose } = useToggle(false);
 
   return (
     <>
@@ -31,12 +44,12 @@ const Branches: React.FC = () => {
               <BackButton />
               <Typography variant="subtitle1" fontWeight={700}>
                 {/* {t("employee:EmployeeList")} */}
-                Branch
+                Items
               </Typography>
             </div>
             <Input
               className="w-full sm:max-w-xs"
-              placeholder="Search Branch"
+              placeholder="Search Item"
               suffix={<BsSearch />}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -47,7 +60,7 @@ const Branches: React.FC = () => {
           </Grid>
           <Grid item>
             <DataTable
-              columns={BranchColumn()}
+              columns={ItemColumn()}
               rows={data?.data?.data || []}
               isLoading={isLoading}
               paginationMode={"server"}
@@ -65,17 +78,10 @@ const Branches: React.FC = () => {
           <FloatButton
             icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
           />
-          <FloatButton
-            icon={<Iconify icon={"material-symbols:add"} />}
-            onClick={() => onClose()}
-          />
         </FloatButton.Group>
-
-        {/* Dialog Box */}
-        <CreateBranch open={open} onClose={onClose} />
       </Container>
     </>
   );
 };
 
-export default Branches;
+export default Item;

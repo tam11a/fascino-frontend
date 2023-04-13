@@ -10,6 +10,10 @@ export const prodRoutes = [
     path: PRODUCT_ROUTES.ADDITIONAL,
     Component: lazy(() => import("../pages/Additional")),
   },
+  {
+    path: PRODUCT_ROUTES.ITEM,
+    Component: lazy(() => import("../pages/item")),
+  },
   // {
   //   path: Employee_ROUTES.NOTFOUND,
   //   Component: lazy(() => import("@pages/NotFound")),

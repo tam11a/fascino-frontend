@@ -3,23 +3,13 @@ import { Icon } from "@iconify/react";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { PRODUCT_ROUTES } from "./routes/paths";
+import { ITEM_ROUTES } from "./routes/paths";
 
 const items: MenuProps["items"] = [
   {
-    label: "Overview",
-    key: PRODUCT_ROUTES.INFO,
-    icon: <Icon icon="fluent-mdl2:product-catalog" className="text-xl" />,
-  },
-  {
-    label: "Items",
-    key: PRODUCT_ROUTES.ITEM,
-    icon: <Icon icon="gridicons:product" className="text-xl" />,
-  },
-  {
-    label: "Additional",
-    key: PRODUCT_ROUTES.ADDITIONAL,
-    icon: <Icon icon="mdi:information-slab-box-outline" className="text-xl" />,
+    label: "Info",
+    key: ITEM_ROUTES.INFO,
+    icon: <Icon icon="fluent:building-shop-20-regular" className="text-xl" />,
   },
 ];
 

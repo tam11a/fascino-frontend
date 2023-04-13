@@ -11,6 +11,11 @@ const items: MenuProps["items"] = [
     key: SHIPMENT_ROUTES.INFO,
     icon: <Icon icon="carbon:delivery" className="text-xl" />,
   },
+  {
+    label: "Items",
+    key: SHIPMENT_ROUTES.ITEM,
+    icon: <Icon icon="gridicons:product" className="text-xl" />,
+  },
 ];
 
 const Navigator: React.FC = () => {

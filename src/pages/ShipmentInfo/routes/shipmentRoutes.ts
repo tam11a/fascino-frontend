@@ -6,6 +6,10 @@ export const shipmentRoutes = [
     path: SHIPMENT_ROUTES.INFO,
     Component: lazy(() => import("@pages/ShipmentInfo/pages/Info")),
   },
+  {
+    path: SHIPMENT_ROUTES.ITEM,
+    Component: lazy(() => import("@pages/ShipmentInfo/pages/item")),
+  },
   // {
   //   path: SHIPMENT_ROUTES.NOTFOUND,
   //   Component: lazy(() => import("@pages/NotFound")),
