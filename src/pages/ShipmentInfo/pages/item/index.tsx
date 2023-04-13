@@ -17,12 +17,12 @@ import { useParams } from "react-router-dom";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Item: React.FC = () => {
-  const { pid } = useParams();
+  const { shid } = useParams();
   const { search, setSearch, getQueryParams, limit, setLimit, page, setPage } =
     usePaginate({
       defaultParams: {
         filters: {
-          product: pid || "",
+          shipment: shid || "",
         },
       },
     });
