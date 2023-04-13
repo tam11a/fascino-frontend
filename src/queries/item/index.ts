@@ -20,17 +20,12 @@ export const useGetItem = (params: any) => {
   );
 };
 
-const getItemById = (id: string) => {
+const getItemById = (id: any) => {
   return instance.get(`/item/${id}`);
 };
 
-export const useGetItemById = () => {
-  const queryClient = useQueryClient();
-  return useMutation(getItemById, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["get-item-by-id"]);
-    },
-  });
+export const useGetItemById = (id: any) => {
+  return useQuery(["get-item-by-id", id], () => getItemById(id));
 };
 
 const getScanById = (id: string) => {
