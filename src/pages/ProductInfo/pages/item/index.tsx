@@ -14,9 +14,15 @@ import { useParams } from "react-router-dom";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Item: React.FC = () => {
-  const { search, setSearch, getQueryParams, limit, setLimit, page, setPage } =
-    usePaginate();
   const { pid } = useParams();
+  const { search, setSearch, getQueryParams, limit, setLimit, page, setPage } =
+    usePaginate({
+      defaultParams: {
+        filters: {
+          product: pid || "",
+        },
+      },
+    });
 
   const { data, isLoading } = useGetItem(getQueryParams());
   const { state: open, toggleState: onClose } = useToggle(false);
