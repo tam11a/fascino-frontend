@@ -4,7 +4,6 @@ import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 // import CreateBranch from "./components/CreateBranch";
 // import BranchColumn from "./components/BranchColumn";
 import { useGetPettyCash } from "@/queries/pettyCash";
-import BackButton from "@components/BackButton";
 import { BsSearch } from "react-icons/bs";
 import { FloatButton, Input } from "antd";
 import Iconify from "@components/iconify";
@@ -38,7 +37,6 @@ const PettyCash: React.FC = () => {
         <Grid container rowGap={1} direction="column" marginTop={4}>
           <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex flex-row items-center whitespace-pre ">
-              <BackButton />
               <Typography variant="subtitle1" fontWeight={700}>
                 {/* {t("employee:EmployeeList")} */}
                 Petty Cash
