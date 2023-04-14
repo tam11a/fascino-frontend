@@ -1,7 +1,6 @@
 import React from "react";
 import { Container, Grid, Typography } from "@mui/material";
 import { useGetOrderById } from "@/queries/order";
-import BackButton from "@components/BackButton";
 // import { BsSearch } from "react-icons/bs";
 import { FloatButton } from "antd";
 import Iconify from "@components/iconify";
@@ -29,7 +28,6 @@ const Transection: React.FC = () => {
         <Grid container rowGap={1} direction="column" marginTop={4}>
           <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex flex-row items-center ">
-              <BackButton />
               <Typography
                 variant="subtitle1"
                 fontWeight={700}

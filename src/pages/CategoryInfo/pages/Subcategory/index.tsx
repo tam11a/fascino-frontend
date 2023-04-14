@@ -1,7 +1,6 @@
 import React from "react";
 import { Container, Grid, Typography } from "@mui/material";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
-import BackButton from "@components/BackButton";
 import { FloatButton, Input } from "antd";
 import { BsSearch } from "react-icons/bs";
 import Iconify from "@components/iconify";
@@ -35,7 +34,6 @@ const Subcategory: React.FC = () => {
       <Grid container rowGap={1} direction="column" marginTop={4}>
         <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex flex-row items-center ">
-            <BackButton />
             <Typography variant="subtitle1" fontWeight={700}>
               {/* {t("employee:EmployeeList")} */}
               Subcategory

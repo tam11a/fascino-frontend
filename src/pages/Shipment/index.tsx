@@ -1,5 +1,4 @@
 import { useGetShipment } from "@/queries/shipment";
-import BackButton from "@components/BackButton";
 import DataTable from "@components/Datatable";
 import Iconify from "@components/iconify";
 import { Container, Grid, Typography } from "@mui/material";
@@ -30,7 +29,6 @@ const Shipments: React.FC = () => {
         <Grid container rowGap={2} direction="column" marginTop={4}>
           <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex flex-row items-center ">
-              <BackButton />
               <Typography variant="subtitle1" fontWeight={700}>
                 {/* {t("employee:EmployeeList")} */}
                 Shipment
