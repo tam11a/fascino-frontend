@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { useGetOrderById } from "@/queries/order";
 import moment from "moment";
 import { Grid, Typography } from "@mui/material";
-import BackButton from "@components/BackButton";
 
 const Info: React.FC = () => {
   const { oid } = useParams();
@@ -17,7 +16,6 @@ const Info: React.FC = () => {
         {" "}
         <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 my-3">
           <div className="flex flex-row items-center ">
-            <BackButton />
             <Typography
               variant="subtitle1"
               fontWeight={700}
