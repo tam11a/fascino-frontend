@@ -95,6 +95,25 @@ const CustomerColumn = (): GridColumns<IDataTable> => {
           "-"
         ),
     },
+    {
+      headerName: "Badge",
+      headerAlign: "center",
+      field: "badge",
+      width: 100,
+      minWidth: 100,
+      align: "center",
+      renderCell: (data: any) =>
+        data.row?.badge ? (
+          <Chip
+            label={data.row?.badge}
+            // sx={{
+            //   textTransform: "uppercase",
+            // }}
+          />
+        ) : (
+          "-"
+        ),
+    },
     // {
     //   headerName: "Date of Birth",
     //   headerAlign: "center",

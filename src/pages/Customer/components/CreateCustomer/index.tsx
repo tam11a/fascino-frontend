@@ -18,7 +18,6 @@ import useUser from "@/hooks/useUser";
 import { message } from "@components/antd/message";
 import useAreYouSure from "@/hooks/useAreYouSure";
 import { useCreateCustomer } from "@/queries/customer";
-import DatePicker from "@components/antd/DatePicker";
 
 const CreateCustomer: React.FC<{ open: boolean; onClose: () => void }> = ({
   open,
@@ -197,20 +196,28 @@ const CreateCustomer: React.FC<{ open: boolean; onClose: () => void }> = ({
                 />
               </div>
               <div className="flex flex-col">
-                <Label>Date Of Birth</Label>
+                <Label>Badge</Label>
                 <Controller
                   control={control}
-                  name={"dob"}
+                  name={"badge"}
                   render={({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
                   }) => (
-                    <DatePicker
-                      size="large"
+                    <Select
+                      placeholder={"Badge"}
+                      size={"large"}
+                      className="gender relative"
                       onChange={onChange}
                       onBlur={onBlur}
                       value={value}
+                      options={[
+                        { value: "Premium", label: "Premium" },
+                        { value: "Gold", label: "Gold" },
+                        { value: "Silver", label: "Silver" },
+                      ]}
                       status={error ? "error" : ""}
+                      // loading={isLoading}
                     />
                   )}
                 />
