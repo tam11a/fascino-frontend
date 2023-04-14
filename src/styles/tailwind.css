@@ -24,11 +24,11 @@
 /* Ant Design Message Over Everything  */
 .ant-message,
 .ant-menu-submenu.ant-menu-submenu-popup {
-	z-index: 1520;
+	z-index: 1520 !important;
 }
 .ant-picker-dropdown,
 .ant-select-dropdown {
-	z-index: 1400;
+	z-index: 1400 !important;
 }
 
 /* NProgess Color */

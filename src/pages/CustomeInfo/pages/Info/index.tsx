@@ -172,7 +172,7 @@ const Info: React.FC = () => {
                     options={[
                       { value: "Premium", label: "Premium" },
                       { value: "Gold", label: "Gold" },
-                      { value: "Silver ", label: "Silver " },
+                      { value: "Silver", label: "Silver" },
                     ]}
                     status={error ? "error" : ""}
                     // loading={isLoading}

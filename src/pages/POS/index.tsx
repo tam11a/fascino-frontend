@@ -102,7 +102,9 @@ const POS: React.FC = () => {
   );
 
   React.useEffect(() => {
-    localStorage.setItem("sbpos", JSON.stringify(selectedBranch));
+    if (selectedBranch)
+      localStorage.setItem("sbpos", JSON.stringify(selectedBranch));
+    else localStorage.removeItem("sbpos");
   }, [selectedBranch]);
 
   //tailors section
@@ -187,7 +189,9 @@ const POS: React.FC = () => {
   }, [selectedCustomer]);
 
   const [posProducts, setPosProducts] = React.useState<{ [id: string]: any }>(
-    JSON.parse(localStorage.getItem("pos_products") || "{}")
+    localStorage.getItem("pos_products")
+      ? JSON.parse(localStorage.getItem("pos_products") || "{}")
+      : {}
   );
   const [subTotal, setSubTotal] = React.useState(0);
   const [stitchCost, setStitchCost] = React.useState(0);
