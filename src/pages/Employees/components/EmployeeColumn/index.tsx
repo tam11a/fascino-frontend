@@ -3,7 +3,6 @@ import { useToggleEmployee } from "@/queries/employees";
 import { IDataTable } from "@/types";
 import handleResponse from "@/utilities/handleResponse";
 import { message } from "@components/antd/message";
-import { Icon } from "@iconify/react";
 import { Chip, IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { Switch } from "antd";
@@ -140,17 +139,6 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <FiEdit2 />
-          </IconButton>
-          <IconButton
-            sx={{ fontSize: "large" }}
-            color="error"
-            // onClick={() =>
-            //   open(<>Are you sure you want to delete this employee?</>)
-            // }
-            // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
-            disabled
-          >
-            <Icon icon="ci:trash-full" />
           </IconButton>
           <Switch
             checked={data?.row?.isActive}

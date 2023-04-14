@@ -32,7 +32,7 @@ const updateProduct = ({
   id: string | undefined;
   data: IUpdateProduct;
 }) => {
-  return instance.patch(`/Product/${id}`, data);
+  return instance.patch(`/product/${id}`, data);
 };
 
 export const useUpdateProduct = () => {
@@ -52,6 +52,17 @@ const createProduct = (data: ICreateProduct) => {
 export const useCreateProducts = () => {
   const queryClient = useQueryClient();
   return useMutation(createProduct, {
+    onSuccess: () => queryClient.invalidateQueries(["get-all-products"]),
+  });
+};
+
+const toggleProducts = (id: any) => {
+  return instance.put(`product/${id}`);
+};
+
+export const useToggleProducts = () => {
+  const queryClient = useQueryClient();
+  return useMutation(toggleProducts, {
     onSuccess: () => queryClient.invalidateQueries(["get-all-products"]),
   });
 };

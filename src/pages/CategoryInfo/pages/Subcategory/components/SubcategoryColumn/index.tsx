@@ -1,7 +1,11 @@
 // import defaultPermissions from "@/utilities/defaultPermissions";
+import { useToggleSubcategory } from "@/queries/subcategory";
+import { IDataTable } from "@/types";
+import handleResponse from "@/utilities/handleResponse";
+import { message } from "@components/antd/message";
 import { Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
-import { IDataTable } from "@pages/Employees/Types";
+import { Switch } from "antd";
 // import { checkAccess } from "@tam11a/react-use-access";
 // import moment from "moment";
 // import { FiEdit2 } from "react-icons/fi";
@@ -9,6 +13,23 @@ import { IDataTable } from "@pages/Employees/Types";
 
 const SubcategoryColumn = (): GridColumns<IDataTable> => {
   // const navigate = useNavigate();
+
+  const { mutateAsync: toggleSubcategory } = useToggleSubcategory();
+
+  const onSubmit = async (id: any) => {
+    message.open({
+      type: "loading",
+      content: "Updating Subcategory Status..",
+      duration: 0,
+    });
+    const res = await handleResponse(() => toggleSubcategory(id), [200]);
+    message.destroy();
+    if (res.status) {
+      message.success(res.message);
+    } else {
+      message.error(res.message);
+    }
+  };
   return [
     {
       headerName: "ID",
@@ -61,21 +82,19 @@ const SubcategoryColumn = (): GridColumns<IDataTable> => {
     // {
     //   headerName: "Action",
     //   field: "action",
-    //   width: 70,
+    //   width: 80,
     //   minWidth: 60,
     //   // flex: 1,
+    //   flex: 1,
     //   headerAlign: "center",
     //   align: "center",
     //   renderCell: (data: any) => (
     //     <>
-    //       <IconButton
-    //         sx={{ fontSize: "large" }}
-    //         color="primary"
-    //         onClick={() => navigate(`/app/category/${data.row?._id}`)}
-    //         // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
-    //       >
-    //         <FiEdit2 />
-    //       </IconButton>
+    //       <Switch
+    //         checked={data?.row?.isActive}
+    //         onClick={() => onSubmit(data?.row?._id)}
+    //         size="small"
+    //       />
     //     </>
     //   ),
     // },
