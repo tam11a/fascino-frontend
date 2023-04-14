@@ -58,3 +58,14 @@ export const useCreateCustomer = () => {
     onSuccess: () => queryClient.invalidateQueries(["get-all-customer"]),
   });
 };
+
+const toggleCustomer = (id: any) => {
+  return instance.put(`customer/${id}`);
+};
+
+export const useToggleCustomer = () => {
+  const queryClient = useQueryClient();
+  return useMutation(toggleCustomer, {
+    onSuccess: () => queryClient.invalidateQueries(["get-all-customer"]),
+  });
+};
