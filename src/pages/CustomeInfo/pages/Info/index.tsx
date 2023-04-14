@@ -25,6 +25,7 @@ const Info: React.FC = () => {
       address: customerData?.data?.data?.address,
       email: customerData?.data?.data?.email,
       gender: customerData?.data?.data?.gender,
+      badge: customerData?.data?.data?.badge,
       dob: customerData?.data?.data?.dob,
       //   bank: customerData?.data?.data?.bank,
       //   bkash: customerData?.data?.data?.bkash,
@@ -103,28 +104,28 @@ const Info: React.FC = () => {
               />
             </div>
           </div>
+          <div className="flex flex-col">
+            <Label>Email</Label>
+            <Controller
+              control={control}
+              name={"email"}
+              render={({
+                field: { onChange, onBlur, value },
+                fieldState: { error },
+              }) => (
+                <Input
+                  // className="w-1/2"
+                  placeholder="Enter an email"
+                  size="large"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  status={error ? "error" : ""}
+                />
+              )}
+            />
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <div className="flex flex-col">
-              <Label>Email</Label>
-              <Controller
-                control={control}
-                name={"email"}
-                render={({
-                  field: { onChange, onBlur, value },
-                  fieldState: { error },
-                }) => (
-                  <Input
-                    // className="w-1/2"
-                    placeholder="Enter an email"
-                    size="large"
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    status={error ? "error" : ""}
-                  />
-                )}
-              />
-            </div>
             <div className="flex flex-col">
               <Label>Gender</Label>
               <Controller
@@ -152,7 +153,35 @@ const Info: React.FC = () => {
                 )}
               />
             </div>
+            <div className="flex flex-col">
+              <Label>Badge</Label>
+              <Controller
+                control={control}
+                name={"badge"}
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error },
+                }) => (
+                  <Select
+                    placeholder={"Badge"}
+                    size={"large"}
+                    className="gender relative"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    options={[
+                      { value: "Premium", label: "Premium" },
+                      { value: "Gold", label: "Gold" },
+                      { value: "Silver ", label: "Silver " },
+                    ]}
+                    status={error ? "error" : ""}
+                    // loading={isLoading}
+                  />
+                )}
+              />
+            </div>
           </div>
+
           <div>
             <Label>Address</Label>
             <Controller
