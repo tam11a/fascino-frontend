@@ -11,9 +11,9 @@ import NProgressSuspense from "@components/NProgressSuspense";
 const App = React.lazy(() => import("./App"));
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-	// {/* <React.StrictMode> */}
-	<Suspense fallback={<NProgressSuspense />}>
-		<App />
-	</Suspense>
-	// {/* </React.StrictMode> */}
+  // {/* <React.StrictMode> */}
+  <Suspense fallback={<NProgressSuspense />}>
+    <App />
+  </Suspense>
+  // {/* </React.StrictMode> */}
 );

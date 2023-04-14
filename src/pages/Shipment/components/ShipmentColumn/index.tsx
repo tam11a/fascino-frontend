@@ -2,9 +2,7 @@
 import { Icon } from "@iconify/react";
 import { Chip, IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
-import { IDataTable } from "@pages/Employees/Types";
-// import { checkAccess } from "@tam11a/react-use-access";
-// import moment from "moment";
+import { IDataTable } from "@pages/Employees/types";
 import { FiEdit2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
@@ -89,9 +87,9 @@ const ShipmentColumn = (): GridColumns<IDataTable> => {
       flex: 1,
     },
     {
-      headerName: "Shipment Cost",
+      headerName: "Weight Cost",
       headerAlign: "center",
-      field: "shipmentCost",
+      field: "weightCost",
       align: "center",
       width: 150,
       minWidth: 150,
