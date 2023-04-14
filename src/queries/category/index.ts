@@ -58,3 +58,14 @@ export const useCreateCategory = () => {
     onSuccess: () => queryClient.invalidateQueries(["get-all-category"]),
   });
 };
+
+const toggleCategory = (id: any) => {
+  return instance.put(`category/${id}`);
+};
+
+export const useToggleCategory = () => {
+  const queryClient = useQueryClient();
+  return useMutation(toggleCategory, {
+    onSuccess: () => queryClient.invalidateQueries(["get-all-category"]),
+  });
+};

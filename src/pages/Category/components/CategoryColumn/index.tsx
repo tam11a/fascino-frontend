@@ -1,7 +1,10 @@
 // import defaultPermissions from "@/utilities/defaultPermissions";
+import { useToggleCategory } from "@/queries/category";
+import { IDataTable } from "@/types";
+import handleResponse from "@/utilities/handleResponse";
 import { Chip, IconButton, Typography } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
-import { IDataTable } from "@pages/Employees/Types";
+import { Switch, message } from "antd";
 // import { checkAccess } from "@tam11a/react-use-access";
 // import moment from "moment";
 import { FiEdit2 } from "react-icons/fi";
@@ -9,6 +12,24 @@ import { useNavigate } from "react-router-dom";
 
 const CategoryColumn = (): GridColumns<IDataTable> => {
   const navigate = useNavigate();
+
+  const { mutateAsync: toggleCategory } = useToggleCategory();
+
+  const onSubmit = async (id: any) => {
+    message.open({
+      type: "loading",
+      content: "Updating Branch Status..",
+      duration: 0,
+    });
+    const res = await handleResponse(() => toggleCategory(id), [200]);
+    message.destroy();
+    if (res.status) {
+      message.success(res.message);
+    } else {
+      message.error(res.message);
+    }
+  };
+
   return [
     {
       headerName: "ID",
@@ -86,8 +107,8 @@ const CategoryColumn = (): GridColumns<IDataTable> => {
     {
       headerName: "Action",
       field: "action",
-      width: 70,
-      minWidth: 60,
+      width: 100,
+      minWidth: 80,
       // flex: 1,
       headerAlign: "center",
       align: "center",
@@ -101,6 +122,11 @@ const CategoryColumn = (): GridColumns<IDataTable> => {
           >
             <FiEdit2 />
           </IconButton>
+          <Switch
+            checked={data?.row?.isActive}
+            onClick={() => onSubmit(data?.row?._id)}
+            size="small"
+          />
         </>
       ),
     },

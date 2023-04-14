@@ -15,11 +15,6 @@ const BranchColumn = (): GridColumns<IDataTable> => {
 
   const { mutateAsync: toggleBranch } = useToggleBranch();
 
-  //   const updateBranch = async (id:any) => {
-  // 	const res = await handleResponse(()=> toggleBranch(id));
-  // 	if (res.status)
-  //   }
-
   const onSubmit = async (id: any) => {
     message.open({
       type: "loading",
