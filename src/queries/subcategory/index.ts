@@ -61,3 +61,14 @@ export const useCreateSubcategory = () => {
     onSuccess: () => queryClient.invalidateQueries(["get-all-subcategories"]),
   });
 };
+
+const toggleSubcategory = (id: any) => {
+  return instance.put(`subcategory/${id}`);
+};
+
+export const useToggleSubcategory = () => {
+  const queryClient = useQueryClient();
+  return useMutation(toggleSubcategory, {
+    onSuccess: () => queryClient.invalidateQueries(["get-all-subcategories"]),
+  });
+};

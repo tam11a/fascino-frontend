@@ -2,15 +2,14 @@ import instance from "@/services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ICreateEmployee, IUpdateEmployee } from "./types";
 
-
 const getEmployees = (params: any) => {
-	return instance.get(`/employee`, {
-		params,
-	});
+  return instance.get(`/employee`, {
+    params,
+  });
 };
 
 export const useGetEmployees = (params: any) => {
-	return useQuery(["get-all-employees", params], () => getEmployees(params));
+  return useQuery(["get-all-employees", params], () => getEmployees(params));
 };
 
 const getEmployeesById = (id: any) => {
@@ -20,10 +19,10 @@ const getEmployeesById = (id: any) => {
 };
 
 export const useGetEmployeesById = (id: any) => {
-	return useQuery(["get-employees-by-id", id], () => getEmployeesById(id), {
-		enabled: !!id,
-		// select: (data: string) => data?.data || [],
-	});
+  return useQuery(["get-employees-by-id", id], () => getEmployeesById(id), {
+    enabled: !!id,
+    // select: (data: string) => data?.data || [],
+  });
 };
 
 const updateEmployee = ({
@@ -53,6 +52,17 @@ const createEmployee = (data: ICreateEmployee) => {
 export const useCreateEmployee = () => {
   const queryClient = useQueryClient();
   return useMutation(createEmployee, {
+    onSuccess: () => queryClient.invalidateQueries(["get-all-employees"]),
+  });
+};
+
+const toggleEmployee = (id: any) => {
+  return instance.put(`employee/${id}`);
+};
+
+export const useToggleEmployee = () => {
+  const queryClient = useQueryClient();
+  return useMutation(toggleEmployee, {
     onSuccess: () => queryClient.invalidateQueries(["get-all-employees"]),
   });
 };
