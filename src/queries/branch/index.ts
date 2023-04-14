@@ -28,6 +28,17 @@ export const useGetBranchById = (id: any) => {
   });
 };
 
+const createBranch = (data: IBranch) => {
+  return instance.post("/branch", data);
+};
+
+export const useCreateBranch = () => {
+  const queryClient = useQueryClient();
+  return useMutation(createBranch, {
+    onSuccess: () => queryClient.invalidateQueries(["get-all-branch"]),
+  });
+};
+
 const updateBranch = ({
   id,
   data,
@@ -48,13 +59,13 @@ export const useUpdateBranch = () => {
   });
 };
 
-const createBranch = (data: IBranch) => {
-  return instance.post("/branch", data);
+const toggleBranch = (id: any) => {
+  return instance.put(`branch/${id}`);
 };
 
-export const useCreateBranch = () => {
+export const useToggleBranch = () => {
   const queryClient = useQueryClient();
-  return useMutation(createBranch, {
+  return useMutation(toggleBranch, {
     onSuccess: () => queryClient.invalidateQueries(["get-all-branch"]),
   });
 };
