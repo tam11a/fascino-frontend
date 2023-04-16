@@ -6,7 +6,6 @@ import { FloatButton, Input } from "antd";
 import Iconify from "@components/iconify";
 import ItemColumn from "./components/EmployeeColumn";
 import { useParams } from "react-router-dom";
-import { GridSelectionModel } from "@mui/x-data-grid";
 import { useGetBranchJuntion } from "@/queries/branch";
 import EmployeeDrawer from "./components/EmployeeDrawer";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
@@ -22,8 +21,7 @@ const Item: React.FC = () => {
       },
     });
   const { data, isLoading } = useGetBranchJuntion(getQueryParams());
-  const [rowSelectionModel, setRowSelectionModel] =
-    React.useState<GridSelectionModel>([]);
+
   const { state: open, toggleState: onClose } = useToggle(false);
 
   console.log(data);
@@ -66,11 +64,11 @@ const Item: React.FC = () => {
               onPageChange={setPage}
               pageSize={limit}
               onPageSizeChange={setLimit}
-              checkboxSelection
-              onSelectionModelChange={(newRowSelectionModel) => {
-                setRowSelectionModel(newRowSelectionModel);
-              }}
-              selectionModel={rowSelectionModel}
+              //   checkboxSelection
+              //   onSelectionModelChange={(newRowSelectionModel) => {
+              //     setRowSelectionModel(newRowSelectionModel);
+              //   }}
+              //   selectionModel={rowSelectionModel}
             />
           </Grid>
         </Grid>
@@ -85,11 +83,7 @@ const Item: React.FC = () => {
           />
         </FloatButton.Group>
 
-        <EmployeeDrawer
-          open={open}
-          onClose={onClose}
-          selectedRowData={rowSelectionModel}
-        />
+        <EmployeeDrawer open={open} onClose={onClose} />
       </Container>
     </>
   );

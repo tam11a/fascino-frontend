@@ -13,8 +13,7 @@ import { useParams } from "react-router-dom";
 const EmployeeDrawer: React.FC<{
   open: boolean;
   onClose: () => void;
-  selectedRowData: any;
-}> = ({ open, onClose, selectedRowData }) => {
+}> = ({ open, onClose }) => {
   const { setSearch: setBranchSearch, getQueryParams: getBranchQueryParams } =
     usePaginate({
       defaultParams: {
