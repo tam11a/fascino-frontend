@@ -4,7 +4,14 @@ import { useGetEmployees } from "@/queries/employees";
 import handleResponse from "@/utilities/handleResponse";
 import Iconify from "@components/iconify";
 import { DrawerFooter } from "@layouts/App/components";
-import { Drawer, Icon, Typography, Button } from "@mui/material";
+import {
+  Drawer,
+  Icon,
+  Button,
+  ListItemText,
+  IconButton,
+  Divider,
+} from "@mui/material";
 import { usePaginate } from "@tam11a/react-use-hooks";
 import { Select, message } from "antd";
 import React from "react";
@@ -75,15 +82,17 @@ const EmployeeDrawer: React.FC<{
       onClose={onClose}
       PaperProps={{ className: "w-[95vw] max-w-[400px]" }}
     >
-      <div className="flex flex-row justify-between items-center pr-3">
-        <Typography variant="subtitle1" className="mx-3 my-2 p-0">
-          Search Employees
-        </Typography>
-        <Icon className="text-2xl">
-          <Iconify icon={"clarity:employee-line"} />
-        </Icon>
+      <div className="flex flex-row items-center justify-between p-2 px-6">
+        <ListItemText
+          primary={"Employees"}
+          secondary={"Select employees to add in branch"}
+        />
+        <IconButton size={"small"} onClick={onClose}>
+          <Iconify icon={"ci:close-md"} />
+        </IconButton>
       </div>
-      <div className="flex flex-row items-center rounded gap-2 mx-3 p-3 bg-slate-100">
+      <Divider className="my-1" />
+      <div className="flex flex-row items-center rounded gap-2 m-3 p-3 bg-slate-100">
         <Icon className="text-2xl">
           <Iconify icon={"clarity:employee-line"} />
         </Icon>

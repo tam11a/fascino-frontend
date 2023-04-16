@@ -73,7 +73,7 @@ const Item: React.FC = () => {
           </Grid>
         </Grid>
 
-        <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
+        <FloatButton.Group shape="square" className="bottom-28">
           <FloatButton
             icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
           />
