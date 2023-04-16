@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Grid, Typography } from "@mui/material";
-import { usePaginate } from "@tam11a/react-use-hooks";
+import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 import { BsSearch } from "react-icons/bs";
 import { FloatButton, Input } from "antd";
 import Iconify from "@components/iconify";
@@ -8,6 +8,7 @@ import ItemColumn from "./components/EmployeeColumn";
 import { useParams } from "react-router-dom";
 import { GridSelectionModel } from "@mui/x-data-grid";
 import { useGetBranchJuntion } from "@/queries/branch";
+import EmployeeDrawer from "./components/EmployeeDrawer";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Item: React.FC = () => {
@@ -23,7 +24,7 @@ const Item: React.FC = () => {
   const { data, isLoading } = useGetBranchJuntion(getQueryParams());
   const [rowSelectionModel, setRowSelectionModel] =
     React.useState<GridSelectionModel>([]);
-  //   const { state: open, toggleState: onClose } = useToggle(false);
+  const { state: open, toggleState: onClose } = useToggle(false);
 
   console.log(data);
   return (
@@ -39,7 +40,7 @@ const Item: React.FC = () => {
             <div className="flex flex-row items-center ">
               <Typography variant="subtitle1" fontWeight={700}>
                 {/* {t("employee:EmployeeList")} */}
-                Items List
+                Employee List
               </Typography>
             </div>
             <Input
@@ -78,7 +79,17 @@ const Item: React.FC = () => {
           <FloatButton
             icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
           />
+          <FloatButton
+            icon={<Iconify icon={"material-symbols:add"} />}
+            onClick={() => onClose()}
+          />
         </FloatButton.Group>
+
+        <EmployeeDrawer
+          open={open}
+          onClose={onClose}
+          selectedRowData={rowSelectionModel}
+        />
       </Container>
     </>
   );

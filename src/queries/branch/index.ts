@@ -1,6 +1,6 @@
 import instance from "@/services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { IBranch } from "./types";
+import { IBranch, IUpdatejunction } from "./types";
 
 const getBranch = (params: any) => {
   return instance.get(`/branch`, {
@@ -87,4 +87,38 @@ export const useGetBranchJuntion = (params: any) => {
     ],
     () => getBranchJunction(params)
   );
+};
+
+const updateJunction = ({
+  id,
+  params,
+}: {
+  id: any;
+  params: IUpdatejunction;
+}) => {
+  return instance.post(`branch/${id}`, {}, { params });
+};
+
+export const useUpdateJunction = () => {
+  const queryClient = useQueryClient();
+  return useMutation(updateJunction, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["get-all-branch"]);
+      queryClient.invalidateQueries(["get-branch-by-id"]);
+    },
+  });
+};
+
+const deleteJunction = (id: any) => {
+  return instance.delete(`/branchjunction/${id}`);
+};
+
+export const usedeleteJunction = () => {
+  const queryClient = useQueryClient();
+  return useMutation(deleteJunction, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["get-all-branch"]);
+      queryClient.invalidateQueries(["get-branch-by-id"]);
+    },
+  });
 };

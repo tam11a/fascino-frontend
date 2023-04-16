@@ -3,3 +3,7 @@ export type IBranch = {
   phone: string;
   address: string;
 };
+
+export type IUpdatejunction = {
+  admins: string;
+};
