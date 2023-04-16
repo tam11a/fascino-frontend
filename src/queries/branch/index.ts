@@ -79,7 +79,7 @@ const getBranchJunction = (params: any) => {
 export const useGetBranchJuntion = (params: any) => {
   return useQuery(
     [
-      "get-branch-by-id",
+      "get-junction",
       params,
       {
         params,
@@ -104,7 +104,7 @@ export const useUpdateJunction = () => {
   return useMutation(updateJunction, {
     onSuccess: () => {
       queryClient.invalidateQueries(["get-all-branch"]);
-      queryClient.invalidateQueries(["get-branch-by-id"]);
+      queryClient.invalidateQueries(["get-junction"]);
     },
   });
 };
@@ -118,7 +118,7 @@ export const usedeleteJunction = () => {
   return useMutation(deleteJunction, {
     onSuccess: () => {
       queryClient.invalidateQueries(["get-all-branch"]);
-      queryClient.invalidateQueries(["get-branch-by-id"]);
+      queryClient.invalidateQueries(["get-junction"]);
     },
   });
 };

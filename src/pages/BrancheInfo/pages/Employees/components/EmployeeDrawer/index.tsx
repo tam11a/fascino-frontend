@@ -75,12 +75,17 @@ const EmployeeDrawer: React.FC<{
       onClose={onClose}
       PaperProps={{ className: "w-[95vw] max-w-[400px]" }}
     >
-      <Typography variant="subtitle1" className="mx-3 my-2 p-0">
-        Search Employees
-      </Typography>
+      <div className="flex flex-row justify-between items-center pr-3">
+        <Typography variant="subtitle1" className="mx-3 my-2 p-0">
+          Search Employees
+        </Typography>
+        <Icon className="text-2xl">
+          <Iconify icon={"clarity:employee-line"} />
+        </Icon>
+      </div>
       <div className="flex flex-row items-center rounded gap-2 mx-3 p-3 bg-slate-100">
         <Icon className="text-2xl">
-          <Iconify icon={"mdi:shop-outline"} />
+          <Iconify icon={"clarity:employee-line"} />
         </Icon>
         <Select
           bordered={false}
@@ -113,7 +118,7 @@ const EmployeeDrawer: React.FC<{
           <Button variant="contained" fullWidth onClick={() => onSubmit()}>
             Update
           </Button>
-          <Button variant="outlined" fullWidth>
+          <Button variant="outlined" fullWidth onClick={onClose}>
             Cancel
           </Button>
         </div>

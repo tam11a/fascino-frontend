@@ -9,15 +9,28 @@ import { useGetCustomers } from "@/queries/customer";
 import { FloatButton, Input } from "antd";
 import { BsSearch } from "react-icons/bs";
 import Iconify from "@components/iconify";
+import FilterDrawer from "./components/FilterDrawer";
 // import { t } from "i18next";
 
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Customer: React.FC = () => {
-  const { search, setSearch, getQueryParams, limit, setLimit, page, setPage } =
-    usePaginate();
+  const {
+    search,
+    setSearch,
+    getQueryParams,
+    limit,
+    setLimit,
+    page,
+    setPage,
+    watch,
+    setFilterField,
+  } = usePaginate();
   const { data, isLoading } = useGetCustomers(getQueryParams());
   const { state: open, toggleState: onClose } = useToggle(false);
+  const { state: openFilter, toggleState: onCloseFilter } = useToggle(false);
+
+  console.log(watch("gender"));
 
   return (
     <>
@@ -65,6 +78,7 @@ const Customer: React.FC = () => {
         <FloatButton.Group shape="square" className="bottom-28">
           <FloatButton
             icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+            onClick={onCloseFilter}
           />
           <FloatButton
             icon={<Iconify icon={"material-symbols:add"} />}
@@ -73,6 +87,12 @@ const Customer: React.FC = () => {
         </FloatButton.Group>
         {/* Dialog Box */}
         <CreateCustomer open={open} onClose={onClose} />
+        <FilterDrawer
+          setFilterField={setFilterField}
+          watch={watch}
+          open={openFilter}
+          onClose={onCloseFilter}
+        />
       </Container>
     </>
   );
