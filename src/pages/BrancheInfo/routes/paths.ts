@@ -1,6 +1,6 @@
 export const Branch_ROUTES = {
   INFO: "",
-  ADDITIONAL: "additional",
+  EMPLOYEE: "employee",
   PETTYCASH: "pettycash",
   ITEM: "item",
   // NOTFOUND: "*",

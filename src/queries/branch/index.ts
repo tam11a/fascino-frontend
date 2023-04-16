@@ -69,3 +69,22 @@ export const useToggleBranch = () => {
     onSuccess: () => queryClient.invalidateQueries(["get-all-branch"]),
   });
 };
+
+const getBranchJunction = (params: any) => {
+  return instance.get(`/branchjunction`, {
+    params,
+  });
+};
+
+export const useGetBranchJuntion = (params: any) => {
+  return useQuery(
+    [
+      "get-branch-by-id",
+      params,
+      {
+        params,
+      },
+    ],
+    () => getBranchJunction(params)
+  );
+};
