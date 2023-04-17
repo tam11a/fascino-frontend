@@ -1,7 +1,6 @@
 // import defaultPermissions from "@/utilities/defaultPermissions";
 import { Chip, IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
-import { IDataTable } from "@/pages/Employees/types";
 // import { checkAccess } from "@tam11a/react-use-access";
 // import moment from "moment";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +8,7 @@ import { Icon } from "@iconify/react";
 import { message } from "@components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
 import { usedeleteJunction } from "@/queries/branch";
+import { IDataTable } from "@/types";
 
 const EmployeeColumn = (): GridColumns<IDataTable> => {
   const navigate = useNavigate();

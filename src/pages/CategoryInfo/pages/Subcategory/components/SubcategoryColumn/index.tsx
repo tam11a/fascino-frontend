@@ -1,11 +1,10 @@
 // import defaultPermissions from "@/utilities/defaultPermissions";
-import { useToggleSubcategory } from "@/queries/subcategory";
+// import { useToggleSubcategory } from "@/queries/subcategory";
 import { IDataTable } from "@/types";
-import handleResponse from "@/utilities/handleResponse";
-import { message } from "@components/antd/message";
+// import handleResponse from "@/utilities/handleResponse";
+// import { message } from "@components/antd/message";
 import { Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
-import { Switch } from "antd";
 // import { checkAccess } from "@tam11a/react-use-access";
 // import moment from "moment";
 // import { FiEdit2 } from "react-icons/fi";
@@ -14,22 +13,22 @@ import { Switch } from "antd";
 const SubcategoryColumn = (): GridColumns<IDataTable> => {
   // const navigate = useNavigate();
 
-  const { mutateAsync: toggleSubcategory } = useToggleSubcategory();
+  // const { mutateAsync: toggleSubcategory } = useToggleSubcategory();
 
-  const onSubmit = async (id: any) => {
-    message.open({
-      type: "loading",
-      content: "Updating Subcategory Status..",
-      duration: 0,
-    });
-    const res = await handleResponse(() => toggleSubcategory(id), [200]);
-    message.destroy();
-    if (res.status) {
-      message.success(res.message);
-    } else {
-      message.error(res.message);
-    }
-  };
+  // const onSubmit = async (id: any) => {
+  //   message.open({
+  //     type: "loading",
+  //     content: "Updating Subcategory Status..",
+  //     duration: 0,
+  //   });
+  //   const res = await handleResponse(() => toggleSubcategory(id), [200]);
+  //   message.destroy();
+  //   if (res.status) {
+  //     message.success(res.message);
+  //   } else {
+  //     message.error(res.message);
+  //   }
+  // };
   return [
     {
       headerName: "ID",

@@ -1,8 +1,8 @@
 // import defaultPermissions from "@/utilities/defaultPermissions";
+import { IDataTable } from "@/types";
 import { Icon } from "@iconify/react";
 import { Chip, IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
-import { IDataTable } from "@/pages/Employees/types";
 import moment from "moment";
 // import { checkAccess } from "@tam11a/react-use-access";
 // import moment from "moment";
