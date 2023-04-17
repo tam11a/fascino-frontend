@@ -9,16 +9,27 @@ import { useGetEmployees } from "@/queries/employees";
 import { FloatButton, Input } from "antd";
 import { BsSearch } from "react-icons/bs";
 import Iconify from "@components/iconify";
+import FilterDrawer from "./components/FilterDrawer";
 // import { t } from "i18next";
 
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Employees: React.FC = () => {
-  const { limit, setLimit, page, setPage, getQueryParams, search, setSearch } =
-    usePaginate();
+  const {
+    limit,
+    setLimit,
+    page,
+    setPage,
+    getQueryParams,
+    search,
+    setSearch,
+    watch,
+    setFilterField,
+  } = usePaginate();
 
   const { data, isLoading } = useGetEmployees(getQueryParams());
   const { state: open, toggleState: onClose } = useToggle(false);
+  const { state: OpenFilter, toggleState: onCloseFilter } = useToggle(false);
 
   return (
     <>
@@ -64,9 +75,14 @@ const Employees: React.FC = () => {
           </Grid>
         </Grid>
 
-        <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
+        <FloatButton.Group shape="square" className="bottom-28">
           <FloatButton
-            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+            icon={
+              <Iconify
+                icon={"material-symbols:filter-alt-outline"}
+                onClick={onCloseFilter}
+              />
+            }
           />
           <FloatButton
             icon={<Iconify icon={"material-symbols:add"} />}
@@ -76,6 +92,12 @@ const Employees: React.FC = () => {
 
         {/* Dialog Box */}
         <CreateEmployee open={open} onClose={onClose} />
+        <FilterDrawer
+          open={OpenFilter}
+          onClose={onCloseFilter}
+          setFilterField={setFilterField}
+          watch={watch}
+        />
       </Container>
     </>
   );

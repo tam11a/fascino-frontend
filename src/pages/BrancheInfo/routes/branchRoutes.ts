@@ -7,8 +7,8 @@ export const branchRoutes = [
     Component: lazy(() => import("../pages/Info")),
   },
   {
-    path: Branch_ROUTES.ADDITIONAL,
-    Component: lazy(() => import("../pages/Additional")),
+    path: Branch_ROUTES.EMPLOYEE,
+    Component: lazy(() => import("../pages/Employees")),
   },
   {
     path: Branch_ROUTES.PETTYCASH,

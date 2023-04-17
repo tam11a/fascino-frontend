@@ -12,14 +12,19 @@ const items: MenuProps["items"] = [
     icon: <Icon icon="fluent:building-shop-20-regular" className="text-xl" />,
   },
   {
-    label: "Petty Cash",
-    key: Branch_ROUTES.PETTYCASH,
-    icon: <Icon icon="mdi:cash-check" className="text-xl" />,
+    label: "Employee",
+    key: Branch_ROUTES.EMPLOYEE,
+    icon: <Icon icon="clarity:employee-line" className="text-xl" />,
   },
   {
     label: "Items",
     key: Branch_ROUTES.ITEM,
     icon: <Icon icon="gridicons:product" className="text-xl" />,
+  },
+  {
+    label: "Petty Cash",
+    key: Branch_ROUTES.PETTYCASH,
+    icon: <Icon icon="mdi:cash-check" className="text-xl" />,
   },
 ];
 
