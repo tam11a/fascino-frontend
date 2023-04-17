@@ -26,7 +26,6 @@ const Item: React.FC = () => {
     React.useState<GridSelectionModel>([]);
   const { state: open, toggleState: onClose } = useToggle(false);
 
-  // console.log(rowSelectionModel);
   return (
     <>
       <Container
@@ -67,7 +66,9 @@ const Item: React.FC = () => {
               pageSize={limit}
               onPageSizeChange={setLimit}
               checkboxSelection
-              onSelectionModelChange={(newRowSelectionModel) => {
+              onSelectionModelChange={(
+                newRowSelectionModel: GridSelectionModel
+              ) => {
                 setRowSelectionModel(newRowSelectionModel);
               }}
               selectionModel={rowSelectionModel}
