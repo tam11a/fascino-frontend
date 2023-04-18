@@ -5,13 +5,48 @@ import { useParams } from "react-router-dom";
 // import { useGetShipmentById } from "@/queries/shipment";
 import moment from "moment";
 import { useGetItemById } from "@/queries/item";
+import Barcode from "react-barcode";
+import { IconButton } from "@mui/material";
+import Iconify from "@components/iconify";
+import { useReactToPrint } from "react-to-print";
+
 const Info: React.FC = ({}) => {
   const { iid } = useParams();
 
   // const { reset, handleSubmit, control } = useForm({});
 
   const { data: itemData } = useGetItemById(iid);
-  console.log(itemData?.data);
+
+  const printRef = React.useRef(null);
+
+  const reactToPrintContent = React.useCallback(() => {
+    return printRef.current;
+  }, [printRef.current]);
+
+  const handlePrint = useReactToPrint({
+    content: reactToPrintContent,
+    documentTitle: "item-" + iid || "",
+    removeAfterPrint: true,
+    pageStyle: `
+    @page {
+      // size: 2.17in 0.71in;
+      margin: 0in 0.4in 0.67in 0.85in;
+    }
+
+    @media all {
+      .pageBreak {
+        display: none
+      }
+    }
+
+    @media print {
+      .pageBreak {
+        page-break-before: always
+      }
+    }
+    `,
+  });
+
   return (
     <>
       <Container>
@@ -63,6 +98,28 @@ const Info: React.FC = ({}) => {
             {moment(itemData?.data?.data?.shipment?.supplier?.updatedAt).format(
               "MMMM Do YYYY"
             )}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={
+              <>
+                <IconButton onClick={() => handlePrint()}>
+                  <Iconify
+                    icon={"material-symbols:print-add-outline-rounded"}
+                  />
+                </IconButton>
+              </>
+            }
+          >
+            <div ref={printRef}>
+              <Barcode
+                format="CODE128"
+                value={iid || ""}
+                width={1}
+                height={50}
+                fontSize={9}
+                fontOptions="bold"
+              />
+            </div>
           </Descriptions.Item>
           {/* {!!itemData?.data.data.return.length ? (
             <Descriptions.Item label="Shipment Details">

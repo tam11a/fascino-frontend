@@ -10,7 +10,9 @@ import { useParams } from "react-router-dom";
 import { GridSelectionModel } from "@mui/x-data-grid";
 import ItemDrawer from "./components/ItemDrawer";
 import FilterDrawer from "./components/FilterDrawer";
+import { useReactToPrint } from "react-to-print";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
+import Barcode from "react-barcode";
 
 const Item: React.FC = () => {
   const { bid } = useParams();
@@ -37,7 +39,35 @@ const Item: React.FC = () => {
   const { state: open, toggleState: onClose } = useToggle(false);
   const { state: openFilter, toggleState: onCloseFilter } = useToggle(false);
 
-  console.log(data);
+  const printRef = React.useRef(null);
+
+  const reactToPrintContent = React.useCallback(() => {
+    return printRef.current;
+  }, [printRef.current]);
+
+  const handlePrint = useReactToPrint({
+    content: reactToPrintContent,
+    documentTitle: "Barcodes from Fascino",
+    removeAfterPrint: true,
+    pageStyle: `
+    @page {
+      // size: 2.17in 0.71in;
+      margin: 0in 0.4in 0.67in 0.85in;
+    }
+
+    @media all {
+      .pageBreak {
+        display: none
+      }
+    }
+
+    @media print {
+      .pageBreak {
+        page-break-before: always
+      }
+    }
+    `,
+  });
   return (
     <>
       <Container
@@ -107,6 +137,7 @@ const Item: React.FC = () => {
                     icon={"material-symbols:print-add-outline-rounded"}
                   />
                 }
+                onClick={() => handlePrint()}
               />
             </>
           ) : (
@@ -127,6 +158,25 @@ const Item: React.FC = () => {
           // getQueryParams={getQueryParams}
         />
       </Container>
+      <div style={{ display: "none" }}>
+        <div ref={printRef}>
+          {rowSelectionModel?.map?.((barid) => (
+            <div key={barid}>
+              <Barcode
+                format="CODE128"
+                value={barid?.toString() || ""}
+                width={1}
+                height={50}
+                fontSize={9}
+                fontOptions="bold"
+              />
+              <br />
+              <br />
+              <br />
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 };
