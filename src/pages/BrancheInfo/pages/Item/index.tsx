@@ -9,23 +9,35 @@ import { useGetItem } from "@/queries/item";
 import { useParams } from "react-router-dom";
 import { GridSelectionModel } from "@mui/x-data-grid";
 import ItemDrawer from "./components/ItemDrawer";
+import FilterDrawer from "./components/FilterDrawer";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Item: React.FC = () => {
   const { bid } = useParams();
-  const { search, setSearch, getQueryParams, limit, setLimit, page, setPage } =
-    usePaginate({
-      defaultParams: {
-        filters: {
-          branch: bid || "",
-        },
+  const {
+    search,
+    setSearch,
+    getQueryParams,
+    limit,
+    setLimit,
+    page,
+    setPage,
+    setFilterField,
+    watch,
+  } = usePaginate({
+    defaultParams: {
+      filters: {
+        branch: bid || "",
       },
-    });
+    },
+  });
   const { data, isLoading } = useGetItem(getQueryParams());
   const [rowSelectionModel, setRowSelectionModel] =
     React.useState<GridSelectionModel>([]);
   const { state: open, toggleState: onClose } = useToggle(false);
+  const { state: openFilter, toggleState: onCloseFilter } = useToggle(false);
 
+  console.log(data);
   return (
     <>
       <Container
@@ -38,7 +50,6 @@ const Item: React.FC = () => {
           <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex flex-row items-center ">
               <Typography variant="subtitle1" fontWeight={700}>
-                {/* {t("employee:EmployeeList")} */}
                 Items List
               </Typography>
             </div>
@@ -78,7 +89,12 @@ const Item: React.FC = () => {
 
         <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
           <FloatButton
-            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+            icon={
+              <Iconify
+                icon={"material-symbols:filter-alt-outline"}
+                onClick={onCloseFilter}
+              />
+            }
           />
           {!!rowSelectionModel.length ? (
             <>
@@ -102,6 +118,13 @@ const Item: React.FC = () => {
           open={open}
           onClose={onClose}
           selectedRowData={rowSelectionModel}
+        />
+        <FilterDrawer
+          setFilterField={setFilterField}
+          watch={watch}
+          open={openFilter}
+          onClose={onCloseFilter}
+          // getQueryParams={getQueryParams}
         />
       </Container>
     </>

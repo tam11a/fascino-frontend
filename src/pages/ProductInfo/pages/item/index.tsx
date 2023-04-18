@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Grid, Typography } from "@mui/material";
 import {
   usePaginate,
+  useToggle,
   //  useToggle
 } from "@tam11a/react-use-hooks";
 // import CreateBranch from "./components/CreateBranch";
@@ -13,21 +14,31 @@ import Iconify from "@components/iconify";
 import ItemColumn from "./components/ItemColumn";
 import { useGetItem } from "@/queries/item";
 import { useParams } from "react-router-dom";
+import FilterDrawer from "./components/FilterDrawer";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Item: React.FC = () => {
   const { pid } = useParams();
-  const { search, setSearch, getQueryParams, limit, setLimit, page, setPage } =
-    usePaginate({
-      defaultParams: {
-        filters: {
-          product: pid || "",
-        },
+  const {
+    search,
+    setSearch,
+    getQueryParams,
+    limit,
+    setLimit,
+    page,
+    setPage,
+    setFilterField,
+    watch,
+  } = usePaginate({
+    defaultParams: {
+      filters: {
+        product: pid || "",
       },
-    });
+    },
+  });
 
   const { data, isLoading } = useGetItem(getQueryParams());
-  // const { toggleState: onClose } = useToggle(false);
+  const { state: openFilter, toggleState: onCloseFilter } = useToggle(false);
 
   return (
     <>
@@ -74,10 +85,21 @@ const Item: React.FC = () => {
 
         <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
           <FloatButton
-            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+            icon={
+              <Iconify
+                icon={"material-symbols:filter-alt-outline"}
+                onClick={() => onCloseFilter()}
+              />
+            }
           />
         </FloatButton.Group>
       </Container>
+      <FilterDrawer
+        open={openFilter}
+        onClose={onCloseFilter}
+        watch={watch}
+        setFilterField={setFilterField}
+      />
     </>
   );
 };

@@ -74,7 +74,7 @@ const ItemDrawer: React.FC<{
     }
   };
 
-  console.log(selectedBranch);
+  // console.log(selectedBranch);
 
   return (
     <Drawer

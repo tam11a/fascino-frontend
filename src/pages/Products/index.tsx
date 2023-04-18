@@ -8,15 +8,26 @@ import React from "react";
 import { BsSearch } from "react-icons/bs";
 import CreateProduct from "./components/CreateProduct";
 import ProductColumn from "./components/ProductColumn";
+import FilterDrawer from "./components/FilterDrawer";
 
 const Products: React.FC = () => {
-  const { limit, setLimit, page, setPage, getQueryParams, setSearch, search } =
-    usePaginate();
+  const {
+    limit,
+    setLimit,
+    page,
+    setPage,
+    getQueryParams,
+    setSearch,
+    search,
+    setFilterField,
+    watch,
+  } = usePaginate();
 
   const { data, isLoading } = useGetProducts(getQueryParams());
   console.log(data);
 
   const { state: open, toggleState: onClose } = useToggle(false);
+  const { state: openFiler, toggleState: onCloseFilter } = useToggle(false);
 
   return (
     <>
@@ -65,7 +76,12 @@ const Products: React.FC = () => {
 
         <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
           <FloatButton
-            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+            icon={
+              <Iconify
+                icon={"material-symbols:filter-alt-outline"}
+                onClick={() => onCloseFilter()}
+              />
+            }
           />
           <FloatButton
             icon={<Iconify icon={"material-symbols:add"} />}
@@ -75,6 +91,12 @@ const Products: React.FC = () => {
 
         <CreateProduct open={open} onClose={onClose} />
       </Container>
+      <FilterDrawer
+        open={openFiler}
+        onClose={onCloseFilter}
+        setFilterField={setFilterField}
+        watch={watch}
+      />
     </>
   );
 };
