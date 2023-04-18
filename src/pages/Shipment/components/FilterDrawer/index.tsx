@@ -1,5 +1,3 @@
-import { useGetCategories } from "@/queries/category";
-import { useGetSubcategories } from "@/queries/subcategory";
 import { useGetSuppliers } from "@/queries/suppliers";
 import Iconify from "@components/iconify";
 import {
