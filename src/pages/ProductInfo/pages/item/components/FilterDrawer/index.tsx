@@ -16,10 +16,10 @@ const FilterDrawer: React.FC<{
   watch: (key: any) => string | undefined;
   open: boolean;
   onClose: () => void;
-  // getQueryParams: any;
 }> = ({ setFilterField, watch, open, onClose }) => {
   const { getQueryParams } = usePaginate();
   const { data } = useGetProducts(getQueryParams());
+
   return (
     <Drawer
       open={open}

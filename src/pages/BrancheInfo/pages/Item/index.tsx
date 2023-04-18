@@ -124,7 +124,7 @@ const Item: React.FC = () => {
           watch={watch}
           open={openFilter}
           onClose={onCloseFilter}
-          getQueryParams={getQueryParams}
+          // getQueryParams={getQueryParams}
         />
       </Container>
     </>

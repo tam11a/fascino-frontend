@@ -14,7 +14,6 @@ const Shipments: React.FC = () => {
     usePaginate();
 
   const { data, isLoading } = useGetShipment(getQueryParams());
-  console.log(data);
 
   const { state: open, toggleState: onClose } = useToggle(false);
 
