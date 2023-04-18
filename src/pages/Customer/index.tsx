@@ -30,8 +30,6 @@ const Customer: React.FC = () => {
   const { state: open, toggleState: onClose } = useToggle(false);
   const { state: openFilter, toggleState: onCloseFilter } = useToggle(false);
 
-  console.log(watch("gender"));
-
   return (
     <>
       <Container
