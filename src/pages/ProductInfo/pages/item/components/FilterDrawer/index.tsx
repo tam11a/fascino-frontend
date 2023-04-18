@@ -1,4 +1,5 @@
-import { useGetProducts } from "@/queries/products";
+import { useGetBranch } from "@/queries/branch";
+import { useGetSuppliers } from "@/queries/suppliers";
 import Iconify from "@components/iconify";
 import {
   Divider,
@@ -18,8 +19,9 @@ const FilterDrawer: React.FC<{
   onClose: () => void;
 }> = ({ setFilterField, watch, open, onClose }) => {
   const { getQueryParams } = usePaginate();
-  const { data } = useGetProducts(getQueryParams());
-
+  const { data: branchData } = useGetBranch(getQueryParams());
+  const { data: suppData } = useGetSuppliers(getQueryParams());
+  console.log(getQueryParams);
   return (
     <Drawer
       open={open}
@@ -41,17 +43,34 @@ const FilterDrawer: React.FC<{
       </div>
       <Divider className="my-1" />
       <div className="p-2 px-6">
-        <Typography variant="overline">Select Product</Typography>
+        <Typography variant="overline">Filter shipment</Typography>
         <Select
-          placeholder={"Filter Product"}
+          placeholder={"Select Supplier"}
           className="w-full"
-          value={watch("product")}
+          value={watch("supplier")}
           allowClear
-          onChange={(v) => setFilterField("product", v)}
-          options={data?.data?.data?.map((pd: any) => {
+          onChange={(v) => setFilterField("supplier", v)}
+          options={suppData?.data?.data?.map((sd: any) => {
             return {
-              value: pd?._id,
-              label: pd?.name,
+              value: sd?._id,
+              label: sd?.name,
+            };
+          })}
+        />
+      </div>
+      <div className="p-2 px-6">
+        <Typography variant="overline">Filter Branch</Typography>
+        <Select
+          placeholder={"Select  Branch"}
+          className="w-full"
+          value={watch("branch")}
+          allowClear
+          onChange={(v) => setFilterField("branch", v)}
+          options={branchData?.data?.data?.map((bd: any) => {
+            console.log(bd);
+            return {
+              value: bd?._id,
+              label: bd?.name,
             };
           })}
         />
