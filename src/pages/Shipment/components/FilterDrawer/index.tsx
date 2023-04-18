@@ -1,5 +1,6 @@
 import { useGetCategories } from "@/queries/category";
 import { useGetSubcategories } from "@/queries/subcategory";
+import { useGetSuppliers } from "@/queries/suppliers";
 import Iconify from "@components/iconify";
 import {
   Divider,
@@ -19,8 +20,7 @@ const FilterDrawer: React.FC<{
   onClose: () => void;
 }> = ({ setFilterField, watch, open, onClose }) => {
   const { getQueryParams } = usePaginate();
-  const { data: subCatData } = useGetSubcategories(getQueryParams());
-  const { data: CatData } = useGetCategories(getQueryParams());
+  const { data: supData } = useGetSuppliers(getQueryParams());
   // console.log(data);
   return (
     <Drawer
@@ -43,33 +43,17 @@ const FilterDrawer: React.FC<{
       </div>
       <Divider className="my-1" />
       <div className="p-2 px-6">
-        <Typography variant="overline">Filter category</Typography>
+        <Typography variant="overline">Filter Shipment</Typography>
         <Select
-          placeholder={"Select category"}
+          placeholder={"Select Supplier"}
           className="w-full"
-          value={watch("category")}
+          value={watch("supplier")}
           allowClear
-          onChange={(v) => setFilterField("category", v)}
-          options={CatData?.data?.data?.map((cd: any) => {
+          onChange={(v) => setFilterField("supplier", v)}
+          options={supData?.data?.data?.map((cd: any) => {
             return {
               value: cd?._id,
               label: cd?.name,
-            };
-          })}
-        />
-      </div>
-      <div className="p-2 px-6">
-        <Typography variant="overline">Filter Subcategory</Typography>
-        <Select
-          placeholder={"Select Subcategory"}
-          className="w-full"
-          value={watch("subcategory")}
-          allowClear
-          onChange={(v) => setFilterField("subcategory", v)}
-          options={subCatData?.data?.data?.map((sd: any) => {
-            return {
-              value: sd?._id,
-              label: sd?.name,
             };
           })}
         />

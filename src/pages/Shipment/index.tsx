@@ -8,14 +8,25 @@ import React from "react";
 import { BsSearch } from "react-icons/bs";
 import CreateShipment from "./components/CreateShipment";
 import ShipmentColumn from "./components/ShipmentColumn";
+import FilterDrawer from "./components/FilterDrawer";
 
 const Shipments: React.FC = () => {
-  const { limit, setLimit, page, setPage, getQueryParams, setSearch, search } =
-    usePaginate();
+  const {
+    limit,
+    setLimit,
+    page,
+    setPage,
+    getQueryParams,
+    setSearch,
+    search,
+    setFilterField,
+    watch,
+  } = usePaginate();
 
   const { data, isLoading } = useGetShipment(getQueryParams());
 
   const { state: open, toggleState: onClose } = useToggle(false);
+  const { state: openFilter, toggleState: onCloseFilter } = useToggle(false);
 
   return (
     <>
@@ -67,12 +78,23 @@ const Shipments: React.FC = () => {
             onClick={() => onClose()}
           />
           <FloatButton
-            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+            icon={
+              <Iconify
+                icon={"material-symbols:filter-alt-outline"}
+                onClick={() => onCloseFilter()}
+              />
+            }
           />
         </FloatButton.Group>
 
         <CreateShipment open={open} onClose={onClose} />
       </Container>
+      <FilterDrawer
+        open={openFilter}
+        onClose={onCloseFilter}
+        setFilterField={setFilterField}
+        watch={watch}
+      />
     </>
   );
 };
