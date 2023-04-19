@@ -215,7 +215,14 @@ const POS: React.FC = () => {
   const { mutateAsync: mutateProduct } = useGetScanById();
 
   const addProduct = async (id: string) => {
-    const res = await handleResponse(() => mutateProduct(id));
+    const res = await handleResponse(() =>
+      mutateProduct({
+        id,
+        params: {
+          branch_id: selectedBranch?.value,
+        },
+      })
+    );
     if (res.status)
       setPosProducts((p) => ({
         ...p,
@@ -235,7 +242,7 @@ const POS: React.FC = () => {
       const barcode = result.barcode;
       //   const type = result.type;
       //   const lastTarget = result.target;
-      if (barcode.length === 24) {
+      if (barcode.length >= 8) {
         // console.log(barcode, type, lastTarget, result);
         message.success(`Scanned ${barcode}`);
         addProduct(barcode);
@@ -733,6 +740,7 @@ const POS: React.FC = () => {
               </Typography>
               <InputNumber
                 addonAfter={<Iconify icon={"tabler:currency-taka"} />}
+                max={subTotal + stitchCost}
                 min={0}
                 className={"max-w-[7rem]"}
                 value={discount}

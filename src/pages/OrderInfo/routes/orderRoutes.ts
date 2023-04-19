@@ -10,8 +10,8 @@ export const orderRoutes = [
     path: Order_ROUTES.TRANSACTION,
     Component: lazy(() => import("../pages/Transection")),
   },
-  // {
-  //   path: Employee_ROUTES.NOTFOUND,
-  //   Component: lazy(() => import("@pages/NotFound")),
-  // },
+  {
+    path: Order_ROUTES.ITEM,
+    Component: lazy(() => import("../pages/Item")),
+  },
 ];

@@ -12,6 +12,12 @@ const items: MenuProps["items"] = [
     icon: <Icon icon="fluent:building-shop-20-regular" className="text-xl" />,
   },
   {
+    label: "Item",
+    key: Order_ROUTES.ITEM,
+    icon: <Icon icon="gridicons:product" className="text-xl" />,
+  },
+
+  {
     label: "Transaction",
     key: Order_ROUTES.TRANSACTION,
     icon: <Icon icon="mdi:information-slab-box-outline" className="text-xl" />,

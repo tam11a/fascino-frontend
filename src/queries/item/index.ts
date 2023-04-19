@@ -43,8 +43,16 @@ export const useUpdateItem = () => {
   });
 };
 
-const getScanById = (id: string) => {
-  return instance.get(`/scan/${id}`);
+const getScanById = ({
+  id,
+  params,
+}: {
+  id: string;
+  params?: { [key: string]: any };
+}) => {
+  return instance.get(`/scan/${id}`, {
+    params,
+  });
 };
 
 export const useGetScanById = () => {
@@ -53,5 +61,16 @@ export const useGetScanById = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["get-scan-by-id"]);
     },
+  });
+};
+
+const returnItem = (id: string) => {
+  return instance.post(`/return/${id}`);
+};
+
+export const useReturnItem = () => {
+  const queryClient = useQueryClient();
+  return useMutation(returnItem, {
+    onSuccess: () => queryClient.invalidateQueries(["get-all-item"]),
   });
 };

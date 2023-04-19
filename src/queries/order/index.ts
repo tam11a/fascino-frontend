@@ -27,6 +27,19 @@ export const useGetOrderById = (id: any) => {
   });
 };
 
+const getItemsByOrderId = (id: any) => {
+  return instance.get(`/order/orderlines/${id}`, {
+    // params: {},
+  });
+};
+
+export const useGetItemsByOrderId = (id: any) => {
+  return useQuery(["get-items-by-order-id", id], () => getItemsByOrderId(id), {
+    enabled: !!id,
+    // select: (data: string) => data?.data || [],
+  });
+};
+
 const postOrder = (data: any) => {
   return instance.post(`/order`, data);
 };
