@@ -15,6 +15,10 @@ import ItemColumn from "./components/ItemColumn";
 import { useGetItem } from "@/queries/item";
 import { useParams } from "react-router-dom";
 import FilterDrawer from "./components/FilterDrawer";
+import { GridSelectionModel } from "@mui/x-data-grid";
+import { useReactToPrint } from "react-to-print";
+import Barcode from "react-barcode";
+import ItemDrawer from "./components/ItemDrawer";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Item: React.FC = () => {
@@ -37,8 +41,43 @@ const Item: React.FC = () => {
     },
   });
 
+  const [rowSelectionModel, setRowSelectionModel] =
+    React.useState<GridSelectionModel>([]);
+
   const { data, isLoading } = useGetItem(getQueryParams());
+  const { state: open, toggleState: onClose } = useToggle(false);
+
   const { state: openFilter, toggleState: onCloseFilter } = useToggle(false);
+
+  const printRef = React.useRef(null);
+
+  const reactToPrintContent = React.useCallback(() => {
+    return printRef.current;
+  }, [printRef.current]);
+
+  const handlePrint = useReactToPrint({
+    content: reactToPrintContent,
+    documentTitle: "Barcodes from Fascino",
+    removeAfterPrint: true,
+    pageStyle: `
+    @page {
+      // size: 2.17in 0.71in;
+      margin: 0in 0.4in 0.67in 0.85in;
+    }
+
+    @media all {
+      .pageBreak {
+        display: none
+      }
+    }
+
+    @media print {
+      .pageBreak {
+        page-break-before: always
+      }
+    }
+    `,
+  });
 
   return (
     <>
@@ -79,6 +118,13 @@ const Item: React.FC = () => {
               onPageChange={setPage}
               pageSize={limit}
               onPageSizeChange={setLimit}
+              checkboxSelection
+              onSelectionModelChange={(
+                newRowSelectionModel: GridSelectionModel
+              ) => {
+                setRowSelectionModel(newRowSelectionModel);
+              }}
+              selectionModel={rowSelectionModel}
             />
           </Grid>
         </Grid>
@@ -92,14 +138,55 @@ const Item: React.FC = () => {
               />
             }
           />
+          {!!rowSelectionModel.length ? (
+            <>
+              <FloatButton
+                icon={<Iconify icon={"mi:edit"} onClick={() => onClose()} />}
+              />
+              <FloatButton
+                icon={
+                  <Iconify
+                    icon={"material-symbols:print-add-outline-rounded"}
+                  />
+                }
+                onClick={() => handlePrint()}
+              />
+            </>
+          ) : (
+            ""
+          )}
         </FloatButton.Group>
+        <ItemDrawer
+          open={open}
+          onClose={onClose}
+          selectedRowData={rowSelectionModel}
+        />
+        <FilterDrawer
+          open={openFilter}
+          onClose={onCloseFilter}
+          watch={watch}
+          setFilterField={setFilterField}
+        />
       </Container>
-      <FilterDrawer
-        open={openFilter}
-        onClose={onCloseFilter}
-        watch={watch}
-        setFilterField={setFilterField}
-      />
+      <div style={{ display: "none" }}>
+        <div ref={printRef}>
+          {rowSelectionModel?.map?.((barid) => (
+            <div key={barid}>
+              <Barcode
+                format="CODE128"
+                value={barid?.toString() || ""}
+                width={1}
+                height={50}
+                fontSize={9}
+                fontOptions="bold"
+              />
+              <br />
+              <br />
+              <br />
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 };

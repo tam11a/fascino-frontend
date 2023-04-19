@@ -69,6 +69,7 @@ const ItemDrawer: React.FC<{
     message.destroy();
     if (res.status) {
       message.success("Information updated successfully!");
+      onClose();
     } else {
       message.error(res.message);
     }
