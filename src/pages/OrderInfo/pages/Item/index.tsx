@@ -18,8 +18,6 @@ const Item: React.FC = () => {
   const [rowSelectionModel, setRowSelectionModel] =
     React.useState<GridSelectionModel>([]);
   const { state: open, toggleState: onClose } = useToggle(false);
-  console.log(data?.data?.data.docs);
-
   return (
     <>
       <Container

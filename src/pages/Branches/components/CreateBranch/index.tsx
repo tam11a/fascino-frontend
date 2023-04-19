@@ -67,9 +67,6 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
         You may have some unsaved changes which will be lost closing the dialog.
       </>
     );
-  {
-    ("");
-  }
 
   return (
     <>

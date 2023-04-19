@@ -1,4 +1,5 @@
 // import defaultPermissions from "@/utilities/defaultPermissions";
+import useAreYouSure from "@/hooks/useAreYouSure";
 import { useReturnItem } from "@/queries/item";
 import { IDataTable } from "@/types";
 import handleResponse from "@/utilities/handleResponse";
@@ -17,16 +18,22 @@ const ItemColumn = (): GridColumns<IDataTable> => {
 
   const { mutateAsync: returnItem } = useReturnItem();
 
+  const { contextHolder: closeContextHolder, open: openClose } = useAreYouSure({
+    title: "Returning Product Item?",
+    okText: "Ok, Return",
+    cancelText: "Cancel",
+  });
+
   const onSubmit = async (rid: string) => {
     message.open({
       type: "loading",
-      content: "Updating Category Information..",
+      content: "Returning Product Item..",
       duration: 0,
     });
     const res = await handleResponse(() => returnItem(rid), [200]);
     message.destroy();
     if (res.status) {
-      message.success("Information updated successfully!");
+      message.success("Item returned successfully!");
     } else {
       message.error(res.message);
     }
@@ -117,13 +124,22 @@ const ItemColumn = (): GridColumns<IDataTable> => {
           <IconButton
             sx={{ fontSize: "large" }}
             color="error"
-            onClick={() => onSubmit(data?.row?._id)}
+            onClick={() =>
+              openClose(
+                () => onSubmit(data?.row?._id),
+                <>
+                  Returning means that you received the product back in
+                  inventory
+                </>
+              )
+            }
             disabled={
               !data?.row?.orderLine || data?.row?.orderLine?.order !== oid
             }
           >
             <Icon icon="tabler:truck-return" />
           </IconButton>
+          {closeContextHolder}
         </>
       ),
     },
