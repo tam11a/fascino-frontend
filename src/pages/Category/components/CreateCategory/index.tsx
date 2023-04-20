@@ -26,11 +26,19 @@ const CreateCategory: React.FC<{ open: boolean; onClose: () => void }> = ({
     // reset,
     handleSubmit,
     control,
+    setValue,
+    getValues,
   } = useForm({
     // resolver: zodResolver(userInfoResolver),
   });
   const { mutateAsync: createCategory, isLoading: CategoryLoading } =
     useCreateCategory();
+
+  const reset = () => {
+    Object.keys(getValues())?.map((field: string) =>
+      setValue(field, undefined)
+    );
+  };
 
   const onSubmit = async (data: any) => {
     message.open({
@@ -47,6 +55,7 @@ const CreateCategory: React.FC<{ open: boolean; onClose: () => void }> = ({
     );
     message.destroy();
     if (res.status) {
+      reset();
       message.success("Category created successfully!");
       onClose();
     } else {

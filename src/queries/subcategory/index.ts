@@ -38,7 +38,7 @@ const updateSubcategory = ({
   id: string | undefined;
   data: IUpdateSubcategory;
 }) => {
-  return instance.patch(`/Category/${id}`, data);
+  return instance.patch(`/subcategory/${id}`, data);
 };
 
 export const useUpdateSubcategory = () => {

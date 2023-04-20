@@ -28,11 +28,19 @@ const CreateSubcategory: React.FC<{ open: boolean; onClose: () => void }> = ({
     // reset,
     handleSubmit,
     control,
+    getValues,
+    setValue,
   } = useForm({
     // resolver: zodResolver(userInfoResolver),
   });
   const { mutateAsync: createSubcategory, isLoading: SubcategoryLoading } =
     useCreateSubcategory();
+
+  const reset = () => {
+    Object.keys(getValues())?.map((field: string) =>
+      setValue(field, undefined)
+    );
+  };
 
   const onSubmit = async (data: any) => {
     message.open({
@@ -51,6 +59,7 @@ const CreateSubcategory: React.FC<{ open: boolean; onClose: () => void }> = ({
     message.destroy();
     if (res.status) {
       message.success("Subcategory created successfully!");
+      reset();
       onClose();
     } else {
       message.error(res.message);

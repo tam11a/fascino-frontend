@@ -53,7 +53,7 @@ const ItemDrawer: React.FC<{
   const onSubmit = async () => {
     message.open({
       type: "loading",
-      content: "Updating Category Information..",
+      content: "Updating Item Information..",
       duration: 0,
     });
     const res = await handleResponse(
@@ -69,13 +69,12 @@ const ItemDrawer: React.FC<{
     message.destroy();
     if (res.status) {
       message.success("Information updated successfully!");
+      setSelectedBranch(undefined);
       onClose();
     } else {
       message.error(res.message);
     }
   };
-
-  // console.log(selectedBranch);
 
   return (
     <Drawer

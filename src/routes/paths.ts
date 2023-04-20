@@ -14,6 +14,7 @@ export const PRIVATE_ROUTES = {
   ITEMINFO: "item/:iid/*",
   CATEGORY: "category",
   CATEGORYINFO: "category/:catid/*",
+  SUBCATEGORYINFO: "subcategory/:scid/*",
   PRODUCTS: "products",
   PRODUCTINFO: "product/:pid/*",
   BRANCHINFO: "branch/:bid/*",

@@ -1,17 +1,12 @@
 // import defaultPermissions from "@/utilities/defaultPermissions";
-// import { useToggleSubcategory } from "@/queries/subcategory";
 import { IDataTable } from "@/types";
-// import handleResponse from "@/utilities/handleResponse";
-// import { message } from "@components/antd/message";
-import { Chip } from "@mui/material";
+import { Chip, IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
-// import { checkAccess } from "@tam11a/react-use-access";
-// import moment from "moment";
-// import { FiEdit2 } from "react-icons/fi";
-// import { useNavigate } from "react-router-dom";
+import { FiEdit2 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const SubcategoryColumn = (): GridColumns<IDataTable> => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // const { mutateAsync: toggleSubcategory } = useToggleSubcategory();
 
@@ -78,25 +73,28 @@ const SubcategoryColumn = (): GridColumns<IDataTable> => {
           "-"
         ),
     },
-    // {
-    //   headerName: "Action",
-    //   field: "action",
-    //   width: 80,
-    //   minWidth: 60,
-    //   // flex: 1,
-    //   flex: 1,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   renderCell: (data: any) => (
-    //     <>
-    //       <Switch
-    //         checked={data?.row?.isActive}
-    //         onClick={() => onSubmit(data?.row?._id)}
-    //         size="small"
-    //       />
-    //     </>
-    //   ),
-    // },
+    {
+      headerName: "Action",
+      field: "action",
+      width: 80,
+      minWidth: 60,
+      // flex: 1,
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (data: any) => (
+        <>
+          <IconButton
+            sx={{ fontSize: "large" }}
+            color="primary"
+            onClick={() => navigate(`/app/subcategory/${data.row?._id}`)}
+            // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
+          >
+            <FiEdit2 />
+          </IconButton>
+        </>
+      ),
+    },
   ];
 };
 

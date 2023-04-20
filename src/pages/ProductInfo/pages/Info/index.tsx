@@ -37,7 +37,7 @@ const Info: React.FC = ({}) => {
   const onSubmit = async (data: any) => {
     message.open({
       type: "loading",
-      content: "Updating Employee Information..",
+      content: "Updating Product Information..",
       duration: 0,
     });
     const res = await handleResponse(

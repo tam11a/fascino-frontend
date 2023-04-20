@@ -7,34 +7,38 @@ import { Controller, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { message } from "@components/antd/message";
-import { useGetCategoriesById, useUpdateCategory } from "@/queries/category";
+import {
+  useGetSubcategoriesById,
+  useUpdateSubcategory,
+} from "@/queries/subcategory";
 
 const Info: React.FC = () => {
-  const { catid } = useParams();
+  const { scid } = useParams();
 
   const { reset, handleSubmit, control } = useForm({});
 
-  const { data: categoryData } = useGetCategoriesById(catid);
-  const { mutateAsync: updateCategory } = useUpdateCategory();
+  const { data: subcatData } = useGetSubcategoriesById(scid);
+  const { mutateAsync: updateSubcategory } = useUpdateSubcategory();
 
   React.useEffect(() => {
-    if (!categoryData) return;
+    if (!subcatData) return;
     reset({
-      name: categoryData?.data?.data?.name,
-      description: categoryData?.data?.data?.description,
+      name: subcatData?.data?.data?.name,
+      description: subcatData?.data?.data?.description,
+      category: subcatData?.data?.data?.category._id,
     });
-  }, [categoryData]);
+  }, [subcatData]);
 
   const onSubmit = async (data: any) => {
     message.open({
       type: "loading",
-      content: "Updating Category Information..",
+      content: "Updating Subcategory Information..",
       duration: 0,
     });
     const res = await handleResponse(
       () =>
-        updateCategory({
-          id: catid,
+        updateSubcategory({
+          id: scid,
           data,
         }),
       [200]
@@ -46,6 +50,7 @@ const Info: React.FC = () => {
       message.error(res.message);
     }
   };
+  console.log(subcatData);
   return (
     <>
       <Container maxWidth={"xs"}>
@@ -54,7 +59,7 @@ const Info: React.FC = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col">
-            <Label isRequired>category Name</Label>
+            <Label isRequired>Subcategory Name</Label>
             <Controller
               control={control}
               name={"name"}
@@ -65,7 +70,7 @@ const Info: React.FC = () => {
               }) => (
                 <Input
                   // className="w-1/2"
-                  placeholder="Category Name"
+                  placeholder="Subcategory Name"
                   size="large"
                   onChange={onChange}
                   onBlur={onBlur}
@@ -80,6 +85,7 @@ const Info: React.FC = () => {
             <Controller
               control={control}
               name={"description"}
+              rules={{ required: true }}
               render={({
                 field: { onChange, onBlur, value },
                 fieldState: { error },
