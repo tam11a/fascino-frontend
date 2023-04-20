@@ -24,8 +24,6 @@ const Products: React.FC = () => {
   } = usePaginate();
 
   const { data, isLoading } = useGetProducts(getQueryParams());
-  console.log(data);
-
   const { state: open, toggleState: onClose } = useToggle(false);
   const { state: openFiler, toggleState: onCloseFilter } = useToggle(false);
 
@@ -41,7 +39,6 @@ const Products: React.FC = () => {
           <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex flex-row items-center ">
               <Typography variant="subtitle1" fontWeight={700}>
-                {/* {t("employee:EmployeeList")} */}
                 Products
               </Typography>
             </div>

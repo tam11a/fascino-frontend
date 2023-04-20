@@ -26,7 +26,7 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
 }) => {
   const user = useUser();
 
-  const { handleSubmit, control } = useForm({});
+  const { handleSubmit, control, reset } = useForm({});
   const { mutateAsync: createProduct, isLoading: createLoading } =
     useCreateProducts();
   const { catNSubcat, searchCatNSubcat, isCatNSubcatLoading } = useCategory();
@@ -47,10 +47,10 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
         }),
       [201]
     );
-    console.log(data);
     message.destroy();
     if (res.status) {
       message.success("Product created successfully!");
+      reset();
       onClose();
     } else {
       message.error(res.message);

@@ -16,11 +16,6 @@ const items: MenuProps["items"] = [
     key: PRODUCT_ROUTES.ITEM,
     icon: <Icon icon="gridicons:product" className="text-xl" />,
   },
-  {
-    label: "Additional",
-    key: PRODUCT_ROUTES.ADDITIONAL,
-    icon: <Icon icon="mdi:information-slab-box-outline" className="text-xl" />,
-  },
 ];
 
 const Navigator: React.FC = () => {

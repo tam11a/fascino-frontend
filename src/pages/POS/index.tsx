@@ -354,6 +354,7 @@ const POS: React.FC = () => {
       setSelectedTailor(null);
       setSelectedCustomer(null);
       setPosProducts({});
+      setPaid(0);
       message.success(res.message);
     } else {
       message.error(res.message);
