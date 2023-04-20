@@ -11,11 +11,6 @@ const items: MenuProps["items"] = [
     key: SUPPLIER_ROUTES.INFO,
     icon: <Icon icon="fluent:building-shop-20-regular" className="text-xl" />,
   },
-  {
-    label: "Additional",
-    key: SUPPLIER_ROUTES.ADDITIONAL,
-    icon: <Icon icon="mdi:information-slab-box-outline" className="text-xl" />,
-  },
 ];
 
 const Navigator: React.FC = () => {

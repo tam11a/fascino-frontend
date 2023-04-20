@@ -25,9 +25,15 @@ const CreateSupplier: React.FC<{ open: boolean; onClose: () => void }> = ({
 }) => {
   const user = useUser();
 
-  const { handleSubmit, control } = useForm({});
+  const { handleSubmit, control, getValues, setValue } = useForm({});
   const { mutateAsync: createSupplier, isLoading: SupplierLoading } =
     useCreateSupplier();
+
+  const reset = () => {
+    Object.keys(getValues())?.map((field: string) =>
+      setValue(field, undefined)
+    );
+  };
 
   const onSubmit = async (data: any) => {
     message.open({
@@ -46,6 +52,7 @@ const CreateSupplier: React.FC<{ open: boolean; onClose: () => void }> = ({
     message.destroy();
     if (res.status) {
       message.success("Supplier created successfully!");
+      reset();
       onClose();
     } else {
       message.error(res.message);
