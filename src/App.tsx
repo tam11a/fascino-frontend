@@ -3,7 +3,6 @@ import React, { lazy } from "react";
 import theme from "@styles/theme";
 import ThemeProvider from "@mui/system/ThemeProvider";
 import { StyleProvider } from "@ant-design/cssinjs";
-import { CssBaseline } from "@mui/material";
 import { ConfigProvider } from "antd";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
@@ -38,7 +37,7 @@ const App: React.FC = () => {
               },
             }}
           >
-            <CssBaseline />
+            {/* <CssBaseline /> */}
             <BrowserRouter>
               <AuthProvider>
                 <BaseRoutes />

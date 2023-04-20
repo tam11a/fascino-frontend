@@ -1,6 +1,5 @@
 // import defaultPermissions from "@/utilities/defaultPermissions";
 import { IDataTable } from "@/types";
-import { Icon } from "@iconify/react";
 import { Chip, IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import moment from "moment";
@@ -53,8 +52,8 @@ const ItemColumn = (): GridColumns<IDataTable> => {
     {
       headerName: "Shipping Date",
       field: "shippingDate",
-      width: 170,
-      minWidth: 150,
+      width: 100,
+      minWidth: 80,
       headerAlign: "center",
       align: "center",
       flex: 1,
@@ -67,8 +66,7 @@ const ItemColumn = (): GridColumns<IDataTable> => {
       headerName: "Action",
       field: "action",
       width: 80,
-      minWidth: 60,
-      flex: 1,
+      minWidth: 70,
       headerAlign: "center",
       align: "center",
       renderCell: (data: any) => (
@@ -80,17 +78,6 @@ const ItemColumn = (): GridColumns<IDataTable> => {
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <FiEdit2 />
-          </IconButton>
-          <IconButton
-            sx={{ fontSize: "large" }}
-            color="error"
-            // onClick={() =>
-            //   open(<>Are you sure you want to delete this employee?</>)
-            // }
-            // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
-            disabled
-          >
-            <Icon icon="ci:trash-full" />
           </IconButton>
         </>
       ),

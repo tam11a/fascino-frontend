@@ -65,8 +65,26 @@ const POS: React.FC = () => {
 
   const handlePrint = useReactToPrint({
     content: reactToPrintContent,
-    documentTitle: "invoice-" + Date.now(),
+    documentTitle: "Invoice",
     removeAfterPrint: true,
+    pageStyle: `
+    @page {
+      // size: 2.17in 0.71in;
+      // margin: 0in 0.4in 0.67in 0.85in;
+    }
+
+    @media all {
+      .pageBreak {
+        display: none
+      }
+    }
+
+    @media print {
+      .pageBreak {
+        page-break-before: always
+      }
+    }
+    `,
   });
 
   //Branch Section
@@ -803,6 +821,7 @@ const POS: React.FC = () => {
                 }}
                 className={"w-fit"}
                 loading={orderLoading}
+                onClick={handlePrint}
               >
                 Invoice
               </Dropdown.Button>
@@ -928,20 +947,20 @@ const POS: React.FC = () => {
         </Spin>
       </Drawer>{" "}
       {/* </Container> */}
-      <Dialog open={openInvoice} onClose={onInvoiceClose}>
+      <Dialog fullScreen open={openInvoice} onClose={onInvoiceClose}>
         <Preview id={"jsx-template"}>
-          <div ref={printRef}>
-            <PrintableArea
-              {...{
-                posProducts,
-                subTotal,
-                stitchCost,
-                paid,
-                discount,
-                selectedCustomer,
-              }}
-            />
-          </div>
+          {/* <div ref={printRef}> */}
+          <PrintableArea
+            {...{
+              posProducts,
+              subTotal,
+              stitchCost,
+              paid,
+              discount,
+              selectedCustomer,
+            }}
+          />
+          {/* </div> */}
         </Preview>
         <DialogActions>
           <Button onClick={() => handlePrint()}>Print</Button>
@@ -952,6 +971,31 @@ const POS: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      <div style={{ display: "none" }}>
+        <div ref={printRef}>
+          <PrintableArea
+            {...{
+              posProducts,
+              subTotal,
+              stitchCost,
+              paid,
+              discount,
+              selectedCustomer,
+            }}
+          />
+          {/* <div id="svg-container"></div> */}
+          <svg>
+            <text
+              style={{ font: "bold 12px monospace" }}
+              text-anchor="middle"
+              x="72.5"
+              y="61"
+            >
+              Hello Bro! Howdy!!
+            </text>
+          </svg>
+        </div>
+      </div>
     </>
   );
 };
@@ -972,11 +1016,13 @@ const PrintableArea: React.FC<{
     <Box
       sx={{
         "& *": {
-          // fontFamily: "monospace",
+          fontSize: "12px",
+          fontFamily: "monospace !important",
           fontWeight: "700",
         },
       }}
       className={"font-black"}
+      id={"baalsaal"}
     >
       <div className="flex flex-row items-center justify-start gap-2">
         <Avatar
