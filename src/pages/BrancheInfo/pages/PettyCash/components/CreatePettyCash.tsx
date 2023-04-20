@@ -24,16 +24,18 @@ const CreatePettyCash: React.FC<{ open: boolean; onClose: () => void }> = ({
   open,
   onClose,
 }) => {
-  const {
-    // reset,
-    handleSubmit,
-    control,
-  } = useForm({
+  const { handleSubmit, control, getValues, setValue } = useForm({
     // resolver: zodResolver(userInfoResolver),
   });
   const { bid } = useParams();
   const { mutateAsync: createPettyCash, isLoading: PettyCashLoading } =
     useCreatePettyCash();
+
+  const reset = () => {
+    Object.keys(getValues())?.map((field: string) =>
+      setValue(field, undefined)
+    );
+  };
 
   const onSubmit = async (data: any) => {
     message.open({
@@ -55,6 +57,7 @@ const CreatePettyCash: React.FC<{ open: boolean; onClose: () => void }> = ({
     message.destroy();
     if (res.status) {
       message.success("petty cash created successfully!");
+      reset();
       onClose();
     } else {
       message.error(res.message);

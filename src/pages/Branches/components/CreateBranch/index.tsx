@@ -26,11 +26,19 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
     // reset,
     handleSubmit,
     control,
+    getValues,
+    setValue,
   } = useForm({
     // resolver: zodResolver(userInfoResolver),
   });
   const { mutateAsync: createBranch, isLoading: BranchLoading } =
     useCreateBranch();
+
+  const reset = () => {
+    Object.keys(getValues())?.map((field: string) =>
+      setValue(field, undefined)
+    );
+  };
 
   const onSubmit = async (data: any) => {
     message.open({
@@ -48,6 +56,7 @@ const CreateBranch: React.FC<{ open: boolean; onClose: () => void }> = ({
     message.destroy();
     if (res.status) {
       message.success("Branch created successfully!");
+      reset();
       onClose();
     } else {
       message.error(res.message);

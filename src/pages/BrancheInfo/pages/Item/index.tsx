@@ -117,7 +117,7 @@ const Item: React.FC = () => {
           </Grid>
         </Grid>
 
-        <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
+        <FloatButton.Group shape="square" className="bottom-20">
           <FloatButton
             icon={
               <Iconify

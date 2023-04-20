@@ -52,7 +52,7 @@ const EmployeeDrawer: React.FC<{
   const onSubmit = async () => {
     message.open({
       type: "loading",
-      content: "Updating Branch Information..",
+      content: "Adding Employees..",
       duration: 0,
     });
     const res = await handleResponse(
@@ -67,7 +67,7 @@ const EmployeeDrawer: React.FC<{
     );
     message.destroy();
     if (res.status) {
-      message.success("Information updated successfully!");
+      message.success("Employees added successfully!");
       onClose();
     } else {
       message.error(res.message);
