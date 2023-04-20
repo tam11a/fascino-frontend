@@ -25,9 +25,15 @@ const CreateCustomer: React.FC<{ open: boolean; onClose: () => void }> = ({
 }) => {
   const user = useUser();
 
-  const { handleSubmit, control } = useForm({});
+  const { handleSubmit, control, getValues, setValue } = useForm({});
   const { mutateAsync: createCustomer, isLoading: createLoading } =
     useCreateCustomer();
+
+  const reset = () => {
+    Object.keys(getValues())?.map((field: string) =>
+      setValue(field, undefined)
+    );
+  };
 
   const onSubmit = async (data: any) => {
     message.open({
@@ -46,6 +52,7 @@ const CreateCustomer: React.FC<{ open: boolean; onClose: () => void }> = ({
     message.destroy();
     if (res.status) {
       message.success("Customer account created successfully!");
+      reset();
       onClose();
     } else {
       message.error(res.message);
@@ -196,10 +203,11 @@ const CreateCustomer: React.FC<{ open: boolean; onClose: () => void }> = ({
                 />
               </div>
               <div className="flex flex-col">
-                <Label>Badge</Label>
+                <Label isRequired>Badge</Label>
                 <Controller
                   control={control}
                   name={"badge"}
+                  rules={{ required: true }}
                   render={({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
