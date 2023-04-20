@@ -53,7 +53,7 @@ const ItemDrawer: React.FC<{
   const onSubmit = async () => {
     message.open({
       type: "loading",
-      content: "Updating Category Information..",
+      content: "Updating Item Information..",
       duration: 0,
     });
     const res = await handleResponse(

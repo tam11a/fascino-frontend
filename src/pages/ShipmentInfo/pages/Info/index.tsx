@@ -15,28 +15,6 @@ const Info: React.FC = ({}) => {
     <>
       <Container>
         <Descriptions bordered column={{ xs: 1, sm: 1, md: 2 }}>
-          <Descriptions.Item label="Product">
-            <b>Name:</b> {shipmentData?.data?.data?.product?.name}
-            <br />
-            <b>Category:</b> {shipmentData?.data?.data?.product?.category}
-            <br />
-            <b>Subcategory:</b> {shipmentData?.data?.data?.product?.subcategory}
-            <br />
-            <b>Created By:</b>{" "}
-            {shipmentData?.data?.data?.product?.product?.fullName}
-            <br />
-            <b>Created At:</b>{" "}
-            {moment(shipmentData?.data?.data?.product?.updatedAt).format(
-              "MMMM Do YYYY"
-            )}
-            <br />
-            <b>Updated By:</b>
-            <br />
-            <b>Updated At:</b>{" "}
-            {moment(shipmentData?.data?.data?.product?.updatedAt).format(
-              "MMMM Do YYYY"
-            )}
-          </Descriptions.Item>
           <Descriptions.Item label="Supplier">
             <b>Name:</b> {shipmentData?.data?.data?.supplier?.name}
             <br />
@@ -54,18 +32,25 @@ const Info: React.FC = ({}) => {
               "MMMM Do YYYY"
             )}
           </Descriptions.Item>
-
           <Descriptions.Item label="Shipment Details">
             <b>Buying Price:</b> {shipmentData?.data?.data?.buyingPrice}
             <br />
-            <b>Selling Price:</b> {shipmentData?.data?.data?.sellPrice}
+            <b>Buying Discount:</b> {shipmentData?.data?.data?.buyingDiscount}
+            <br />
+            <b>Total Price:</b>{" "}
+            {shipmentData?.data?.data?.buyingPrice -
+              shipmentData?.data?.data?.buyingDiscount}
+            <br />
+            <b>Weight:</b> {shipmentData?.data?.data?.weight}
+            <br />
+            <b>Weight Cost:</b> {shipmentData?.data?.data?.weightCost}
+            <br />
+            <b>Shipment Cost:</b>{" "}
+            {shipmentData?.data?.data?.weight *
+              shipmentData?.data?.data?.weightCost}
             <br />
             <b>Supplier Commision:</b>{" "}
             {shipmentData?.data?.data?.supplierCommision}
-            <br />
-            <b>Shipment Cost:</b> {shipmentData?.data?.data?.shipmentCost}
-            <br />
-            <b>Weight:</b> {shipmentData?.data?.data?.weight}
           </Descriptions.Item>
         </Descriptions>
       </Container>

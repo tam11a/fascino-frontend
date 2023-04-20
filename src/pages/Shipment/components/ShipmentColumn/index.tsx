@@ -1,6 +1,5 @@
 // import defaultPermissions from "@/utilities/defaultPermissions";
 import { IDataTable } from "@/types";
-import { Icon } from "@iconify/react";
 import { Chip, IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { FiEdit2 } from "react-icons/fi";
@@ -85,6 +84,7 @@ const ShipmentColumn = (): GridColumns<IDataTable> => {
       width: 150,
       minWidth: 150,
       flex: 1,
+      hide: true,
     },
     {
       headerName: "Weight Cost",
@@ -120,26 +120,7 @@ const ShipmentColumn = (): GridColumns<IDataTable> => {
           "-"
         ),
     },
-    // {
-    //   headerName: "Updated By",
-    //   field: "updatedBy",
-    //   width: 180,
-    //   minWidth: 150,
-    //   flex: 1,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   renderCell: (data: any) =>
-    //     data.row?.updatedBy?.userName ? (
-    //       <Chip
-    //         label={data.row?.updatedBy?.userName}
-    //         // sx={{
-    //         //   textTransform: "uppercase",
-    //         // }}
-    //       />
-    //     ) : (
-    //       "-"
-    //     ),
-    // },
+
     {
       headerName: "Action",
       field: "action",
@@ -157,17 +138,6 @@ const ShipmentColumn = (): GridColumns<IDataTable> => {
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <FiEdit2 />
-          </IconButton>
-          <IconButton
-            sx={{ fontSize: "large" }}
-            color="error"
-            disabled
-            // onClick={() =>
-            //   open(<>Are you sure you want to delete this employee?</>)
-            // }
-            // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
-          >
-            <Icon icon="ci:trash-full" />
           </IconButton>
         </>
       ),

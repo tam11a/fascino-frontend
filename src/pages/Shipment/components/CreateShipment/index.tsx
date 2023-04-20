@@ -27,10 +27,16 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
 }) => {
   const user = useUser();
 
-  const { handleSubmit, control, watch } = useForm({});
+  const { handleSubmit, control, watch, getValues, setValue } = useForm({});
   const { mutateAsync: createShipment } = useCreateshipment();
   const { Supplier, isSupplierLoading, searchSupplier } = useSupplier();
   const { product, isproductLoading, searchProduct } = useProduct();
+
+  const reset = () => {
+    Object.keys(getValues())?.map((field: string) =>
+      setValue(field, undefined)
+    );
+  };
 
   const onSubmit = async (data: any) => {
     message.open({
@@ -49,6 +55,7 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
     message.destroy();
     if (res.status) {
       message.success("Shipment created successfully!");
+      reset();
       onClose();
     } else {
       message.error(res.message);
