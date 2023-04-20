@@ -12,7 +12,7 @@ const OrderList: React.FC = () => {
   const { search, setSearch, getQueryParams, limit, setLimit, page, setPage } =
     usePaginate();
   const { data, isLoading } = useGetOrders(getQueryParams());
-
+  console.log(data);
   return (
     <>
       <Container

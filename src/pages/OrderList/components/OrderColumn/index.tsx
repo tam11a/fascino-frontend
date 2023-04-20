@@ -25,9 +25,8 @@ const OrderColumn = (): GridColumns<IDataTable> => {
       headerAlign: "center",
       field: "name",
       align: "center",
-      width: 150,
-      minWidth: 150,
-      flex: 1,
+      width: 200,
+      minWidth: 180,
       renderCell: (data: any) =>
         data.row?.customer?.name ? (
           <Typography>{data.row?.customer?.name}</Typography>
@@ -40,9 +39,8 @@ const OrderColumn = (): GridColumns<IDataTable> => {
       headerAlign: "center",
       field: "address",
       align: "center",
-      width: 150,
+      width: 250,
       minWidth: 150,
-      flex: 1,
       renderCell: (data: any) =>
         data.row?.customer?.address ? (
           <Typography>{data.row?.customer?.address}</Typography>
@@ -70,14 +68,8 @@ const OrderColumn = (): GridColumns<IDataTable> => {
       field: "total",
       align: "center",
       flex: 1,
-      width: 160,
-      minWidth: 150,
-      renderCell: (data: any) =>
-        data.row?.transaction?.amount ? (
-          <Typography>{data.row?.transaction?.amount}</Typography>
-        ) : (
-          "-"
-        ),
+      width: 100,
+      minWidth: 80,
     },
     {
       headerName: "Type",
@@ -85,8 +77,8 @@ const OrderColumn = (): GridColumns<IDataTable> => {
       field: "type",
       align: "center",
       flex: 1,
-      width: 160,
-      minWidth: 150,
+      width: 100,
+      minWidth: 80,
     },
     {
       headerName: "Invoice Id",
