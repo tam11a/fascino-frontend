@@ -1,18 +1,28 @@
 import React from "react";
 import { Container, Grid, Typography } from "@mui/material";
-import { usePaginate } from "@tam11a/react-use-hooks";
+import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 import { useGetOrders } from "@/queries/order";
 import { BsSearch } from "react-icons/bs";
 import { FloatButton, Input } from "antd";
 import Iconify from "@components/iconify";
 import OrderColumn from "./components/OrderColumn";
+import FilterDrawer from "./components/FilterDrawer";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const OrderList: React.FC = () => {
-  const { search, setSearch, getQueryParams, limit, setLimit, page, setPage } =
-    usePaginate();
+  const {
+    search,
+    setSearch,
+    getQueryParams,
+    limit,
+    setLimit,
+    page,
+    setPage,
+    setFilterField,
+    watch,
+  } = usePaginate();
   const { data, isLoading } = useGetOrders(getQueryParams());
-  console.log(data);
+  const { state: openFiler, toggleState: onCloseFilter } = useToggle(false);
   return (
     <>
       <Container
@@ -58,10 +68,21 @@ const OrderList: React.FC = () => {
 
         <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
           <FloatButton
-            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+            icon={
+              <Iconify
+                icon={"material-symbols:filter-alt-outline"}
+                onClick={() => onCloseFilter()}
+              />
+            }
           />
         </FloatButton.Group>
       </Container>
+      <FilterDrawer
+        open={openFiler}
+        onClose={onCloseFilter}
+        setFilterField={setFilterField}
+        watch={watch}
+      />
     </>
   );
 };
