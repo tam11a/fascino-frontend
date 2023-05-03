@@ -36,7 +36,6 @@ const FilterDrawer: React.FC<{
           primary={"Filter"}
           secondary={"Based on different parameters"}
         />
-
         <IconButton size={"small"} onClick={onClose}>
           <Iconify icon={"ci:close-md"} />
         </IconButton>

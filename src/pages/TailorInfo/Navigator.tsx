@@ -11,6 +11,11 @@ const items: MenuProps["items"] = [
     key: TAILOR_ROUTES.INFO,
     icon: <Icon icon="fluent-mdl2:TAILOR-catalog" className="text-xl" />,
   },
+  {
+    label: "Items",
+    key: TAILOR_ROUTES.ITEM,
+    icon: <Icon icon="gridicons:product" className="text-xl" />,
+  },
 ];
 
 const Navigator: React.FC = () => {

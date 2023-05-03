@@ -89,6 +89,7 @@ const ItemDrawer: React.FC<{
           secondary={selectedRowData.length + " Items selected"}
         />
       </ListItem>
+
       <Divider
         sx={{
           mb: 1,

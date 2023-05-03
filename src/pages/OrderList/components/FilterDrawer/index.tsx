@@ -1,6 +1,4 @@
-import { useGetBranch } from "@/queries/branch";
-import { useGetSuppliers } from "@/queries/suppliers";
-// import { useGetSuppliers } from "@/queries/suppliers";
+import { useGetCustomers } from "@/queries/customer";
 import Iconify from "@components/iconify";
 import {
   Divider,
@@ -20,8 +18,7 @@ const FilterDrawer: React.FC<{
   onClose: () => void;
 }> = ({ setFilterField, watch, open, onClose }) => {
   const { getQueryParams } = usePaginate();
-  const { data: branchData } = useGetBranch(getQueryParams());
-  const { data: suppData } = useGetSuppliers(getQueryParams());
+  const { data: CustomerData } = useGetCustomers(getQueryParams());
   return (
     <Drawer
       open={open}
@@ -43,34 +40,17 @@ const FilterDrawer: React.FC<{
       </div>
       <Divider className="my-1" />
       <div className="p-2 px-6">
-        <Typography variant="overline">Filter shipment</Typography>
+        <Typography variant="overline">Filter Customer</Typography>
         <Select
-          placeholder={"Select Supplier"}
+          placeholder={"Select customer"}
           className="w-full"
-          value={watch("supplier")}
+          value={watch("customer")}
           allowClear
-          onChange={(v) => setFilterField("supplier", v)}
-          options={suppData?.data?.data?.map((sd: any) => {
+          onChange={(v) => setFilterField("customer", v)}
+          options={CustomerData?.data?.data?.map((cd: any) => {
             return {
-              value: sd?._id,
-              label: sd?.name,
-            };
-          })}
-        />
-      </div>
-      <div className="p-2 px-6">
-        <Typography variant="overline">Filter Branch</Typography>
-        <Select
-          placeholder={"Select  Branch"}
-          className="w-full"
-          value={watch("branch")}
-          allowClear
-          onChange={(v) => setFilterField("branch", v)}
-          options={branchData?.data?.data?.map((bd: any) => {
-            console.log(bd);
-            return {
-              value: bd?._id,
-              label: bd?.name,
+              value: cd?._id,
+              label: cd?.name,
             };
           })}
         />
