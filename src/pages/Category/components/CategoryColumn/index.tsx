@@ -2,7 +2,7 @@
 import { useToggleCategory } from "@/queries/category";
 import { IDataTable } from "@/types";
 import handleResponse from "@/utilities/handleResponse";
-import { Chip, IconButton, Typography } from "@mui/material";
+import { Chip, IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { Switch, message } from "antd";
 // import { checkAccess } from "@tam11a/react-use-access";
@@ -51,18 +51,24 @@ const CategoryColumn = (): GridColumns<IDataTable> => {
       flex: 1,
     },
     {
-      headerName: "Subcategory No",
+      headerName: "Subcategories",
       headerAlign: "center",
-      field: "totalSubcategory",
+      field: "totalSubcategories",
       width: 250,
       minWidth: 250,
       align: "center",
-      renderCell: (data: any) =>
-        data.row?.totalSubcategory ? (
-          <Typography>{data.row?.totalSubcategory}</Typography>
-        ) : (
-          "-"
-        ),
+      // renderCell: (data: any) =>
+      //   data.row?.totalSubcategory ? data.row?.totalSubcategories : "-",
+    },
+    {
+      headerName: "Products",
+      headerAlign: "center",
+      field: "totalProducts",
+      width: 250,
+      minWidth: 250,
+      align: "center",
+      // renderCell: (data: any) =>
+      //   data.row?.totalSubcategory ? data.row?.totalSubcategories : "-",
     },
     {
       headerName: "Created by",
