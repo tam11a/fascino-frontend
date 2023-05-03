@@ -1,4 +1,5 @@
 import { useGetBranch } from "@/queries/branch";
+import { useGetSuppliers } from "@/queries/suppliers";
 // import { useGetSuppliers } from "@/queries/suppliers";
 import Iconify from "@components/iconify";
 import {
@@ -20,7 +21,7 @@ const FilterDrawer: React.FC<{
 }> = ({ setFilterField, watch, open, onClose }) => {
   const { getQueryParams } = usePaginate();
   const { data: branchData } = useGetBranch(getQueryParams());
-  // const { data: suppData } = useGetSuppliers(getQueryParams());
+  const { data: suppData } = useGetSuppliers(getQueryParams());
   return (
     <Drawer
       open={open}
@@ -41,7 +42,7 @@ const FilterDrawer: React.FC<{
         </IconButton>
       </div>
       <Divider className="my-1" />
-      {/* <div className="p-2 px-6">
+      <div className="p-2 px-6">
         <Typography variant="overline">Filter shipment</Typography>
         <Select
           placeholder={"Select Supplier"}
@@ -56,7 +57,7 @@ const FilterDrawer: React.FC<{
             };
           })}
         />
-      </div> */}
+      </div>
       <div className="p-2 px-6">
         <Typography variant="overline">Filter Branch</Typography>
         <Select
