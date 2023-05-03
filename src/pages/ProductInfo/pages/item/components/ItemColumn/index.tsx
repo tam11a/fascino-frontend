@@ -17,7 +17,7 @@ const ItemColumn = (): GridColumns<IDataTable> => {
       headerAlign: "center",
       field: "_id",
       align: "center",
-      width: 240,
+      width: 140,
       // flex: 1,
       sortable: false,
       hide: false,
@@ -29,7 +29,7 @@ const ItemColumn = (): GridColumns<IDataTable> => {
       field: "branch",
       align: "center",
       width: 150,
-      minWidth: 150,
+      minWidth: 130,
       flex: 1,
       renderCell: (data: any) =>
         data.row?.branch ? <Chip label={data.row?.branch?.name} /> : "-",
