@@ -7,8 +7,8 @@ export const trailorRoutes = [
     Component: lazy(() => import("../pages/Info")),
   },
   {
-    path: TAILOR_ROUTES.ADDITIONAL,
-    Component: lazy(() => import("../pages/Additional")),
+    path: TAILOR_ROUTES.ITEM,
+    Component: lazy(() => import("../pages/item")),
   },
   // {
   //   path: Employee_ROUTES.NOTFOUND,
