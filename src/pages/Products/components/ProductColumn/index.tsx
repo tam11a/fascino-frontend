@@ -51,6 +51,15 @@ const ProductColumn = (): GridColumns<IDataTable> => {
       flex: 1,
     },
     {
+      headerName: "Total Items",
+      headerAlign: "center",
+      field: "totalItems",
+      align: "center",
+      width: 100,
+      minWidth: 100,
+      flex: 1,
+    },
+    {
       headerName: "Price",
       headerAlign: "center",
       field: "price",
