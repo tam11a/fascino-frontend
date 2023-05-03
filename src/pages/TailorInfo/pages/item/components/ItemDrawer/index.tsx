@@ -89,6 +89,7 @@ const ItemDrawer: React.FC<{
           secondary={selectedRowData.length + " Items selected"}
         />
       </ListItem>
+
       <Divider
         sx={{
           mb: 1,
@@ -129,7 +130,7 @@ const ItemDrawer: React.FC<{
           <Button variant="contained" fullWidth onClick={() => onSubmit()}>
             Update
           </Button>
-          <Button variant="outlined" fullWidth>
+          <Button variant="outlined" fullWidth onClick={onClose}>
             Cancel
           </Button>
         </div>

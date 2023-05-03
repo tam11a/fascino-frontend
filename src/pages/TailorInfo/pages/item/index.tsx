@@ -22,7 +22,7 @@ import ItemDrawer from "./components/ItemDrawer";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Item: React.FC = () => {
-  const { pid } = useParams();
+  const { tid } = useParams();
   const {
     search,
     setSearch,
@@ -36,7 +36,7 @@ const Item: React.FC = () => {
   } = usePaginate({
     defaultParams: {
       filters: {
-        product: pid || "",
+        tailor: tid || "",
       },
     },
   });
@@ -91,7 +91,6 @@ const Item: React.FC = () => {
           <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex flex-row items-center ">
               <Typography variant="subtitle1" fontWeight={700}>
-                {/* {t("employee:EmployeeList")} */}
                 Items
               </Typography>
             </div>

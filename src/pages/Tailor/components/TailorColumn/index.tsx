@@ -1,6 +1,5 @@
 // import defaultPermissions from "@/utilities/defaultPermissions";
 import { IDataTable } from "@/types";
-import { Icon } from "@iconify/react";
 import { Chip, IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 // import { checkAccess } from "@tam11a/react-use-access";
@@ -120,17 +119,6 @@ const TailorColumn = (): GridColumns<IDataTable> => {
             // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
           >
             <FiEdit2 />
-          </IconButton>
-          <IconButton
-            sx={{ fontSize: "large" }}
-            color="error"
-            disabled
-            // onClick={() =>
-            //   open(<>Are you sure you want to delete this employee?</>)
-            // }
-            // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
-          >
-            <Icon icon="ci:trash-full" />
           </IconButton>
         </>
       ),
