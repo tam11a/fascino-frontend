@@ -1,5 +1,6 @@
 // import defaultPermissions from "@/utilities/defaultPermissions";
 import { IDataTable } from "@/types";
+import { Icon } from "@iconify/react";
 import { Chip, IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import moment from "moment";
@@ -61,6 +62,33 @@ const ItemColumn = (): GridColumns<IDataTable> => {
         data.row?.shipment
           ? moment(data.row?.shipment?.createdAt).format("LL")
           : "-",
+    },
+    {
+      headerName: "Stitch Status",
+      field: "sticthStatus ",
+      width: 100,
+      minWidth: 80,
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+      renderCell: (data: any) =>
+        data.row?.stitch ? (
+          <>
+            {data?.row?.stitch?.receivedAt ? (
+              <>
+                <Icon
+                  icon="game-icons:sewing-machine"
+                  className="text-xl"
+                  color="#36b336"
+                />
+              </>
+            ) : (
+              <Icon icon="game-icons:sewing-machine" className="text-xl" />
+            )}
+          </>
+        ) : (
+          "-"
+        ),
     },
     {
       headerName: "Action",

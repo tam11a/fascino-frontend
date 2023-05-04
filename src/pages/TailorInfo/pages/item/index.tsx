@@ -51,6 +51,8 @@ const Item: React.FC = () => {
 
   const printRef = React.useRef(null);
 
+  console.log(data);
+
   const reactToPrintContent = React.useCallback(() => {
     return printRef.current;
   }, [printRef.current]);

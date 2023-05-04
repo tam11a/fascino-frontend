@@ -49,6 +49,8 @@ const Item: React.FC = () => {
 
   const { state: openFilter, toggleState: onCloseFilter } = useToggle(false);
 
+  console.log(data);
+
   const printRef = React.useRef(null);
 
   const reactToPrintContent = React.useCallback(() => {
@@ -131,12 +133,8 @@ const Item: React.FC = () => {
 
         <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
           <FloatButton
-            icon={
-              <Iconify
-                icon={"material-symbols:filter-alt-outline"}
-                onClick={() => onCloseFilter()}
-              />
-            }
+            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+            onClick={() => onCloseFilter()}
           />
           {!!rowSelectionModel.length ? (
             <>

@@ -26,7 +26,6 @@ const Products: React.FC = () => {
   const { data, isLoading } = useGetProducts(getQueryParams());
   const { state: open, toggleState: onClose } = useToggle(false);
   const { state: openFiler, toggleState: onCloseFilter } = useToggle(false);
-
   return (
     <>
       <Container
@@ -73,12 +72,8 @@ const Products: React.FC = () => {
 
         <FloatButton.Group shape="square" className="bottom-20 ">
           <FloatButton
-            icon={
-              <Iconify
-                icon={"material-symbols:filter-alt-outline"}
-                onClick={() => onCloseFilter()}
-              />
-            }
+            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+            onClick={() => onCloseFilter()}
           />
           <FloatButton
             icon={<Iconify icon={"material-symbols:add"} />}

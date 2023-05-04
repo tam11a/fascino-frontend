@@ -68,12 +68,8 @@ const OrderList: React.FC = () => {
 
         <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
           <FloatButton
-            icon={
-              <Iconify
-                icon={"material-symbols:filter-alt-outline"}
-                onClick={() => onCloseFilter()}
-              />
-            }
+            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+            onClick={() => onCloseFilter()}
           />
         </FloatButton.Group>
       </Container>

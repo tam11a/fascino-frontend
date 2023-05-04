@@ -74,12 +74,8 @@ const Shipments: React.FC = () => {
 
         <FloatButton.Group shape="square" className="bottom-20">
           <FloatButton
-            icon={
-              <Iconify
-                icon={"material-symbols:filter-alt-outline"}
-                onClick={() => onCloseFilter()}
-              />
-            }
+            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+            onClick={() => onCloseFilter()}
           />
           <FloatButton
             icon={<Iconify icon={"material-symbols:add"} />}

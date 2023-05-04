@@ -14,22 +14,6 @@ import { useNavigate } from "react-router-dom";
 const ProductColumn = (): GridColumns<IDataTable> => {
   const navigate = useNavigate();
 
-  //   const { mutateAsync: toggleProducts } = useToggleProducts();
-
-  //   const onSubmit = async (id: any) => {
-  //     message.open({
-  //       type: "loading",
-  //       content: "Updating Products Status..",
-  //       duration: 0,
-  //     });
-  //     const res = await handleResponse(() => toggleProducts(id), [200]);
-  //     message.destroy();
-  //     if (res.status) {
-  //       message.success(res.message);
-  //     } else {
-  //       message.error(res.message);
-  //     }
-  //   };
   return [
     {
       headerName: "ID",
@@ -151,12 +135,6 @@ const ProductColumn = (): GridColumns<IDataTable> => {
           >
             <FiEdit2 />
           </IconButton>
-
-          {/* <Switch
-            checked={data?.row?.isActive}
-            onClick={() => onSubmit(data?.row?._id)}
-            size="small"
-          /> */}
         </>
       ),
     },

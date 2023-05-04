@@ -60,9 +60,6 @@ const Transection: React.FC = () => {
 
         <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
           <FloatButton
-            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
-          />
-          <FloatButton
             icon={<Iconify icon={"material-symbols:add"} />}
             onClick={() => onClose()}
           />

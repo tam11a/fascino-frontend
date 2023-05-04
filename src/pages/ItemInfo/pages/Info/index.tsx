@@ -4,18 +4,47 @@ import { Descriptions } from "antd";
 import { useParams } from "react-router-dom";
 // import { useGetShipmentById } from "@/queries/shipment";
 import moment from "moment";
-import { useGetItemById } from "@/queries/item";
+import { useGetItemById, useReturnStitchedItem } from "@/queries/item";
 import Barcode from "react-barcode";
-import { IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import Iconify from "@components/iconify";
 import { useReactToPrint } from "react-to-print";
+import { useGetEmployeesById } from "@/queries/employees";
+import useAreYouSure from "@/hooks/useAreYouSure";
+import handleResponse from "@/utilities/handleResponse";
+import { message } from "@components/antd/message";
+import { Icon } from "@iconify/react";
 
 const Info: React.FC = ({}) => {
   const { iid } = useParams();
 
-  // const { reset, handleSubmit, control } = useForm({});
-
   const { data: itemData } = useGetItemById(iid);
+  const { data: employeeData } = useGetEmployeesById(
+    itemData?.data?.data?.stitch?.receivedBy
+  );
+
+  const { mutateAsync: returnStitchedItem } = useReturnStitchedItem();
+
+  const { contextHolder: closeContextHolder, open: openClose } = useAreYouSure({
+    title: "Receive Stitched Item?",
+    okText: "Yes",
+    cancelText: "Cancel",
+  });
+
+  const onReceive = async (iid: string) => {
+    message.open({
+      type: "loading",
+      content: "Receiving Stitched Item..",
+      duration: 0,
+    });
+    const res = await handleResponse(() => returnStitchedItem(iid), [200]);
+    message.destroy();
+    if (res.status) {
+      message.success("Item received successfully!");
+    } else {
+      message.error(res.message);
+    }
+  };
 
   const printRef = React.useRef(null);
 
@@ -49,8 +78,32 @@ const Info: React.FC = ({}) => {
 
   return (
     <>
+      {closeContextHolder}
       <Container>
         <Descriptions bordered column={{ xs: 1, sm: 1, md: 2 }}>
+          <Descriptions.Item
+            label={
+              <>
+                <IconButton onClick={() => handlePrint()}>
+                  <Iconify
+                    icon={"material-symbols:print-add-outline-rounded"}
+                  />
+                </IconButton>
+              </>
+            }
+            span={2}
+          >
+            <div ref={printRef}>
+              <Barcode
+                format="CODE128"
+                value={iid || ""}
+                width={1}
+                height={50}
+                fontSize={9}
+                fontOptions="bold"
+              />
+            </div>
+          </Descriptions.Item>
           <Descriptions.Item label="Product">
             <b>Name:</b> {itemData?.data?.data?.product?.name}
             <br />
@@ -91,54 +144,74 @@ const Info: React.FC = ({}) => {
             <br />
             <b>Created At: </b>
             {moment(itemData?.data?.data?.shipment?.supplier?.createdAt).format(
-              "MMMM Do YYYY"
+              "LL"
             )}
             <br />
             <b>Updated At: </b>
             {moment(itemData?.data?.data?.shipment?.supplier?.updatedAt).format(
-              "MMMM Do YYYY"
+              "LL"
             )}
           </Descriptions.Item>
-          <Descriptions.Item
-            label={
-              <>
-                <IconButton onClick={() => handlePrint()}>
-                  <Iconify
-                    icon={"material-symbols:print-add-outline-rounded"}
-                  />
-                </IconButton>
-              </>
-            }
-          >
-            <div ref={printRef}>
-              <Barcode
-                format="CODE128"
-                value={iid || ""}
-                width={1}
-                height={50}
-                fontSize={9}
-                fontOptions="bold"
-              />
-            </div>
-          </Descriptions.Item>
-          {/* {!!itemData?.data.data.return.length ? (
-            <Descriptions.Item label="Shipment Details">
-              <b>Buying Price:</b> {itemData?.data?.data?.buyingPrice}
+
+          {!!itemData?.data.data.stitch ? (
+            <Descriptions.Item label="Stitch Details">
+              <b>Tailor Name:</b> {itemData?.data?.data?.stitch?.tailor?.name}
               <br />
-              <b>Selling Price:</b> {itemData?.data?.data?.sellPrice}
+              <b>Tailor Address:</b>{" "}
+              {itemData?.data?.data?.stitch?.tailor?.address}
               <br />
-              <b>Supplier Commision:</b>{" "}
-              {itemData?.data?.data?.supplierCommision}
+              <b>Tailor Owner:</b>{" "}
+              {itemData?.data?.data?.stitch?.tailor?.ownerName}
               <br />
-              <b>Shipment Cost:</b> {itemData?.data?.data?.shipmentCost}
+              <b>Tailor Contact:</b>{" "}
+              {itemData?.data?.data?.stitch?.tailor?.phone}
               <br />
-              <b>Tax:</b> {itemData?.data?.data?.tax}
+              <b>Stitch Fee:</b> {itemData?.data?.data?.stitch?.fee}
               <br />
-              <b>Weight:</b> {itemData?.data?.data?.weight}
+              <b>Stitch Size:</b> {itemData?.data?.data?.stitch?.size}
+              <br />
+              <b>Created At:</b>{" "}
+              {moment(itemData?.data?.data?.stitch?.createdAt).format("LL")}
+              <br />
+              {itemData?.data?.data?.stitch?.receivedAt ? (
+                <>
+                  <b>Received At:</b>{" "}
+                  {moment(itemData?.data?.data?.stitch?.receivedAt).format(
+                    "LL"
+                  )}
+                  <br />
+                  <b>Received By:</b> {employeeData?.data?.data?.fullName}
+                  <br />
+                  <b>Receiver Role:</b> {employeeData?.data?.data?.role?.name}
+                </>
+              ) : (
+                <>
+                  <b>Received: </b>
+                  <Button
+                    sx={{ fontSize: "14px" }}
+                    size="small"
+                    color="primary"
+                    onClick={() =>
+                      openClose(
+                        () => onReceive(itemData?.data?.data?._id),
+                        <>
+                          This item will be marked as received and will be back
+                          in invemtory
+                        </>
+                      )
+                    }
+                    endIcon={
+                      <Icon icon="ph:key-return-duotone" className="text-xl" />
+                    }
+                  >
+                    Receive Now
+                  </Button>
+                </>
+              )}
             </Descriptions.Item>
           ) : (
             ""
-          )} */}
+          )}
         </Descriptions>
       </Container>
     </>

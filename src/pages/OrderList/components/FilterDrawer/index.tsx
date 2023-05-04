@@ -17,8 +17,9 @@ const FilterDrawer: React.FC<{
   open: boolean;
   onClose: () => void;
 }> = ({ setFilterField, watch, open, onClose }) => {
-  const { getQueryParams } = usePaginate();
+  const { search, setSearch, getQueryParams } = usePaginate();
   const { data: CustomerData } = useGetCustomers(getQueryParams());
+
   return (
     <Drawer
       open={open}
@@ -47,12 +48,19 @@ const FilterDrawer: React.FC<{
           value={watch("customer")}
           allowClear
           onChange={(v) => setFilterField("customer", v)}
-          options={CustomerData?.data?.data?.map((cd: any) => {
-            return {
-              value: cd?._id,
-              label: cd?.name,
-            };
-          })}
+          options={
+            CustomerData?.data?.data?.map((cd: any) => {
+              return {
+                value: cd?._id,
+                label: cd?.name,
+              };
+            }) || []
+          }
+          showSearch
+          filterOption={false}
+          searchValue={search}
+          onSearch={(v) => setSearch(v)}
+          onClear={() => setFilterField("customer", undefined)}
         />
       </div>
     </Drawer>
