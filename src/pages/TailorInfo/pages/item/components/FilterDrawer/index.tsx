@@ -19,7 +19,7 @@ const FilterDrawer: React.FC<{
   open: boolean;
   onClose: () => void;
 }> = ({ setFilterField, watch, open, onClose }) => {
-  const { getQueryParams } = usePaginate();
+  const { setSearch, getQueryParams } = usePaginate();
   const { data: branchData } = useGetBranch(getQueryParams());
   const { data: suppData } = useGetSuppliers(getQueryParams());
   return (
@@ -55,6 +55,9 @@ const FilterDrawer: React.FC<{
               label: sd?.name,
             };
           })}
+          showSearch
+          onSearch={(v) => setSearch(v)}
+          filterOption={false}
         />
       </div>
       <div className="p-2 px-6">
@@ -71,6 +74,9 @@ const FilterDrawer: React.FC<{
               label: bd?.name,
             };
           })}
+          showSearch
+          onSearch={(v) => setSearch(v)}
+          filterOption={false}
         />
       </div>
     </Drawer>

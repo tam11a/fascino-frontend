@@ -61,9 +61,9 @@ const FilterDrawer: React.FC<{
               label: cd?.name,
             };
           })}
+          loading={catLoading}
           showSearch
           onSearch={(v) => setSearch(v)}
-          loading={catLoading}
           filterOption={false}
         />
       </div>
