@@ -74,3 +74,17 @@ export const useReturnItem = () => {
     onSuccess: () => queryClient.invalidateQueries(["get-all-item"]),
   });
 };
+
+const returnStitchedItem = (id: string | undefined) => {
+  return instance.put(`/item/${id}`);
+};
+
+export const useReturnStitchedItem = () => {
+  const queryClient = useQueryClient();
+  return useMutation(returnStitchedItem, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["get-all-item"]);
+      queryClient.invalidateQueries(["get-item-by-id"]);
+    },
+  });
+};
