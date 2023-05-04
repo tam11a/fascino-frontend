@@ -18,14 +18,10 @@ import { Icon } from "@iconify/react";
 const Info: React.FC = ({}) => {
   const { iid } = useParams();
 
-  // const { reset, handleSubmit, control } = useForm({});
-
   const { data: itemData } = useGetItemById(iid);
   const { data: employeeData } = useGetEmployeesById(
     itemData?.data?.data?.stitch?.receivedBy
   );
-
-  console.log(itemData);
 
   const { mutateAsync: returnStitchedItem } = useReturnStitchedItem();
 

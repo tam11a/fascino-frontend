@@ -18,9 +18,13 @@ const FilterDrawer: React.FC<{
   open: boolean;
   onClose: () => void;
 }> = ({ setFilterField, watch, open, onClose }) => {
-  const { getQueryParams } = usePaginate();
-  const { data: subCatData } = useGetSubcategories(getQueryParams());
-  const { data: CatData } = useGetCategories(getQueryParams());
+  const { setSearch, getQueryParams } = usePaginate();
+  const { data: subCatData, isLoading: subcatLoading } = useGetSubcategories(
+    getQueryParams()
+  );
+  const { data: CatData, isLoading: catLoading } = useGetCategories(
+    getQueryParams()
+  );
   // console.log(data);
   return (
     <Drawer
@@ -49,13 +53,18 @@ const FilterDrawer: React.FC<{
           className="w-full"
           value={watch("category")}
           allowClear
-          onChange={(v) => setFilterField("category", v)}
+          onClear={() => setFilterField("category", undefined)}
+          onSelect={(v) => setFilterField("category", v)}
           options={CatData?.data?.data?.map((cd: any) => {
             return {
               value: cd?._id,
               label: cd?.name,
             };
           })}
+          showSearch
+          onSearch={(v) => setSearch(v)}
+          loading={catLoading}
+          filterOption={false}
         />
       </div>
       <div className="p-2 px-6">
@@ -65,13 +74,18 @@ const FilterDrawer: React.FC<{
           className="w-full"
           value={watch("subcategory")}
           allowClear
-          onChange={(v) => setFilterField("subcategory", v)}
+          onClear={() => setFilterField("subcategory", undefined)}
+          onSelect={(v) => setFilterField("subcategory", v)}
           options={subCatData?.data?.data?.map((sd: any) => {
             return {
               value: sd?._id,
               label: sd?.name,
             };
           })}
+          showSearch
+          onSearch={(v) => setSearch(v)}
+          loading={subcatLoading}
+          filterOption={false}
         />
       </div>
     </Drawer>

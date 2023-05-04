@@ -77,12 +77,8 @@ const Employees: React.FC = () => {
 
         <FloatButton.Group shape="square" className="bottom-28">
           <FloatButton
-            icon={
-              <Iconify
-                icon={"material-symbols:filter-alt-outline"}
-                onClick={onCloseFilter}
-              />
-            }
+            icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
+            onClick={onCloseFilter}
           />
           <FloatButton
             icon={<Iconify icon={"material-symbols:add"} />}
