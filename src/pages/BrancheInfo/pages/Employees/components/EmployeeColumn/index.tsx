@@ -9,11 +9,18 @@ import { message } from "@components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
 import { usedeleteJunction } from "@/queries/branch";
 import { IDataTable } from "@/types";
+import useAreYouSure from "@/hooks/useAreYouSure";
 
 const EmployeeColumn = (): GridColumns<IDataTable> => {
   const navigate = useNavigate();
 
   const { mutateAsync: deleteJunction } = usedeleteJunction();
+
+  const { contextHolder: delContextHolder, open: openClose } = useAreYouSure({
+    title: "Receive Stitched Item?",
+    okText: "Yes",
+    cancelText: "Cancel",
+  });
 
   const onDel = async (id: any) => {
     message.open({
@@ -103,7 +110,15 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
           <IconButton
             sx={{ fontSize: "large" }}
             color="error"
-            onClick={() => onDel(data?.row?._id)}
+            onClick={() =>
+              openClose(
+                () => onDel(data?.row?._id),
+                <>
+                  This item will be marked as received and will be back in
+                  invemtory
+                </>
+              )
+            }
             // onClick={() =>
             //   open(<>Are you sure you want to delete this employee?</>)
             // }
@@ -111,6 +126,7 @@ const EmployeeColumn = (): GridColumns<IDataTable> => {
           >
             <Icon icon="ci:trash-full" />
           </IconButton>
+          {delContextHolder}
         </>
       ),
     },

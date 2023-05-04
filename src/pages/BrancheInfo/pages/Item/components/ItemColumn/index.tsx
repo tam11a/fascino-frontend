@@ -139,17 +139,6 @@ const ItemColumn = (): GridColumns<IDataTable> => {
           >
             <FiEdit2 />
           </IconButton>
-          <IconButton
-            sx={{ fontSize: "large" }}
-            color="error"
-            // onClick={() =>
-            //   open(<>Are you sure you want to delete this employee?</>)
-            // }
-            // disabled={!checkAccess(defaultPermissions.EMPLOYEES.FULL)}
-            disabled
-          >
-            <Icon icon="ci:trash-full" />
-          </IconButton>
         </>
       ),
     },
