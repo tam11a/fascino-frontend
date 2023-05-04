@@ -10,12 +10,10 @@ import { GridColumns } from "@mui/x-data-grid";
 import moment from "moment";
 // import { checkAccess } from "@tam11a/react-use-access";
 import { FiEdit2 } from "react-icons/fi";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ItemColumn = (): GridColumns<IDataTable> => {
   const navigate = useNavigate();
-
-  // const { iid } = useParams();
 
   const { mutateAsync: returnStitchedItem } = useReturnStitchedItem();
 
