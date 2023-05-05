@@ -12,8 +12,6 @@ import {
 	List,
 	ListItem,
 	Drawer,
-	Dialog,
-	DialogActions,
 	Box,
 } from "@mui/material";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
@@ -39,14 +37,13 @@ import handleResponse from "@/utilities/handleResponse";
 import { useGetTailor } from "@/queries/tailor";
 import { SegmentedValue } from "antd/es/segmented";
 import { useReactToPrint } from "react-to-print";
-import { Preview, print } from "react-html2pdf";
+import { print } from "react-html2pdf";
 import short from "short-uuid";
 import { usePostOrder } from "@/queries/order";
 import moment from "moment";
 
 const POS: React.FC = () => {
 	const { state: open, toggleState: onClose } = useToggle(false);
-	const { state: openInvoice, toggleState: onInvoiceClose } = useToggle(false);
 
 	const [posInvoice, setPosInvoice] = React.useState(
 		localStorage?.getItem("posInvoiceId") || short.generate()
@@ -840,7 +837,6 @@ const POS: React.FC = () => {
 													key: "print",
 													label: "Print",
 													onClick: () => {
-														onInvoiceClose();
 														handlePrint();
 													},
 												},
@@ -848,9 +844,7 @@ const POS: React.FC = () => {
 													key: "download",
 													label: "Download",
 													onClick: () => {
-														onInvoiceClose();
 														print("invoice-" + Date.now(), "jsx-template");
-														// handlePrint();
 													},
 												},
 											],
@@ -1058,8 +1052,8 @@ const PrintableArea: React.FC<{
 
 				<div className="flex flex-col">
 					<b className="text-lg">Fascino</b>
-					<p className={"text-xs"}>{branch.data.address}</p>
-					<p className={"text-xs"}>Tel: {branch.data.phone}</p>
+					<p className={"text-xs"}>{branch?.data?.address}</p>
+					<p className={"text-xs"}>Tel: {branch?.data?.phone}</p>
 				</div>
 			</div>
 			<Divider
