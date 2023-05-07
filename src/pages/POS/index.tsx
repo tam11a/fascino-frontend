@@ -816,12 +816,14 @@ const POS: React.FC = () => {
                           onClick: () => {
                             print("invoice-" + Date.now(), "jsx-template");
                           },
+                          disabled: true,
                         },
                       ],
                     },
                     {
                       key: "a4",
                       label: "A4",
+                      disabled: true,
                     },
                     {
                       key: "save",
