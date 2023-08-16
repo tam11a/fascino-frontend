@@ -46,11 +46,11 @@ const Info: React.FC = () => {
     message.destroy();
     if (res.status) {
       message.success("Information updated successfully!");
+      reset();
     } else {
       message.error(res.message);
     }
   };
-  console.log(subcatData);
   return (
     <>
       <Container maxWidth={"xs"}>
