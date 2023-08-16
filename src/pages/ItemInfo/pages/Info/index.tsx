@@ -153,6 +153,15 @@ const Info: React.FC = ({}) => {
             )}
           </Descriptions.Item>
 
+          <Descriptions.Item label="Branch">
+            <b>Name:</b> {itemData?.data?.data?.branch?.name}
+            <br />
+            <b>Address:</b> {itemData?.data?.data?.branch?.address}
+            <br />
+            <b>Phone:</b> {itemData?.data?.data?.branch?.phone}
+            <br />
+          </Descriptions.Item>
+
           {!!itemData?.data.data.stitch ? (
             <Descriptions.Item label="Stitch Details">
               <b>Tailor Name:</b> {itemData?.data?.data?.stitch?.tailor?.name}
