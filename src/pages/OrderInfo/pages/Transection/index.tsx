@@ -108,3 +108,5 @@ const Transection: React.FC = () => {
 };
 
 export default Transection;
+
+// "transactions": [{ "paid": 100, "method": "COD" }]

@@ -556,14 +556,28 @@ const POS: React.FC = () => {
               <Typography variant="body2">Paid : </Typography>
               <Typography variant="body2">{paid} ৳</Typography>
             </div>
-            {!!(subTotal - discount - paid + stitchCost) && (
-              <div className="w-full flex flex-row items-center gap-4 justify-between text-red-600">
-                <Typography variant="body2">Due : </Typography>
-                <Typography variant="body2">
-                  {subTotal - discount - paid + stitchCost} ৳
-                </Typography>
-              </div>
-            )}
+            <div className="w-full flex flex-row items-center gap-4 justify-between">
+              <Typography variant="body2">Changed Amount : </Typography>
+              <Typography variant="body2">
+                {paid > subTotal - discount + stitchCost
+                  ? paid - (subTotal - discount + stitchCost)
+                  : "0"}{" "}
+                ৳
+              </Typography>
+            </div>
+            {/* {!!(subTotal - discount - paid + stitchCost) && ( */}
+            <div className="w-full flex flex-row items-center gap-4 justify-between text-red-600">
+              <Typography variant="body2">Due : </Typography>
+
+              <Typography variant="body2">
+                {subTotal - discount - paid + stitchCost > 0
+                  ? subTotal - discount - paid + stitchCost
+                  : "0"}{" "}
+                ৳
+              </Typography>
+            </div>
+
+            {/* )} */}
           </div>
         </div>
         <Divider
@@ -790,7 +804,7 @@ const POS: React.FC = () => {
             <div className="flex flex-row items-center justify-between gap-2">
               <InputNumber
                 addonAfter={<Iconify icon={"tabler:currency-taka"} />}
-                max={subTotal - discount + stitchCost}
+                // max={subTotal - discount + stitchCost}
                 min={0}
                 className={"w-full"}
                 value={paid}
@@ -1017,30 +1031,30 @@ const PrintableArea: React.FC<{
 						borderColor: "none",
 					}}
 				/> */}
-
         <div className="flex flex-col items-center">
           <b className="text-lg">Fascino</b>
           <p className={"text-xs"}>{branch?.data?.address}</p>
           <p className={"text-xs"}>Tel: {branch?.data?.phone}</p>
+          <p className={"text-xs"}>Mushak 6.3</p>
         </div>
       </div>
       <Divider flexItem className={"w-full mt-3 border-2 border-black"}>
         <b className="text-xs">Invoice Info</b>
       </Divider>
       <div className="flex flex-col w-full m-2">
+        <p className={"text-xs"}>
+          <b>Date:</b> {moment().format("lll")}
+        </p>
+        <p className={"text-xs mt-2"}>
+          <b>Invoice No:</b> {localStorage.getItem("posInvoiceId")}
+        </p>
+
         <b>Customer:</b>
         <p className="text-xs">{selectedCustomer?.name}</p>
         <p className={"text-xs"}>{selectedCustomer?.phone}</p>
         <p className={"text-xs"}>{selectedCustomer?.email}</p>
         <p className={"text-xs"}>{selectedCustomer?.address}</p>
-        <p className={"text-xs mt-2"}>
-          <b>Invoice No:</b> {localStorage.getItem("posInvoiceId")}
-        </p>
-        <p className={"text-xs"}>
-          <b>Date:</b> {moment().format("lll")}
-        </p>
       </div>
-
       <List>
         <Divider className="border-1 border-black" />
         <ListItem className={"justify-between text-xs"}>
@@ -1090,14 +1104,15 @@ const PrintableArea: React.FC<{
             <p>{others?.discount}৳</p>
           </div>
           <div className="w-full flex flex-row items-center gap-4 justify-between">
-            <p>Vat(7%) : </p>
+            <p>Vat Inclusive (7.5%) : </p>
             <p>
               {parseFloat(
-                `${(others?.subTotal + others?.stitchCost) * 0.07}`
+                `${(others?.subTotal + others?.stitchCost) * 0.075}`
               ).toFixed(2)}
               ৳
             </p>
           </div>
+
           <div className="w-full flex flex-row items-center gap-4 justify-between">
             <p>Amount Paid: </p>
             <p>{others?.paid}৳</p>
@@ -1111,10 +1126,13 @@ const PrintableArea: React.FC<{
             <div className="w-full flex flex-row items-center gap-4 justify-between">
               <p>Amount Due: </p>
               <p>
-                {others?.subTotal -
-                  others?.discount -
-                  others?.paid +
-                  others?.stitchCost}
+                {others?.paid <
+                others?.subTotal - others?.discount + others?.stitchCost
+                  ? others?.paid -
+                    others?.subTotal -
+                    others?.discount +
+                    others?.stitchCost
+                  : "0"}
                 ৳
               </p>
             </div>
@@ -1132,11 +1150,27 @@ const PrintableArea: React.FC<{
               ৳
             </b>
           </div>
+          <div className="w-full flex flex-row items-center gap-4 justify-between">
+            <p>Changed Amount : </p>
+            <p>
+              {others?.paid >
+              others?.subTotal - others?.discount + others?.stitchCost
+                ? others?.paid -
+                  others?.subTotal -
+                  others?.discount +
+                  others?.stitchCost
+                : "0"}
+              ৳
+            </p>
+          </div>
         </div>
       </div>
       <div className=" flex flex-col items-center justify-center gap-1 mt-2">
         {/* <b> */}
-        <Typography variant="body2" fontWeight={600}>
+        <Typography variant="caption" fontWeight={400} className="text-center ">
+          T&C : All prices are inclusive to VAT.
+        </Typography>
+        {/* <Typography variant="body2" fontWeight={600}>
           Thank you for shopping with us
         </Typography>
         <Typography
@@ -1148,6 +1182,7 @@ const PrintableArea: React.FC<{
           and <br />
           follow us on facebook
         </Typography>
+
         <Avatar
           src={"/fascino-qr.svg"}
           variant={"square"}
@@ -1157,7 +1192,16 @@ const PrintableArea: React.FC<{
             background: "transparent",
             borderColor: "none",
           }}
-        />
+        /> */}
+        <div className="border border-slate-800 w-64 mt-2">
+          <Typography
+            variant="body1"
+            fontWeight={600}
+            className="text-center break-all"
+          >
+            No Return, No Exchange
+          </Typography>
+        </div>
       </div>
     </Box>
   );
