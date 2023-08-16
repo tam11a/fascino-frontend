@@ -556,14 +556,28 @@ const POS: React.FC = () => {
               <Typography variant="body2">Paid : </Typography>
               <Typography variant="body2">{paid} ৳</Typography>
             </div>
-            {!!(subTotal - discount - paid + stitchCost) && (
-              <div className="w-full flex flex-row items-center gap-4 justify-between text-red-600">
-                <Typography variant="body2">Due : </Typography>
-                <Typography variant="body2">
-                  {subTotal - discount - paid + stitchCost} ৳
-                </Typography>
-              </div>
-            )}
+            <div className="w-full flex flex-row items-center gap-4 justify-between">
+              <Typography variant="body2">Changed Amount : </Typography>
+              <Typography variant="body2">
+                {paid > subTotal - discount + stitchCost
+                  ? paid - subTotal - discount + stitchCost
+                  : "0"}{" "}
+                ৳
+              </Typography>
+            </div>
+            {/* {!!(subTotal - discount - paid + stitchCost) && ( */}
+            <div className="w-full flex flex-row items-center gap-4 justify-between text-red-600">
+              <Typography variant="body2">Due : </Typography>
+
+              <Typography variant="body2">
+                {subTotal - discount - paid + stitchCost > 0
+                  ? subTotal - discount - paid + stitchCost
+                  : "0"}{" "}
+                ৳
+              </Typography>
+            </div>
+
+            {/* )} */}
           </div>
         </div>
         <Divider
@@ -790,7 +804,7 @@ const POS: React.FC = () => {
             <div className="flex flex-row items-center justify-between gap-2">
               <InputNumber
                 addonAfter={<Iconify icon={"tabler:currency-taka"} />}
-                max={subTotal - discount + stitchCost}
+                // max={subTotal - discount + stitchCost}
                 min={0}
                 className={"w-full"}
                 value={paid}
