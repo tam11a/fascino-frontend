@@ -8,14 +8,24 @@ import TransectionColumn from "./components/TransectionColumn";
 import { useParams } from "react-router-dom";
 import { useToggle } from "@tam11a/react-use-hooks";
 import AddTransaction from "./components/AddOrder";
+import { Card, Col, Row, Statistic } from "antd";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Transection: React.FC = () => {
   const { oid } = useParams();
   const { data, isLoading } = useGetOrderById(oid);
 
-  console.log(data?.data?.data?.transaction);
+  // console.log(data?.data?.data?.transaction);
   const { state: open, toggleState: onClose } = useToggle(false);
+
+  let totalAmount = 0;
+
+  data?.data?.data?.transaction.forEach((total: any) => {
+    totalAmount += total.amount;
+  });
+  // console.log(totalAmount);
+  const due = data?.data?.data?.total - totalAmount;
+  // console.log(due);
 
   return (
     <>
@@ -25,6 +35,32 @@ const Transection: React.FC = () => {
           maxWidth: "1500px !important",
         }}
       >
+        <Row gutter={16}>
+          <Col span={12}>
+            <Card bordered={false}>
+              <Statistic
+                title="Total Amount"
+                value={data?.data?.data?.total}
+                precision={2}
+                valueStyle={{ color: "#3f8600" }}
+                // prefix={<ArrowUpOutlined />}
+                // suffix="%"
+              />
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card bordered={false}>
+              <Statistic
+                title="Due Amount"
+                value={due}
+                precision={2}
+                valueStyle={{ color: "#cf1322" }}
+                // prefix={<ArrowDownOutlined />}
+                // suffix="%"
+              />
+            </Card>
+          </Col>
+        </Row>
         <Grid container rowGap={1} direction="column" marginTop={4}>
           <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex flex-row items-center ">
@@ -57,13 +93,14 @@ const Transection: React.FC = () => {
             />
           </Grid>
         </Grid>
-
-        <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
-          <FloatButton
-            icon={<Iconify icon={"material-symbols:add"} />}
-            onClick={() => onClose()}
-          />
-        </FloatButton.Group>
+        {due > 0 && (
+          <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
+            <FloatButton
+              icon={<Iconify icon={"material-symbols:add"} />}
+              onClick={() => onClose()}
+            />
+          </FloatButton.Group>
+        )}
         <AddTransaction open={open} onClose={onClose} />
       </Container>
     </>
