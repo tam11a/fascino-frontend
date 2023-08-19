@@ -44,6 +44,15 @@ const SubcategoryColumn = (): GridColumns<IDataTable> => {
       flex: 1,
     },
     {
+      headerName: "Total Products",
+      headerAlign: "center",
+      field: "totalProducts",
+      align: "center",
+      width: 150,
+      minWidth: 150,
+      flex: 1,
+    },
+    {
       headerName: "Created by",
       field: "createdBy",
       width: 170,
