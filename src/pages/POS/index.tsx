@@ -358,6 +358,7 @@ const POS: React.FC = () => {
       setSelectedCustomer(null);
       setPosProducts({});
       setPaid(0);
+      setDiscount(0);
       message.success(res.message);
     } else {
       message.error(res.message);
