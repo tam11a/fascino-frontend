@@ -85,7 +85,7 @@ const Info: React.FC = () => {
             <Controller
               control={control}
               name={"description"}
-              rules={{ required: true }}
+              rules={{ required: false }}
               render={({
                 field: { onChange, onBlur, value },
                 fieldState: { error },
