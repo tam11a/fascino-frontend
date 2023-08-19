@@ -27,16 +27,25 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
 }) => {
   const user = useUser();
 
-  const { handleSubmit, control, watch, getValues, setValue } = useForm({});
+  const { handleSubmit, control, watch, reset } = useForm({
+    defaultValues: {
+      supplier: null,
+      product: null,
+      quantity: 0,
+      weight: 0,
+      weightCost: 0,
+      buyingPrice: 0,
+      buyingDiscount: 0,
+      supplierCommision: 0,
+      stitch: {
+        fee: 0,
+        size: null,
+      },
+    },
+  });
   const { mutateAsync: createShipment } = useCreateshipment();
   const { Supplier, isSupplierLoading, searchSupplier } = useSupplier();
   const { product, isproductLoading, searchProduct } = useProduct();
-
-  const reset = () => {
-    Object.keys(getValues())?.map((field: string) =>
-      setValue(field, undefined)
-    );
-  };
 
   const onSubmit = async (data: any) => {
     message.open({
@@ -48,6 +57,7 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
       () =>
         createShipment({
           ...data,
+          // weight: data.weight || 0,
           stitch: data.stitch.size || data.stitch.fee ? data.stitch : undefined,
           createdBy: user.userName,
         }),
@@ -57,6 +67,20 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
     if (res.status) {
       message.success("Shipment created successfully!");
       reset();
+      reset({
+        supplier: null,
+        product: null,
+        quantity: 0,
+        weight: 0,
+        weightCost: 0,
+        buyingPrice: 0,
+        buyingDiscount: 0,
+        supplierCommision: 0,
+        stitch: {
+          fee: 0,
+          size: null,
+        },
+      });
       onClose();
     } else {
       message.error(res.message);
@@ -93,7 +117,11 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
           },
         }}
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form
+          onSubmit={handleSubmit(onSubmit, (e) => {
+            console.log(e);
+          })}
+        >
           <DialogTitle className={"flex flex-row items-center justify-between"}>
             <ListItemText
               primary={"Shipment"}
@@ -125,7 +153,7 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                       size="large"
                       placeholder="Search supplier..."
                       allowClear={false}
-                      value={value}
+                      value={value || undefined}
                       showSearch
                       options={Supplier}
                       onSearch={searchSupplier}
@@ -154,7 +182,7 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                       size="large"
                       placeholder="Search product..."
                       allowClear={false}
-                      value={value}
+                      value={value || undefined}
                       showSearch
                       options={product}
                       onSearch={searchProduct}
@@ -202,7 +230,7 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                   }) => (
                     <Input
                       // className="w-1/2"
-                      defaultValue={"0"}
+                      // defaultValue={"0"}
                       placeholder="Enter Weight"
                       size="large"
                       onChange={onChange}
@@ -225,7 +253,6 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                   }) => (
                     <Input
                       // className="w-1/2"
-                      defaultValue={"0"}
                       placeholder="Enter Unit Cost"
                       size="large"
                       onChange={onChange}
@@ -259,7 +286,6 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                   }) => (
                     <Input
                       // className="w-1/2"
-                      defaultValue={"0"}
                       placeholder="Enter Buying Price"
                       size="large"
                       onChange={onChange}
@@ -281,7 +307,6 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                   }) => (
                     <Input
                       // className="w-1/2"
-                      defaultValue={"0"}
                       placeholder="Enter Discount"
                       size="large"
                       onChange={onChange}
@@ -337,7 +362,6 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                   }) => (
                     <Input
                       // className="w-1/2"
-                      defaultValue={"0"}
                       placeholder="Enter Supplier Commission"
                       size="large"
                       onChange={onChange}
@@ -365,7 +389,7 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                       size="large"
                       onChange={onChange}
                       onBlur={onBlur}
-                      value={value}
+                      value={value || undefined}
                       status={error ? "error" : ""}
                     />
                   )}
@@ -383,7 +407,7 @@ const CreateShipment: React.FC<{ open: boolean; onClose: () => void }> = ({
                       size="large"
                       onChange={onChange}
                       onBlur={onBlur}
-                      value={value}
+                      value={value || undefined}
                       status={error ? "error" : ""}
                     />
                   )}
