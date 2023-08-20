@@ -6,7 +6,7 @@ import { IOption } from "./type";
 const useCategory = () => {
 	const { setSearch, getQueryParams } = usePaginate({
 		defaultParams: {
-			limit: 40,
+			limit: 200,
 		},
 	});
 
