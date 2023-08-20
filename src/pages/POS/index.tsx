@@ -21,7 +21,6 @@ import {
 	Select,
 	Spin,
 	Input,
-	Segmented,
 	Switch,
 	InputNumber,
 	Dropdown,
@@ -35,7 +34,6 @@ import { message } from "@components/antd/message";
 import { useGetScanById } from "@/queries/item";
 import handleResponse from "@/utilities/handleResponse";
 import { useGetTailor } from "@/queries/tailor";
-import { SegmentedValue } from "antd/es/segmented";
 import { useReactToPrint } from "react-to-print";
 import { print } from "react-html2pdf";
 import short from "short-uuid";
