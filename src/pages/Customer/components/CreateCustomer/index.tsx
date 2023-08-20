@@ -141,7 +141,8 @@ const CreateCustomer: React.FC<{ open: boolean; onClose: () => void }> = ({
                   }) => (
                     <Input
                       // className="w-1/2"
-                      placeholder="Phone"
+                      defaultValue={"+88"}
+                      placeholder=" Phone"
                       size="large"
                       onChange={onChange}
                       onBlur={onBlur}
@@ -175,11 +176,10 @@ const CreateCustomer: React.FC<{ open: boolean; onClose: () => void }> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
               <div className="flex flex-col">
-                <Label isRequired>Gender</Label>
+                <Label>Gender</Label>
                 <Controller
                   control={control}
                   name={"gender"}
-                  rules={{ required: true }}
                   render={({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
@@ -203,11 +203,10 @@ const CreateCustomer: React.FC<{ open: boolean; onClose: () => void }> = ({
                 />
               </div>
               <div className="flex flex-col">
-                <Label isRequired>Badge</Label>
+                <Label>Badge</Label>
                 <Controller
                   control={control}
                   name={"badge"}
-                  rules={{ required: true }}
                   render={({
                     field: { onChange, onBlur, value },
                     fieldState: { error },
