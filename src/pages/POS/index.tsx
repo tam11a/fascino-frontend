@@ -231,6 +231,7 @@ const POS: React.FC = () => {
     setStitchCost(stitchAmount);
   }, [posProducts]);
 
+  const [scanType, setScanType] = React.useState("true");
   const { mutateAsync: mutateProduct } = useGetScanById();
 
   const addProduct = async (id: string) => {
@@ -238,7 +239,8 @@ const POS: React.FC = () => {
       mutateProduct({
         id,
         params: {
-          branch_id: selectedBranch?.value,
+          branch_id: JSON.parse(localStorage.getItem("sbpos") || "{}")?.value,
+          is_product: scanType,
         },
       })
     );
@@ -340,12 +342,17 @@ const POS: React.FC = () => {
     const data = {
       invoice: posInvoice,
       customer: selectedCustomer?._id,
+      branch: JSON.parse(localStorage.getItem("sbpos") || "{}")?.value,
       type: online ? "online" : "offline",
       discount: discount || 0,
-      paid: paid || 0,
-      method: payMethod,
       products,
       tailor: selectedTailor?.value,
+      transactions: [
+        {
+          paid: paid || 0,
+          method: payMethod,
+        },
+      ],
     };
 
     const res = await handleResponse(() => postOrder(data), [201]);
@@ -414,7 +421,7 @@ const POS: React.FC = () => {
             </div>
 
             <FloatButton.Group
-              className="relative top-0 left-0 flex flex-row w-fit gap-1"
+              className="relative top-0 left-0 flex flex-row items-center w-fit gap-1"
               shape="square"
             >
               <FloatButton
@@ -424,6 +431,7 @@ const POS: React.FC = () => {
               <form
                 className="flex flex-row"
                 onSubmit={(e) => {
+                  console.log("Submittted");
                   e.preventDefault();
                   addProduct(searchInput);
                   setSearchInput("");
@@ -438,6 +446,21 @@ const POS: React.FC = () => {
                   allowClear
                 />
               </form>
+              <Select
+                bordered={false}
+                value={scanType}
+                onChange={(v) => setScanType(v)}
+                options={[
+                  {
+                    value: "true",
+                    label: "Product",
+                  },
+                  {
+                    value: "false",
+                    label: "Item",
+                  },
+                ]}
+              />
             </FloatButton.Group>
           </div>
           <Spin spinning={searchProducts}>
