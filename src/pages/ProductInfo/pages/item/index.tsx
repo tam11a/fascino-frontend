@@ -19,6 +19,7 @@ import { GridSelectionModel } from "@mui/x-data-grid";
 import { useReactToPrint } from "react-to-print";
 import Barcode from "react-barcode";
 import ItemDrawer from "./components/ItemDrawer";
+import AddItems from "./components/AddItems";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Item: React.FC = () => {
@@ -49,8 +50,7 @@ const Item: React.FC = () => {
   const { state: open, toggleState: onClose } = useToggle(false);
 
   const { state: openFilter, toggleState: onCloseFilter } = useToggle(false);
-
-  console.log(data);
+  const { state: openItems, toggleState: onCloseItem } = useToggle(false);
 
   const printRef = React.useRef(null);
 
@@ -137,6 +137,10 @@ const Item: React.FC = () => {
             icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
             onClick={() => onCloseFilter()}
           />
+          <FloatButton
+            icon={<Iconify icon={"material-symbols:add"} />}
+            onClick={() => onCloseItem()}
+          />
           {!!rowSelectionModel.length ? (
             <>
               <FloatButton
@@ -166,6 +170,7 @@ const Item: React.FC = () => {
           watch={watch}
           setFilterField={setFilterField}
         />
+        <AddItems open={openItems} onClose={onCloseItem} />
       </Container>
       <div style={{ display: "none" }}>
         <div ref={printRef}>

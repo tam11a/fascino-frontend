@@ -52,6 +52,9 @@ const createshipment = (data: IShipment) => {
 export const useCreateshipment = () => {
   const queryClient = useQueryClient();
   return useMutation(createshipment, {
-    onSuccess: () => queryClient.invalidateQueries(["get-all-Shipment"]),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["get-all-Shipment"]);
+      queryClient.invalidateQueries(["get-all-item"]);
+    },
   });
 };
