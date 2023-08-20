@@ -238,7 +238,7 @@ const POS: React.FC = () => {
       mutateProduct({
         id,
         params: {
-          branch_id: selectedBranch?.value,
+          branch_id: JSON.parse(localStorage.getItem("sbpos") || "{}")?.value,
         },
       })
     );
@@ -340,12 +340,17 @@ const POS: React.FC = () => {
     const data = {
       invoice: posInvoice,
       customer: selectedCustomer?._id,
+      branch: JSON.parse(localStorage.getItem("sbpos") || "{}")?.value,
       type: online ? "online" : "offline",
       discount: discount || 0,
-      paid: paid || 0,
-      method: payMethod,
       products,
       tailor: selectedTailor?.value,
+      transactions: [
+        {
+          paid: paid || 0,
+          method: payMethod,
+        },
+      ],
     };
 
     const res = await handleResponse(() => postOrder(data), [201]);
@@ -358,7 +363,6 @@ const POS: React.FC = () => {
       setSelectedCustomer(null);
       setPosProducts({});
       setPaid(0);
-      setDiscount(0);
       message.success(res.message);
     } else {
       message.error(res.message);
@@ -1067,14 +1071,13 @@ const PrintableArea: React.FC<{
         {Object.values(posProducts)?.map?.((product: any) => (
           <ListItem key={product?._id} className={"justify-between text-xs"}>
             <p className="text-xs">
-              <b>{`${product?.product?.category?.name} - ${product?.product?.subcategory?.name}`}</b>{" "}
-              <br />
-              {/* <span>{product?._id}</span> */}
-              <span>{`${product?.product?.name} ${
+              <b>{`${product?.product?.name} ${
                 !!product.stitch && !product.stitch.tailor
                   ? `(Size - ${product.stitch.size})`
                   : ""
-              }`}</span>
+              }`}</b>{" "}
+              <br />
+              <span>{product?._id}</span>
             </p>
             <p>
               {product?.product?.price +
@@ -1089,46 +1092,73 @@ const PrintableArea: React.FC<{
 
       <Divider className="border-1 border-black" />
 
-      {/* <div className="flex flex-row justify-between"> */}
-      <div className="flex flex-col items-end gap-2 m-4 text-xs">
-        <div className="w-full flex flex-row items-center gap-4 justify-between ">
-          <p>Subtotal: </p>
-          <p>{others?.subTotal}৳</p>
-        </div>
-        {!!others?.stitchCost && (
-          <div className="w-full flex flex-row items-center gap-4 justify-between">
-            <p>Stitch Fee: </p>
-            <p>{others?.stitchCost}৳</p>
+      <div className="flex flex-row justify-end">
+        <div className="flex flex-col  items-end gap-2 m-4 w-[95vw] max-w-[200px] text-xs">
+          <div className="w-full flex flex-row items-center gap-4 justify-between ">
+            <p>Subtotal: </p>
+            <p>{others?.subTotal}৳</p>
           </div>
-        )}
-        <div className="w-full flex flex-row items-center gap-4 justify-between">
-          <p>Discount: </p>
-          <p>{others?.discount}৳</p>
-        </div>
-        <div className="w-full flex flex-row items-center gap-4 justify-between">
-          <p>Vat Inclusive (7.5%) : </p>
-          <p>
-            {parseFloat(
-              `${(others?.subTotal + others?.stitchCost) * 0.075}`
-            ).toFixed(2)}
-            ৳
-          </p>
-        </div>
-
-        <div className="w-full flex flex-row items-center gap-4 justify-between">
-          <p>Amount Paid: </p>
-          <p>{others?.paid}৳</p>
-        </div>
-        {!!(
-          others?.subTotal -
-          others?.discount -
-          others?.paid +
-          others?.stitchCost
-        ) && (
+          {!!others?.stitchCost && (
+            <div className="w-full flex flex-row items-center gap-4 justify-between">
+              <p>Stitch Fee: </p>
+              <p>{others?.stitchCost}৳</p>
+            </div>
+          )}
           <div className="w-full flex flex-row items-center gap-4 justify-between">
-            <p>Amount Due: </p>
+            <p>Discount: </p>
+            <p>{others?.discount}৳</p>
+          </div>
+          <div className="w-full flex flex-row items-center gap-4 justify-between">
+            <p>Vat Inclusive (7.5%) : </p>
             <p>
-              {others?.paid <
+              {parseFloat(
+                `${(others?.subTotal + others?.stitchCost) * 0.075}`
+              ).toFixed(2)}
+              ৳
+            </p>
+          </div>
+
+          <div className="w-full flex flex-row items-center gap-4 justify-between">
+            <p>Amount Paid: </p>
+            <p>{others?.paid}৳</p>
+          </div>
+          {!!(
+            others?.subTotal -
+            others?.discount -
+            others?.paid +
+            others?.stitchCost
+          ) && (
+            <div className="w-full flex flex-row items-center gap-4 justify-between">
+              <p>Amount Due: </p>
+              <p>
+                {others?.paid <
+                others?.subTotal - others?.discount + others?.stitchCost
+                  ? others?.paid -
+                    others?.subTotal -
+                    others?.discount +
+                    others?.stitchCost
+                  : "0"}
+                ৳
+              </p>
+            </div>
+          )}
+          <div className="w-full flex flex-row items-center gap-4 justify-between">
+            <p>Mode of Payment: </p>
+            <b>{others?.method}</b>
+          </div>
+          <div className="w-full flex flex-row items-center gap-4 justify-between border-t-2 border-black pt-2">
+            <b>MRP: </b>
+            <b>
+              {parseFloat(
+                `${others?.subTotal - others?.discount + others?.stitchCost}`
+              ).toFixed(2)}
+              ৳
+            </b>
+          </div>
+          <div className="w-full flex flex-row items-center gap-4 justify-between">
+            <p>Changed Amount : </p>
+            <p>
+              {others?.paid >
               others?.subTotal - others?.discount + others?.stitchCost
                 ? others?.paid -
                   others?.subTotal -
@@ -1138,35 +1168,8 @@ const PrintableArea: React.FC<{
               ৳
             </p>
           </div>
-        )}
-        <div className="w-full flex flex-row items-center gap-4 justify-between">
-          <p>Mode of Payment: </p>
-          <b>{others?.method}</b>
-        </div>
-        <div className="w-full flex flex-row items-center gap-4 justify-between border-t-2 border-black pt-2">
-          <b>MRP: </b>
-          <b>
-            {parseFloat(
-              `${others?.subTotal - others?.discount + others?.stitchCost}`
-            ).toFixed(2)}
-            ৳
-          </b>
-        </div>
-        <div className="w-full flex flex-row items-center gap-4 justify-between">
-          <p>Changed Amount : </p>
-          <p>
-            {others?.paid >
-            others?.subTotal - others?.discount + others?.stitchCost
-              ? others?.paid -
-                others?.subTotal -
-                others?.discount +
-                others?.stitchCost
-              : "0"}
-            ৳
-          </p>
         </div>
       </div>
-      {/* </div> */}
       <div className=" flex flex-col items-center justify-center gap-1 mt-2">
         {/* <b> */}
         <Typography variant="caption" fontWeight={400} className="text-center ">
