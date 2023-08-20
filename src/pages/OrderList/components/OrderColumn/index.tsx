@@ -72,6 +72,41 @@ const OrderColumn = (): GridColumns<IDataTable> => {
       minWidth: 80,
     },
     {
+      headerName: "Paid",
+      headerAlign: "center",
+      field: "paid",
+      align: "center",
+      flex: 1,
+      width: 100,
+      minWidth: 80,
+      renderCell: (data: any) => {
+        let totalAmount = 0;
+
+        data?.row?.transaction.forEach((total: any) => {
+          totalAmount += total.amount;
+        });
+        return totalAmount;
+      },
+    },
+    {
+      headerName: "Due",
+      headerAlign: "center",
+      field: "due",
+      align: "center",
+      flex: 1,
+      width: 100,
+      minWidth: 80,
+      renderCell: (data: any) => {
+        let totalAmount = 0;
+
+        data?.row?.transaction.forEach((total: any) => {
+          totalAmount += total.amount;
+        });
+        const due = data?.row?.total - totalAmount;
+        return due > 0 ? due : 0;
+      },
+    },
+    {
       headerName: "Type",
       headerAlign: "center",
       field: "type",
