@@ -11,7 +11,11 @@ import CreateCategory from "./components/CreateCategory";
 
 const Info: React.FC = () => {
   const { search, setSearch, getQueryParams, limit, setLimit, page, setPage } =
-    usePaginate();
+    usePaginate({
+      defaultParams: {
+        limit: 50,
+      },
+    });
   const { data, isLoading } = useGetCategories(getQueryParams());
   const { state: open, toggleState: onClose } = useToggle(false);
   return (

@@ -19,6 +19,7 @@ const Subcategory: React.FC = () => {
         filters: {
           category: catid || "",
         },
+        limit: 50,
       },
     });
   const { data, isLoading } = useGetSubcategories(getQueryParams());
