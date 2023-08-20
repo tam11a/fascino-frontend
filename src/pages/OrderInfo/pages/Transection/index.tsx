@@ -23,9 +23,7 @@ const Transection: React.FC = () => {
   data?.data?.data?.transaction.forEach((total: any) => {
     totalAmount += total.amount;
   });
-  // console.log(totalAmount);
   const due = data?.data?.data?.total - totalAmount;
-  // console.log(due);
 
   return (
     <>

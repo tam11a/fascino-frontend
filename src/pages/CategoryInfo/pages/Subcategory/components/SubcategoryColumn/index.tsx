@@ -2,6 +2,7 @@
 import { IDataTable } from "@/types";
 import { Chip, IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
+import moment from "moment";
 import { FiEdit2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
@@ -42,6 +43,26 @@ const SubcategoryColumn = (): GridColumns<IDataTable> => {
       width: 150,
       minWidth: 150,
       flex: 1,
+    },
+    {
+      headerName: "Total Products",
+      headerAlign: "center",
+      field: "totalProducts",
+      align: "center",
+      width: 150,
+      minWidth: 150,
+      flex: 1,
+    },
+    {
+      headerName: "Created At",
+      field: "createdAt",
+      width: 170,
+      minWidth: 150,
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+      renderCell: (data: any) =>
+        data.row?.createdAt ? moment(data.row?.createdAt).format("LL") : "-",
     },
     {
       headerName: "Created by",

@@ -38,6 +38,7 @@ const Item: React.FC = () => {
       filters: {
         product: pid || "",
       },
+      limit: 50,
     },
   });
 

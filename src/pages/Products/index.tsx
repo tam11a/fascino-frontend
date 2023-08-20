@@ -21,7 +21,11 @@ const Products: React.FC = () => {
     search,
     setFilterField,
     watch,
-  } = usePaginate();
+  } = usePaginate({
+    defaultParams: {
+      limit: 50,
+    },
+  });
 
   const { data, isLoading } = useGetProducts(getQueryParams());
   const { state: open, toggleState: onClose } = useToggle(false);

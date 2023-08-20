@@ -46,7 +46,7 @@ export const useUpdateSubcategory = () => {
   return useMutation(updateSubcategory, {
     onSuccess: () => {
       queryClient.invalidateQueries(["get-all-subcategories"]);
-      queryClient.invalidateQueries(["get-subcategory-by-id"]);
+      queryClient.invalidateQueries(["get-subategories-by-id"]);
     },
   });
 };
