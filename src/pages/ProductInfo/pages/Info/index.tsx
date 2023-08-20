@@ -4,12 +4,15 @@ import Label from "@components/Label";
 import { Container } from "@mui/system";
 import { Cascader, Input } from "antd";
 import { Controller, useForm } from "react-hook-form";
-import { Button } from "@mui/material";
+import { Button, Divider, IconButton } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 import { message } from "@components/antd/message";
 import { useGetProductById, useUpdateProduct } from "@/queries/products";
 import useCategory from "@/hooks/useCategory";
+import Barcode from "react-jsbarcode";
+import { useReactToPrint } from "react-to-print";
+import Iconify from "@components/iconify";
 
 const Info: React.FC = ({}) => {
 	const { pid } = useParams();
@@ -59,6 +62,37 @@ const Info: React.FC = ({}) => {
 			message.error(res.message);
 		}
 	};
+
+	const printRef = React.useRef(null);
+
+	const reactToPrintContent = React.useCallback(() => {
+		return printRef.current;
+	}, [printRef.current]);
+
+	const handlePrint = useReactToPrint({
+		content: reactToPrintContent,
+		documentTitle: "Barcodes from Fascino",
+		removeAfterPrint: true,
+		pageStyle: `
+	  @page {
+		// size: 2.17in 0.71in;
+		margin: 0in 0.4in 0.67in 0.95in;
+	  }
+  
+	  @media all {
+		.pageBreak {
+		  display: none
+		}
+	  }
+  
+	  @media print {
+		.pageBreak {
+		  page-break-before: always
+		}
+	  }
+	  `,
+	});
+
 	return (
 		<>
 			<Container maxWidth={"xs"}>
@@ -66,6 +100,28 @@ const Info: React.FC = ({}) => {
 					className="py-3 grid grid-cols-1 mt-3"
 					onSubmit={handleSubmit(onSubmit)}
 				>
+					<div className="flex flex-row border-2 rounded">
+						<div ref={printRef}>
+							{productData?.data?.data?._id && (
+								<Barcode
+									value={productData?.data?.data?._id || ""}
+									options={{
+										width: 1,
+										text: productData?.data?.data?.name,
+										fontOptions: "bold",
+										format: "CODE128",
+										fontSize: 15,
+										height: 50,
+									}}
+									// className="scale-50"
+								/>
+							)}
+						</div>
+						<Divider orientation="vertical" />
+						<IconButton onClick={() => handlePrint()}>
+							<Iconify icon={"material-symbols:print-add-outline-rounded"} />
+						</IconButton>
+					</div>
 					<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
 						<div className="flex flex-col relative">
 							<Label>Name</Label>
