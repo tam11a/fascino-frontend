@@ -117,9 +117,22 @@ const OrderColumn = (): GridColumns<IDataTable> => {
 				data?.row?.transaction.forEach((total: any) => {
 					totalAmount += total.amount;
 				});
-				const due = data?.row?.total - totalAmount;
-				return due > 0 ? due : 0;
+				const due = data?.row?.total - data?.row?.discount - totalAmount;
+				return due > 0 ? (
+					<span className="font-bold text-red-600">{due}</span>
+				) : (
+					0
+				);
 			},
+		},
+		{
+			headerName: "Discount",
+			headerAlign: "center",
+			field: "discount",
+			align: "center",
+			flex: 1,
+			width: 100,
+			minWidth: 80,
 		},
 		{
 			headerName: "Type",
