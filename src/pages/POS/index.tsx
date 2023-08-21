@@ -35,7 +35,7 @@ import { useGetScanById } from "@/queries/item";
 import handleResponse from "@/utilities/handleResponse";
 import { useGetTailor } from "@/queries/tailor";
 import { useReactToPrint } from "react-to-print";
-import { print } from "react-html2pdf";
+// import { print } from "react-html2pdf";
 import short from "short-uuid";
 import { usePostOrder } from "@/queries/order";
 import moment from "moment";
