@@ -5,10 +5,13 @@ import { useParams } from "react-router-dom";
 // import { useGetShipmentById } from "@/queries/shipment";
 import moment from "moment";
 import { useGetItemById, useReturnStitchedItem } from "@/queries/item";
-import Barcode from "react-barcode";
-import { Button, IconButton } from "@mui/material";
-import Iconify from "@components/iconify";
-import { useReactToPrint } from "react-to-print";
+// import Barcode from "react-barcode";
+import {
+	Button,
+	// IconButton
+} from "@mui/material";
+// import Iconify from "@components/iconify";
+// import { useReactToPrint } from "react-to-print";
 import { useGetEmployeesById } from "@/queries/employees";
 import useAreYouSure from "@/hooks/useAreYouSure";
 import handleResponse from "@/utilities/handleResponse";
@@ -46,35 +49,35 @@ const Info: React.FC = ({}) => {
 		}
 	};
 
-	const printRef = React.useRef(null);
+	// const printRef = React.useRef(null);
 
-	const reactToPrintContent = React.useCallback(() => {
-		return printRef.current;
-	}, [printRef.current]);
+	// const reactToPrintContent = React.useCallback(() => {
+	// 	return printRef.current;
+	// }, [printRef.current]);
 
-	const handlePrint = useReactToPrint({
-		content: reactToPrintContent,
-		documentTitle: "item-" + iid || "",
-		removeAfterPrint: true,
-		pageStyle: `
-    @page {
-      // size: 2.17in 0.71in;
-      margin: 0in 0.4in 0.67in 0.85in;
-    }
+	// const handlePrint = useReactToPrint({
+	// 	content: reactToPrintContent,
+	// 	documentTitle: "item-" + iid || "",
+	// 	removeAfterPrint: true,
+	// 	pageStyle: `
+	//   @page {
+	//     // size: 2.17in 0.71in;
+	//     margin: 0in 0.4in 0.67in 0.85in;
+	//   }
 
-    @media all {
-      .pageBreak {
-        display: none
-      }
-    }
+	//   @media all {
+	//     .pageBreak {
+	//       display: none
+	//     }
+	//   }
 
-    @media print {
-      .pageBreak {
-        page-break-before: always
-      }
-    }
-    `,
-	});
+	//   @media print {
+	//     .pageBreak {
+	//       page-break-before: always
+	//     }
+	//   }
+	//   `,
+	// });
 
 	return (
 		<>
