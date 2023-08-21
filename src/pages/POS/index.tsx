@@ -1025,7 +1025,7 @@ const POS: React.FC = () => {
 			{/* 
         Invoice Container
       */}
-			<div style={{ display: "none" }}>
+			<div className="hidden">
 				<div ref={printRef}>
 					<PrintableArea
 						{...{
@@ -1040,6 +1040,7 @@ const POS: React.FC = () => {
 						}}
 					/>
 				</div>
+				<hr className="my-5" />
 				<div ref={printA5Ref}>
 					<PrintableArea
 						{...{
@@ -1100,52 +1101,96 @@ const PrintableArea: React.FC<{
 						<div className="flex flex-row container items-center justify-between">
 							<div className="flex items-center">
 								<Avatar
-									src={"/favicon.svg"}
+									src={"/logo.svg"}
 									variant={"square"}
 									sx={{
-										height: "50px",
-										width: "50px",
+										height: "auto",
+										width: "120px",
 										background: "transparent",
 										borderColor: "none",
 									}}
 								/>
-								<b className="text-lg">Fascino</b>
 							</div>
 							<div>
 								<b>Dhanmondi Showroom:</b>
-								<p className={"text-xs"}>{branch?.data?.address}</p>
+								<p className={"text-xs whitespace-pre"}>
+									{branch?.data?.address}
+								</p>
 								<p className={"text-xs"}>Tel: {branch?.data?.phone}</p>
 							</div>
 						</div>
 					</>
 				) : (
 					<div className="flex flex-col items-center">
-						<b className="text-lg">Fascino</b>
-						<p className={"text-xs"}>{branch?.data?.address}</p>
-						<p className={"text-xs"}>Tel: {branch?.data?.phone}</p>
+						{/* <b className="text-lg">Fascino</b> */}
+						<Avatar
+							src={"/logo.svg"}
+							variant={"square"}
+							sx={{
+								height: "auto",
+								width: "120px",
+								background: "transparent",
+								borderColor: "none",
+							}}
+							className="mb-2"
+						/>
+						<p className={"text-xs text-center whitespace-pre"}>
+							{branch?.data?.address}
+						</p>
+						{branch?.data?.phone && (
+							<p className={"text-xs"}>Tel: {branch?.data?.phone}</p>
+						)}
 						<p className={"text-xs"}>Mushak 6.3</p>
 					</div>
 				)}
 			</div>
-			<Divider
+			{/* <Divider
 				flexItem
 				className={"w-full mt-3 border-2 border-black"}
 			>
 				<b className="text-xs">Invoice Info</b>
-			</Divider>
+			</Divider> */}
 			<div className="flex flex-col w-full m-2">
-				<p className={"text-xs"}>
-					<b>Date:</b> {moment().format("lll")}
-				</p>
-				<p className={"text-xs mt-2"}>
-					<b>Invoice No:</b> {localStorage.getItem("posInvoiceId")}
-				</p>
+				<div
+					className={`flex ${
+						isA5 ? "flex-row" : "flex-col"
+					} gap-1 justify-between my-1`}
+				>
+					<p className={"text-xs"}>
+						<b>Date:</b> {moment().format("lll")}
+					</p>
+					<p className={"text-xs"}>
+						<b>Invoice No:</b> {localStorage.getItem("posInvoiceId")}
+					</p>
+				</div>
 
-				<b>Customer:</b>
-				<p className="text-xs">{selectedCustomer?.name}</p>
-				<p className={"text-xs"}>{selectedCustomer?.phone}</p>
-				<p className={"text-xs"}>{selectedCustomer?.email}</p>
-				<p className={"text-xs"}>{selectedCustomer?.address}</p>
+				<div
+					className={`text-xs ${
+						isA5 ? "bg-slate-100 rounded p-3 my-1 mt-3" : ""
+					}`}
+				>
+					<div className="flex flex-row gap-2">
+						<b>Name:</b>
+						<p className="text-xs flex-1 pl-6">{selectedCustomer?.name}</p>
+					</div>
+					<div className="flex flex-row gap-2">
+						<b>Phone: </b>
+						<p className={"text-xs flex-1 pl-4"}>{selectedCustomer?.phone}</p>
+					</div>
+					<div className="flex flex-row gap-2">
+						<b>Email: </b>
+						<p className={"text-xs flex-1 pl-4"}>
+							asdasd{selectedCustomer?.email}
+						</p>
+					</div>
+					<div className="flex flex-row gap-2">
+						<b>Address:</b>
+						<p className={"text-xs whitespace-pre pl-1"}>
+							{selectedCustomer?.address}
+						</p>
+					</div>
+				</div>
+				{/* <b>Customer:</b> */}
 			</div>
 			<List>
 				<Divider className="border-1 border-black" />
