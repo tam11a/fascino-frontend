@@ -4,7 +4,7 @@ import Label from "@components/Label";
 import { Container } from "@mui/system";
 import { Cascader, Input } from "antd";
 import { Controller, useForm } from "react-hook-form";
-import { Button, Divider, IconButton } from "@mui/material";
+import { Button, Divider, IconButton, ListItemText } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 import { message } from "@components/antd/message";
@@ -100,27 +100,44 @@ const Info: React.FC = ({}) => {
 					className="py-3 grid grid-cols-1 mt-3"
 					onSubmit={handleSubmit(onSubmit)}
 				>
-					<div className="flex flex-row border-2 rounded">
-						<div ref={printRef}>
-							{productData?.data?.data?._id && (
+					<div className="hidden">
+						<div
+							ref={printRef}
+							// className="hidden"
+						>
+							{/* <p className="text-[0.5rem] text-center">
+								{productData?.data?.data?.barcode}
+							</p> */}
+							{productData?.data?.data?.barcode && (
 								<Barcode
-									value={productData?.data?.data?._id || ""}
+									value={productData?.data?.data?.barcode || ""}
 									options={{
 										width: 1,
-										text: productData?.data?.data?.name,
+										text: `${productData?.data?.data?.name} - ${productData?.data?.data?.barcode}`,
 										fontOptions: "bold",
 										format: "CODE128",
-										fontSize: 15,
+										fontSize: 8,
 										height: 50,
 									}}
 									// className="scale-50"
 								/>
 							)}
 						</div>
-						<Divider orientation="vertical" />
-						<IconButton onClick={() => handlePrint()}>
-							<Iconify icon={"material-symbols:print-add-outline-rounded"} />
-						</IconButton>
+					</div>
+					<div className="pl-4 flex flex-row border-2 rounded items-center mb-2">
+						<ListItemText
+							primary={productData?.data?.data?.barcode}
+							secondary={"Product Barcode"}
+							primaryTypographyProps={{
+								className: "font-bold",
+							}}
+							className="font-bold"
+						/>
+						<div>
+							<IconButton onClick={() => handlePrint()}>
+								<Iconify icon={"material-symbols:print-add-outline-rounded"} />
+							</IconButton>
+						</div>
 					</div>
 					<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
 						<div className="flex flex-col relative">
