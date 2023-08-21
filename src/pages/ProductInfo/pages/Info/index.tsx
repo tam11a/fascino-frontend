@@ -2,7 +2,7 @@ import React from "react";
 import handleResponse from "@/utilities/handleResponse";
 import Label from "@components/Label";
 import { Container } from "@mui/system";
-import { Cascader, Input } from "antd";
+import { Cascader, Input, Switch } from "antd";
 import { Controller, useForm } from "react-hook-form";
 import { Button, IconButton, ListItemText } from "@mui/material";
 import { useParams } from "react-router-dom";
@@ -65,6 +65,11 @@ const Info: React.FC = ({}) => {
 
 	const printRef = React.useRef(null);
 
+	const [hide, setHide] = React.useState({
+		name: false,
+		barcode: false,
+	});
+
 	const reactToPrintContent = React.useCallback(() => {
 		return printRef.current;
 	}, [printRef.current]);
@@ -113,7 +118,17 @@ const Info: React.FC = ({}) => {
 									value={productData?.data?.data?.barcode || ""}
 									options={{
 										width: 1,
-										text: `${productData?.data?.data?.name} - ${productData?.data?.data?.barcode}`,
+										text:
+											!hide.name || !hide.barcode
+												? `${!hide.name ? productData?.data?.data?.name : ""}${
+														hide.barcode && hide.name ? " - " : ""
+												  }${
+														!hide.barcode
+															? `${productData?.data?.data?.barcode}`
+															: ""
+												  }`
+												: "",
+										displayValue: !hide.name || !hide.barcode,
 										fontOptions: "bold",
 										format: "CODE128",
 										fontSize: 8,
@@ -133,10 +148,39 @@ const Info: React.FC = ({}) => {
 							}}
 							className="font-bold"
 						/>
-						<div>
+
+						<div className="mr-4">
 							<IconButton onClick={() => handlePrint()}>
 								<Iconify icon={"material-symbols:print-add-outline-rounded"} />
 							</IconButton>
+						</div>
+						<div className="mr-2">
+							<div className="flex flex-row items-center justify-between gap-5 w-full">
+								<p className="text-sm">Show Name</p>{" "}
+								<Switch
+									size="small"
+									checked={!hide.name}
+									onChange={(c) =>
+										setHide((h) => ({
+											...h,
+											name: !c,
+										}))
+									}
+								/>
+							</div>
+							<div className="flex flex-row items-center justify-between gap-5 w-full">
+								<p className="text-sm">Show Code</p>{" "}
+								<Switch
+									size="small"
+									checked={!hide.barcode}
+									onChange={(c) =>
+										setHide((h) => ({
+											...h,
+											barcode: !c,
+										}))
+									}
+								/>
+							</div>
 						</div>
 					</div>
 					<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
