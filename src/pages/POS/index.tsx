@@ -237,7 +237,12 @@ const POS: React.FC = () => {
 		setStitchCost(stitchAmount);
 	}, [posProducts]);
 
-	const [scanType, setScanType] = React.useState("true");
+	const [scanType, setScanType] = React.useState(
+		JSON.parse(localStorage.getItem("scanType") || "true")
+	);
+
+	console.log("Scan ->", scanType);
+
 	const { mutateAsync: mutateProduct } = useGetScanById();
 
 	const addProduct = async (id: string) => {
@@ -246,7 +251,8 @@ const POS: React.FC = () => {
 				id,
 				params: {
 					branch_id: JSON.parse(localStorage.getItem("sbpos") || "{}")?.value,
-					is_product: scanType,
+					is_product: JSON.parse(localStorage.getItem("scanType") || "true"),
+					skip_products: Object.keys(posProducts),
 				},
 			})
 		);
@@ -271,7 +277,7 @@ const POS: React.FC = () => {
 			//   const lastTarget = result.target;
 			if (barcode.length >= 8) {
 				// console.log(barcode, type, lastTarget, result);
-				message.success(`Scanned ${barcode}`);
+				message.success(`Scanned ${scanType ? "Product" : "Item"} ${barcode}`);
 				addProduct(barcode);
 			}
 		});
@@ -441,7 +447,6 @@ const POS: React.FC = () => {
 							<form
 								className="flex flex-row"
 								onSubmit={(e) => {
-									console.log("Submittted");
 									e.preventDefault();
 									addProduct(searchInput);
 									setSearchInput("");
@@ -458,8 +463,11 @@ const POS: React.FC = () => {
 							</form>
 							<Select
 								bordered={false}
-								value={scanType}
-								onChange={(v) => setScanType(v)}
+								value={scanType || "true"}
+								onChange={(v) => {
+									localStorage.setItem("scanType", JSON.stringify(v));
+									setScanType(v);
+								}}
 								dropdownMatchSelectWidth={false}
 								options={[
 									{
