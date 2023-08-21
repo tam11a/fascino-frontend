@@ -83,6 +83,36 @@ const POS: React.FC = () => {
     `,
 	});
 
+	const printA5Ref = React.useRef(null);
+
+	const reactToPrintA5Content = React.useCallback(() => {
+		return printA5Ref.current;
+	}, [printRef.current]);
+
+	const handlePrintA5 = useReactToPrint({
+		content: reactToPrintA5Content,
+		documentTitle: "Invoice",
+		removeAfterPrint: true,
+		pageStyle: `
+    @page {
+      // size: 2.17in 0.71in;
+      // margin: 0in 0.4in 0.67in 0.85in;
+    }
+
+    @media all {
+      .pageBreak {
+        display: none
+      }
+    }
+
+    @media print {
+      .pageBreak {
+        page-break-before: always
+      }
+    }
+    `,
+	});
+
 	//Branch Section
 	const { setSearch: setBranchSearch, getQueryParams: getBranchQueryParams } =
 		usePaginate({
@@ -842,28 +872,16 @@ const POS: React.FC = () => {
 										{
 											key: "80mm",
 											label: "80mm",
-											children: [
-												{
-													key: "print",
-													label: "Print",
-													onClick: () => {
-														handlePrint();
-													},
-												},
-												{
-													key: "download",
-													label: "Download",
-													onClick: () => {
-														print("invoice-" + Date.now(), "jsx-template");
-													},
-													disabled: true,
-												},
-											],
+											onClick: () => {
+												handlePrint();
+											},
 										},
 										{
-											key: "a4",
-											label: "A4",
-											disabled: true,
+											key: "a5",
+											label: "A5",
+											onClick: () => {
+												handlePrintA5();
+											},
 										},
 										{
 											key: "save",
@@ -1022,6 +1040,21 @@ const POS: React.FC = () => {
 						}}
 					/>
 				</div>
+				<div ref={printA5Ref}>
+					<PrintableArea
+						{...{
+							posProducts,
+							subTotal,
+							stitchCost,
+							paid,
+							discount,
+							selectedCustomer,
+							branch: selectedBranch,
+							method: payMethod,
+						}}
+						isA5={true}
+					/>
+				</div>
 			</div>
 		</>
 	);
@@ -1040,7 +1073,8 @@ const PrintableArea: React.FC<{
 	};
 	branch: any;
 	method: any;
-}> = ({ posProducts, selectedCustomer, branch, ...others }) => {
+	isA5?: boolean;
+}> = ({ posProducts, selectedCustomer, branch, isA5 = false, ...others }) => {
 	return (
 		<Box
 			sx={{
@@ -1061,12 +1095,37 @@ const PrintableArea: React.FC<{
 						borderColor: "none",
 					}}
 				/> */}
-				<div className="flex flex-col items-center">
-					<b className="text-lg">Fascino</b>
-					<p className={"text-xs"}>{branch?.data?.address}</p>
-					<p className={"text-xs"}>Tel: {branch?.data?.phone}</p>
-					<p className={"text-xs"}>Mushak 6.3</p>
-				</div>
+				{isA5 ? (
+					<>
+						<div className="flex flex-row container items-center justify-between">
+							<div className="flex items-center">
+								<Avatar
+									src={"/favicon.svg"}
+									variant={"square"}
+									sx={{
+										height: "50px",
+										width: "50px",
+										background: "transparent",
+										borderColor: "none",
+									}}
+								/>
+								<b className="text-lg">Fascino</b>
+							</div>
+							<div>
+								<b>Dhanmondi Showroom:</b>
+								<p className={"text-xs"}>{branch?.data?.address}</p>
+								<p className={"text-xs"}>Tel: {branch?.data?.phone}</p>
+							</div>
+						</div>
+					</>
+				) : (
+					<div className="flex flex-col items-center">
+						<b className="text-lg">Fascino</b>
+						<p className={"text-xs"}>{branch?.data?.address}</p>
+						<p className={"text-xs"}>Tel: {branch?.data?.phone}</p>
+						<p className={"text-xs"}>Mushak 6.3</p>
+					</div>
+				)}
 			</div>
 			<Divider
 				flexItem
@@ -1234,15 +1293,31 @@ const PrintableArea: React.FC<{
             borderColor: "none",
           }}
         /> */}
-				<div className="border border-slate-800 w-64 mt-2">
-					<Typography
-						variant="body1"
-						fontWeight={600}
-						className="text-center break-all"
-					>
-						No Return, No Exchange
-					</Typography>
-				</div>
+				{isA5 ? (
+					<>
+						<div className="border border-slate-800 w-full mt-2">
+							<Typography
+								variant="body1"
+								fontWeight={600}
+								className="text-center break-all"
+							>
+								We Do Not Offer Exchange, Refund & Color Gurantee
+							</Typography>
+						</div>
+					</>
+				) : (
+					<>
+						<div className="border border-slate-800 w-64 mt-2">
+							<Typography
+								variant="body1"
+								fontWeight={600}
+								className="text-center break-all"
+							>
+								No Return, No Exchange
+							</Typography>
+						</div>
+					</>
+				)}
 			</div>
 		</Box>
 	);
