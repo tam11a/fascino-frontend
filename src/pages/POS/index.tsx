@@ -35,7 +35,7 @@ import { useGetScanById } from "@/queries/item";
 import handleResponse from "@/utilities/handleResponse";
 import { useGetTailor } from "@/queries/tailor";
 import { useReactToPrint } from "react-to-print";
-import { print } from "react-html2pdf";
+// import { print } from "react-html2pdf";
 import short from "short-uuid";
 import { usePostOrder } from "@/queries/order";
 import moment from "moment";
@@ -61,6 +61,36 @@ const POS: React.FC = () => {
 
 	const handlePrint = useReactToPrint({
 		content: reactToPrintContent,
+		documentTitle: "Invoice",
+		removeAfterPrint: true,
+		pageStyle: `
+    @page {
+      // size: 2.17in 0.71in;
+      // margin: 0in 0.4in 0.67in 0.85in;
+    }
+
+    @media all {
+      .pageBreak {
+        display: none
+      }
+    }
+
+    @media print {
+      .pageBreak {
+        page-break-before: always
+      }
+    }
+    `,
+	});
+
+	const printA5Ref = React.useRef(null);
+
+	const reactToPrintA5Content = React.useCallback(() => {
+		return printA5Ref.current;
+	}, [printRef.current]);
+
+	const handlePrintA5 = useReactToPrint({
+		content: reactToPrintA5Content,
 		documentTitle: "Invoice",
 		removeAfterPrint: true,
 		pageStyle: `
@@ -842,28 +872,16 @@ const POS: React.FC = () => {
 										{
 											key: "80mm",
 											label: "80mm",
-											children: [
-												{
-													key: "print",
-													label: "Print",
-													onClick: () => {
-														handlePrint();
-													},
-												},
-												{
-													key: "download",
-													label: "Download",
-													onClick: () => {
-														print("invoice-" + Date.now(), "jsx-template");
-													},
-													disabled: true,
-												},
-											],
+											onClick: () => {
+												handlePrint();
+											},
 										},
 										{
-											key: "a4",
-											label: "A4",
-											disabled: true,
+											key: "a5",
+											label: "A5",
+											onClick: () => {
+												handlePrintA5();
+											},
 										},
 										{
 											key: "save",
@@ -1007,7 +1025,7 @@ const POS: React.FC = () => {
 			{/* 
         Invoice Container
       */}
-			<div style={{ display: "none" }}>
+			<div className="hidden">
 				<div ref={printRef}>
 					<PrintableArea
 						{...{
@@ -1020,6 +1038,22 @@ const POS: React.FC = () => {
 							branch: selectedBranch,
 							method: payMethod,
 						}}
+					/>
+				</div>
+				<hr className="my-5" />
+				<div ref={printA5Ref}>
+					<PrintableArea
+						{...{
+							posProducts,
+							subTotal,
+							stitchCost,
+							paid,
+							discount,
+							selectedCustomer,
+							branch: selectedBranch,
+							method: payMethod,
+						}}
+						isA5={true}
 					/>
 				</div>
 			</div>
@@ -1040,7 +1074,8 @@ const PrintableArea: React.FC<{
 	};
 	branch: any;
 	method: any;
-}> = ({ posProducts, selectedCustomer, branch, ...others }) => {
+	isA5?: boolean;
+}> = ({ posProducts, selectedCustomer, branch, isA5 = false, ...others }) => {
 	return (
 		<Box
 			sx={{
@@ -1061,32 +1096,101 @@ const PrintableArea: React.FC<{
 						borderColor: "none",
 					}}
 				/> */}
-				<div className="flex flex-col items-center">
-					<b className="text-lg">Fascino</b>
-					<p className={"text-xs"}>{branch?.data?.address}</p>
-					<p className={"text-xs"}>Tel: {branch?.data?.phone}</p>
-					<p className={"text-xs"}>Mushak 6.3</p>
-				</div>
+				{isA5 ? (
+					<>
+						<div className="flex flex-row container items-center justify-between">
+							<div className="flex items-center">
+								<Avatar
+									src={"/logo.svg"}
+									variant={"square"}
+									sx={{
+										height: "auto",
+										width: "120px",
+										background: "transparent",
+										borderColor: "none",
+									}}
+								/>
+							</div>
+							<div>
+								<b>Dhanmondi Showroom:</b>
+								<p className={"text-xs whitespace-pre"}>
+									{branch?.data?.address}
+								</p>
+								<p className={"text-xs"}>Tel: {branch?.data?.phone}</p>
+							</div>
+						</div>
+					</>
+				) : (
+					<div className="flex flex-col items-center">
+						{/* <b className="text-lg">Fascino</b> */}
+						<Avatar
+							src={"/logo.svg"}
+							variant={"square"}
+							sx={{
+								height: "auto",
+								width: "120px",
+								background: "transparent",
+								borderColor: "none",
+							}}
+							className="mb-2"
+						/>
+						<p className={"text-xs text-center whitespace-pre"}>
+							{branch?.data?.address}
+						</p>
+						{branch?.data?.phone && (
+							<p className={"text-xs"}>Tel: {branch?.data?.phone}</p>
+						)}
+						<p className={"text-xs"}>Mushak 6.3</p>
+					</div>
+				)}
 			</div>
-			<Divider
+			{/* <Divider
 				flexItem
 				className={"w-full mt-3 border-2 border-black"}
 			>
 				<b className="text-xs">Invoice Info</b>
-			</Divider>
+			</Divider> */}
 			<div className="flex flex-col w-full m-2">
-				<p className={"text-xs"}>
-					<b>Date:</b> {moment().format("lll")}
-				</p>
-				<p className={"text-xs mt-2"}>
-					<b>Invoice No:</b> {localStorage.getItem("posInvoiceId")}
-				</p>
+				<div
+					className={`flex ${
+						isA5 ? "flex-row" : "flex-col"
+					} gap-1 justify-between my-1`}
+				>
+					<p className={"text-xs"}>
+						<b>Date:</b> {moment().format("lll")}
+					</p>
+					<p className={"text-xs"}>
+						<b>Invoice No:</b> {localStorage.getItem("posInvoiceId")}
+					</p>
+				</div>
 
-				<b>Customer:</b>
-				<p className="text-xs">{selectedCustomer?.name}</p>
-				<p className={"text-xs"}>{selectedCustomer?.phone}</p>
-				<p className={"text-xs"}>{selectedCustomer?.email}</p>
-				<p className={"text-xs"}>{selectedCustomer?.address}</p>
+				<div
+					className={`text-xs ${
+						isA5 ? "bg-slate-100 rounded p-3 my-1 mt-3" : ""
+					}`}
+				>
+					<div className="flex flex-row gap-2">
+						<b>Name:</b>
+						<p className="text-xs flex-1 pl-6">{selectedCustomer?.name}</p>
+					</div>
+					<div className="flex flex-row gap-2">
+						<b>Phone: </b>
+						<p className={"text-xs flex-1 pl-4"}>{selectedCustomer?.phone}</p>
+					</div>
+					<div className="flex flex-row gap-2">
+						<b>Email: </b>
+						<p className={"text-xs flex-1 pl-4"}>
+							asdasd{selectedCustomer?.email}
+						</p>
+					</div>
+					<div className="flex flex-row gap-2">
+						<b>Address:</b>
+						<p className={"text-xs whitespace-pre pl-1"}>
+							{selectedCustomer?.address}
+						</p>
+					</div>
+				</div>
+				{/* <b>Customer:</b> */}
 			</div>
 			<List>
 				<Divider className="border-1 border-black" />
@@ -1234,15 +1338,31 @@ const PrintableArea: React.FC<{
             borderColor: "none",
           }}
         /> */}
-				<div className="border border-slate-800 w-64 mt-2">
-					<Typography
-						variant="body1"
-						fontWeight={600}
-						className="text-center break-all"
-					>
-						No Return, No Exchange
-					</Typography>
-				</div>
+				{isA5 ? (
+					<>
+						<div className="border border-slate-800 w-full mt-2">
+							<Typography
+								variant="body1"
+								fontWeight={600}
+								className="text-center break-all"
+							>
+								We Do Not Offer Exchange, Refund & Color Gurantee
+							</Typography>
+						</div>
+					</>
+				) : (
+					<>
+						<div className="border border-slate-800 w-64 mt-2">
+							<Typography
+								variant="body1"
+								fontWeight={600}
+								className="text-center break-all"
+							>
+								No Return, No Exchange
+							</Typography>
+						</div>
+					</>
+				)}
 			</div>
 		</Box>
 	);
