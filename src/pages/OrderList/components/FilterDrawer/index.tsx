@@ -89,6 +89,27 @@ const FilterDrawer: React.FC<{
           onClear={() => setFilterField("salesman", undefined)}
         />
       </div>
+      <div className="p-2 px-6">
+        <Typography variant="overline">Filter Sale Type</Typography>
+        <Select
+          placeholder={"Select Type"}
+          className="w-full"
+          value={watch("type")}
+          allowClear
+          onChange={(v) => setFilterField("type", v)}
+          options={
+            [
+              { value: "online", label: "Online" },
+              { value: "offline", label: "Offline" },
+            ] || []
+          }
+          showSearch
+          filterOption={false}
+          searchValue={search}
+          onSearch={(v) => setSearch(v)}
+          onClear={() => setFilterField("type", undefined)}
+        />
+      </div>
     </Drawer>
   );
 };
