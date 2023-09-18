@@ -1,4 +1,5 @@
 import { useGetCustomers } from "@/queries/customer";
+import { useGetEmployees } from "@/queries/employees";
 import Iconify from "@components/iconify";
 import {
   Divider,
@@ -19,6 +20,8 @@ const FilterDrawer: React.FC<{
 }> = ({ setFilterField, watch, open, onClose }) => {
   const { search, setSearch, getQueryParams } = usePaginate();
   const { data: CustomerData } = useGetCustomers(getQueryParams());
+  const { data: EmployeeData } = useGetEmployees(getQueryParams());
+  console.log(EmployeeData);
 
   return (
     <Drawer
@@ -61,6 +64,29 @@ const FilterDrawer: React.FC<{
           searchValue={search}
           onSearch={(v) => setSearch(v)}
           onClear={() => setFilterField("customer", undefined)}
+        />
+      </div>
+      <div className="p-2 px-6">
+        <Typography variant="overline">Filter Salesman</Typography>
+        <Select
+          placeholder={"Select Salesman"}
+          className="w-full"
+          value={watch("salesman")}
+          allowClear
+          onChange={(v) => setFilterField("salesman", v)}
+          options={
+            EmployeeData?.data?.data?.map((ed: any) => {
+              return {
+                value: ed?._id,
+                label: ed?.fullName,
+              };
+            }) || []
+          }
+          showSearch
+          filterOption={false}
+          searchValue={search}
+          onSearch={(v) => setSearch(v)}
+          onClear={() => setFilterField("salesman", undefined)}
         />
       </div>
     </Drawer>
