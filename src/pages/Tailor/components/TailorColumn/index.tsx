@@ -105,7 +105,7 @@ const TailorColumn = (): GridColumns<IDataTable> => {
     {
       headerName: "Action",
       field: "action",
-      width: 80,
+      width: 90,
       minWidth: 80,
       flex: 1,
       headerAlign: "center",
