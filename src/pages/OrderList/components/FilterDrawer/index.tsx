@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { usePaginate } from "@tam11a/react-use-hooks";
-import { Select } from "antd";
+import { Input, Select } from "antd";
 import React from "react";
 
 const FilterDrawer: React.FC<{
@@ -21,7 +21,6 @@ const FilterDrawer: React.FC<{
   const { search, setSearch, getQueryParams } = usePaginate();
   const { data: CustomerData } = useGetCustomers(getQueryParams());
   const { data: EmployeeData } = useGetEmployees(getQueryParams());
-  console.log(EmployeeData);
 
   return (
     <Drawer
@@ -108,6 +107,16 @@ const FilterDrawer: React.FC<{
           searchValue={search}
           onSearch={(v) => setSearch(v)}
           onClear={() => setFilterField("type", undefined)}
+        />
+      </div>
+      <div className="p-2 px-6">
+        <Typography variant="overline">Filter Due</Typography>
+        <Input
+          placeholder={"Input minimum due"}
+          className="w-full"
+          value={watch("minDue")}
+          allowClear
+          onChange={(v) => setFilterField("minDue", v)}
         />
       </div>
     </Drawer>
