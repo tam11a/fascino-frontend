@@ -1,3 +1,4 @@
+import { useGetBranch } from "@/queries/branch";
 import { useGetCustomers } from "@/queries/customer";
 import { useGetEmployees } from "@/queries/employees";
 import Iconify from "@components/iconify";
@@ -20,7 +21,9 @@ const FilterDrawer: React.FC<{
 }> = ({ setFilterField, watch, open, onClose }) => {
   const { search, setSearch, getQueryParams } = usePaginate();
   const { data: CustomerData } = useGetCustomers(getQueryParams());
+  const { data: BranchData } = useGetBranch(getQueryParams());
   const { data: EmployeeData } = useGetEmployees(getQueryParams());
+  console.log(BranchData);
 
   return (
     <Drawer
@@ -52,6 +55,29 @@ const FilterDrawer: React.FC<{
           onChange={(v) => setFilterField("customer", v)}
           options={
             CustomerData?.data?.data?.map((cd: any) => {
+              return {
+                value: cd?._id,
+                label: cd?.name,
+              };
+            }) || []
+          }
+          showSearch
+          filterOption={false}
+          searchValue={search}
+          onSearch={(v) => setSearch(v)}
+          onClear={() => setFilterField("customer", undefined)}
+        />
+      </div>
+      <div className="p-2 px-6">
+        <Typography variant="overline">Filter Branch</Typography>
+        <Select
+          placeholder={"Select Branch"}
+          className="w-full"
+          value={watch("branch")}
+          allowClear
+          onChange={(v) => setFilterField("branch", v)}
+          options={
+            BranchData?.data?.data?.map((cd: any) => {
               return {
                 value: cd?._id,
                 label: cd?.name,
@@ -116,8 +142,27 @@ const FilterDrawer: React.FC<{
           className="w-full"
           value={watch("minDue")}
           allowClear
-          onChange={(v) => setFilterField("minDue", v)}
+          onChange={(v) => setFilterField("minDue", v.target.value)}
         />
+      </div>
+      <div className="p-2 px-6">
+        <Typography variant="overline">Filter Mfs</Typography>
+
+        <Select
+          value={watch("mfs")}
+          dropdownMatchSelectWidth={false}
+          className="w-full"
+          onChange={(v) => setFilterField("mfs", v)}
+          onClear={() => setFilterField("mfs", undefined)}
+          placeholder={"Select a mfs"}
+        >
+          <Select.Option value="Cash">Cash</Select.Option>
+          <Select.Option value="Card">Card</Select.Option>
+          <Select.Option value="bKash">bKash</Select.Option>
+          <Select.Option value="Nagad">Nagad</Select.Option>
+          <Select.Option value="Rocket">Rocket</Select.Option>
+          <Select.Option value="COD">COD</Select.Option>
+        </Select>
       </div>
     </Drawer>
   );

@@ -101,6 +101,16 @@ const OrderColumn = (): GridColumns<IDataTable> => {
       minWidth: 80,
     },
     {
+      headerName: "MFS",
+      headerAlign: "center",
+      field: "mfs",
+      align: "center",
+      flex: 1,
+      width: 100,
+      minWidth: 80,
+    },
+
+    {
       headerName: "Paid",
       headerAlign: "center",
       field: "paid",
