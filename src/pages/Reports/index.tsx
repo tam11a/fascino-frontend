@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Divider, Select, Statistic } from "antd";
+import { Card, Divider, Select, Spin, Statistic } from "antd";
 import { useGetBranch } from "@/queries/branch";
 import { IOption } from "@/hooks/useCategory/type";
 import { usePaginate } from "@tam11a/react-use-hooks";
@@ -39,52 +39,77 @@ const Sales: React.FC = () => {
 
 	const { data: globalData, isLoading: isGlobalLoading } = useGetGlobalReport();
 
-	console.log(globalData);
+	// console.log(globalData);
+
+	//   {
+	//     "totalBranches": 2,
+	//     "totalEmployees": 11,
+	//     "totalCustomers": 172,
+	//     "totalProducts": 2569,
+	//     "totalOrders": 191,
+	//     "totalAvailableItems": 3876,
+	//     "totalItems": 4187
+	// }
 
 	return (
-		<>
+		<div className="py-3 px-5">
 			<p className="py-4 font-semibold text-xl">All Reports</p>
-			<div className="grid grid-cols-4 gap-2">
-				<Card
-					bordered={true}
-					className="border-slate-400 text-slate-900 font-semibold"
-				>
-					<Statistic
-						title="Total Sale (In Amount)"
-						value={11.28}
-						// precision={2}
-						valueStyle={{ color: "" }}
-						// prefix={<ArrowUpOutlined />}
-						// suffix="%"
-					/>
-				</Card>
-				<Card
-					bordered={true}
-					className="border-slate-400 text-slate-900 font-semibold"
-				>
-					<Statistic
-						title="total sale (In Quantity)"
-						value={11.28}
-						// precision={2}
-						valueStyle={{ color: "" }}
-						// prefix={<ArrowUpOutlined />}
-						// suffix="%"
-					/>
-				</Card>
-				<Card
-					bordered={true}
-					className="border-slate-400 text-slate-900 font-semibold"
-				>
-					<Statistic
-						title="Total Customer"
-						value={11.28}
-						// precision={2}
-						valueStyle={{ color: "" }}
-						// prefix={<ArrowUpOutlined />}
-						// suffix="%"
-					/>
-				</Card>
-			</div>
+			<Spin spinning={isGlobalLoading}>
+				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
+					<Card
+						bordered={true}
+						className="border-slate-200 border-2 text-slate-900 font-semibold"
+					>
+						<Statistic
+							title="Total Order"
+							value={globalData?.data?.totalOrders || 0}
+							// precision={2}
+							// valueStyle={{ color: "" }}
+							// prefix={<ArrowUpOutlined />}
+							// suffix="%"
+						/>
+					</Card>
+					<Card
+						bordered={true}
+						className="border-slate-200 border-2 text-slate-900 font-semibold"
+					>
+						<Statistic
+							title="Total Customer"
+							value={globalData?.data?.totalCustomers || 0}
+							// precision={2}
+							valueStyle={{ color: "" }}
+							// prefix={<ArrowUpOutlined />}
+							// suffix="%"
+						/>
+					</Card>
+					<Card
+						bordered={true}
+						className="border-slate-200 border-2 text-slate-900 font-semibold"
+					>
+						<Statistic
+							title="Total Employee"
+							value={globalData?.data?.totalEmployees || 0}
+							// precision={2}
+							valueStyle={{ color: "" }}
+							// prefix={<ArrowUpOutlined />}
+							// suffix="%"
+						/>
+					</Card>
+					<Card
+						bordered={true}
+						className="border-slate-200 border-2 text-slate-900 font-semibold"
+					>
+						<Statistic
+							title="Total Branch"
+							value={globalData?.data?.totalBranches || 0}
+							// precision={2}
+							valueStyle={{ color: "" }}
+							// prefix={<ArrowUpOutlined />}
+							// suffix="%"
+						/>
+					</Card>
+				</div>
+			</Spin>
 			<div className="grid grid-cols-2">
 				<Divider orientation="left">
 					<Select
@@ -155,7 +180,7 @@ const Sales: React.FC = () => {
 			<div className="grid grid-cols-4 gap-2">
 				<Card
 					bordered={true}
-					className="border-slate-400 text-slate-900 font-semibold"
+					className="border-slate-200 border-2 text-slate-900 font-semibold"
 				>
 					<Statistic
 						title="Total Sale (In Amount)"
@@ -168,7 +193,7 @@ const Sales: React.FC = () => {
 				</Card>
 				<Card
 					bordered={true}
-					className="border-slate-400 text-slate-900 font-semibold"
+					className="border-slate-200 border-2 text-slate-900 font-semibold"
 				>
 					<Statistic
 						title="total sale (In Quantity)"
@@ -181,7 +206,7 @@ const Sales: React.FC = () => {
 				</Card>
 				<Card
 					bordered={true}
-					className="border-slate-400 text-slate-900 font-semibold"
+					className="border-slate-200 border-2 text-slate-900 font-semibold"
 				>
 					<Statistic
 						title="Total Customer"
@@ -194,7 +219,7 @@ const Sales: React.FC = () => {
 				</Card>{" "}
 				<Card
 					bordered={true}
-					className="border-slate-400 text-slate-900 font-semibold"
+					className="border-slate-200 border-2 text-slate-900 font-semibold"
 				>
 					<Statistic
 						title="Total Delivery"
@@ -207,7 +232,7 @@ const Sales: React.FC = () => {
 				</Card>
 				<Card
 					bordered={true}
-					className="border-slate-400 text-slate-900 font-semibold"
+					className="border-slate-200 border-2 text-slate-900 font-semibold"
 				>
 					<Statistic
 						title="Total Due"
@@ -220,7 +245,7 @@ const Sales: React.FC = () => {
 				</Card>
 				<Card
 					bordered={true}
-					className="border-slate-400 text-slate-900 font-semibold"
+					className="border-slate-200 border-2 text-slate-900 font-semibold"
 				>
 					<Statistic
 						title="Top Salesman"
@@ -232,7 +257,7 @@ const Sales: React.FC = () => {
 					/>
 				</Card>
 			</div>
-		</>
+		</div>
 	);
 };
 
