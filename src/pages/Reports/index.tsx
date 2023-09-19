@@ -4,8 +4,8 @@ import { useGetBranch } from "@/queries/branch";
 import { IOption } from "@/hooks/useCategory/type";
 import { usePaginate } from "@tam11a/react-use-hooks";
 import DatePicker from "@components/antd/DatePicker";
-import moment from "moment";
-import { useGetGlobalReport } from "@/queries/report";
+import moment, { Moment } from "moment";
+import { useGetGlobalReport, useGetRangeReport } from "@/queries/report";
 
 const Sales: React.FC = () => {
 	//Branch Section
@@ -36,20 +36,13 @@ const Sales: React.FC = () => {
 	const [selectedBranch, setSelectedBranch] = React.useState<
 		IOption | undefined
 	>(undefined);
-
+	const [range, setRange] = React.useState<Moment[]>([moment(), moment()]);
 	const { data: globalData, isLoading: isGlobalLoading } = useGetGlobalReport();
-
-	// console.log(globalData);
-
-	//   {
-	//     "totalBranches": 2,
-	//     "totalEmployees": 11,
-	//     "totalCustomers": 172,
-	//     "totalProducts": 2569,
-	//     "totalOrders": 191,
-	//     "totalAvailableItems": 3876,
-	//     "totalItems": 4187
-	// }
+	const { data: rangeData, isLoading: isRangeLoading } = useGetRangeReport({
+		branch: selectedBranch?.value,
+		fromDate: range?.[0]?.startOf("day").toISOString(),
+		toDate: range?.[1]?.endOf("day").toISOString(),
+	});
 
 	return (
 		<div className="py-3 px-5">
@@ -108,18 +101,58 @@ const Sales: React.FC = () => {
 							// suffix="%"
 						/>
 					</Card>
+					<Card
+						bordered={true}
+						className="border-slate-200 border-2 text-slate-900 font-semibold"
+					>
+						<Statistic
+							title="Total Available Items"
+							value={globalData?.data?.totalAvailableItems || 0}
+							// precision={2}
+							valueStyle={{ color: "" }}
+							// prefix={<ArrowUpOutlined />}
+							// suffix="%"
+						/>
+					</Card>
+					<Card
+						bordered={true}
+						className="border-slate-200 border-2 text-slate-900 font-semibold"
+					>
+						<Statistic
+							title="Total Uploaded Items"
+							value={globalData?.data?.totalItems || 0}
+							// precision={2}
+							valueStyle={{ color: "" }}
+							// prefix={<ArrowUpOutlined />}
+							// suffix="%"
+						/>
+					</Card>
+					<Card
+						bordered={true}
+						className="border-slate-200 border-2 text-slate-900 font-semibold"
+					>
+						<Statistic
+							title="Total Uploaded Products"
+							value={globalData?.data?.totalProducts || 0}
+							// precision={2}
+							valueStyle={{ color: "" }}
+							// prefix={<ArrowUpOutlined />}
+							// suffix="%"
+						/>
+					</Card>
 				</div>
 			</Spin>
+			<p className="pt-8 pb-4 font-semibold text-xl">Other Reports</p>
 			<div className="grid grid-cols-2">
 				<Divider orientation="left">
 					<Select
 						placeholder={"Select Your Branch"}
 						allowClear
 						showSearch
-						bordered={false}
-						defaultActiveFirstOption
-						size="large"
+						// bordered={false}
+						// size="large"
 						showArrow={false}
+						dropdownMatchSelectWidth={false}
 						onClear={() => setSelectedBranch(undefined)}
 						onSearch={(v) => setBranchSearch(v)}
 						value={selectedBranch?.value}
@@ -128,17 +161,18 @@ const Sales: React.FC = () => {
 						loading={isBranchLoading}
 						options={branches}
 						filterOption={false}
-						className="min-w-sm"
+						className="min-w-[100px] text-left"
 					/>
 				</Divider>
 				<Divider orientation="right">
 					<div className="w-fit">
 						<DatePicker.RangePicker
-							bordered={false}
+							// bordered={false}
+							defaultValue={[moment(), moment()]}
 							// size={"large"}
-							allowClear
-							allowEmpty={[true, true]}
-							className="w-fit"
+							allowClear={false}
+							allowEmpty={[false, false]}
+							className="w-fit min-w-[250px]"
 							presets={[
 								{
 									label: "Today",
@@ -166,97 +200,81 @@ const Sales: React.FC = () => {
 								},
 							]}
 							onChange={(v) => {
-								// setFilterField("range", [
-								// 	v?.[0]
-								// 		? moment(v?.[0]).startOf("day").toISOString()
-								// 		: undefined,
-								// 	v?.[1] ? moment(v?.[1]).endOf("day").toISOString() : undefined,
-								// ]);
+								setRange([moment(v?.[0]), moment(v?.[1])]);
 							}}
 						/>
 					</div>
 				</Divider>
 			</div>
-			<div className="grid grid-cols-4 gap-2">
-				<Card
-					bordered={true}
-					className="border-slate-200 border-2 text-slate-900 font-semibold"
-				>
-					<Statistic
-						title="Total Sale (In Amount)"
-						value={11.28}
-						// precision={2}
-						valueStyle={{ color: "" }}
-						// prefix={<ArrowUpOutlined />}
-						// suffix="%"
-					/>
-				</Card>
-				<Card
-					bordered={true}
-					className="border-slate-200 border-2 text-slate-900 font-semibold"
-				>
-					<Statistic
-						title="total sale (In Quantity)"
-						value={11.28}
-						// precision={2}
-						valueStyle={{ color: "" }}
-						// prefix={<ArrowUpOutlined />}
-						// suffix="%"
-					/>
-				</Card>
-				<Card
-					bordered={true}
-					className="border-slate-200 border-2 text-slate-900 font-semibold"
-				>
-					<Statistic
-						title="Total Customer"
-						value={11.28}
-						// precision={2}
-						valueStyle={{ color: "" }}
-						// prefix={<ArrowUpOutlined />}
-						// suffix="%"
-					/>
-				</Card>{" "}
-				<Card
-					bordered={true}
-					className="border-slate-200 border-2 text-slate-900 font-semibold"
-				>
-					<Statistic
-						title="Total Delivery"
-						value={11.28}
-						// precision={2}
-						valueStyle={{ color: "" }}
-						// prefix={<ArrowUpOutlined />}
-						// suffix="%"
-					/>
-				</Card>
-				<Card
-					bordered={true}
-					className="border-slate-200 border-2 text-slate-900 font-semibold"
-				>
-					<Statistic
-						title="Total Due"
-						value={11.28}
-						// precision={2}
-						valueStyle={{ color: "" }}
-						// prefix={<ArrowUpOutlined />}
-						// suffix="%"
-					/>
-				</Card>
-				<Card
-					bordered={true}
-					className="border-slate-200 border-2 text-slate-900 font-semibold"
-				>
-					<Statistic
-						title="Top Salesman"
-						value={11.28}
-						// precision={2}
-						valueStyle={{ color: "" }}
-						// prefix={<ArrowUpOutlined />}
-						// suffix="%"
-					/>
-				</Card>
-			</div>
+			<Spin spinning={isRangeLoading}>
+				<div className="grid grid-cols-4 gap-2">
+					<Card
+						bordered={true}
+						className="border-slate-200 border-2 text-slate-900 font-semibold"
+					>
+						<Statistic
+							title="New Orders"
+							value={rangeData?.data?.newOrders || 0}
+							// precision={2}
+							valueStyle={{ color: "" }}
+							// prefix={<ArrowUpOutlined />}
+							// suffix="%"
+						/>
+					</Card>
+					<Card
+						bordered={true}
+						className="border-slate-200 border-2 text-slate-900 font-semibold"
+					>
+						<Statistic
+							title="Total Sales"
+							value={rangeData?.data?.totalSales || 0}
+							precision={2}
+							valueStyle={{ color: "" }}
+							// prefix={<ArrowUpOutlined />}
+							suffix="৳"
+						/>
+					</Card>
+					<Card
+						bordered={true}
+						className="border-slate-200 border-2 text-slate-900 font-semibold"
+					>
+						<Statistic
+							title="Total Due"
+							value={rangeData?.data?.totalDue || 0}
+							precision={2}
+							valueStyle={{ color: "" }}
+							suffix="৳"
+						/>
+					</Card>
+
+					<Card
+						bordered={true}
+						className="border-slate-200 border-2 text-slate-900 font-semibold"
+					>
+						<Statistic
+							title="New Customers"
+							value={rangeData?.data?.newCustomers || 0}
+							// precision={2}
+							valueStyle={{ color: "" }}
+							// prefix={<ArrowUpOutlined />}
+							// suffix="%"
+						/>
+					</Card>
+
+					<Card
+						bordered={true}
+						className="border-slate-200 border-2 text-slate-900 font-semibold"
+					>
+						<Statistic
+							title="Total Petty Cash"
+							value={rangeData?.data?.totalPettyCash || 0}
+							precision={2}
+							valueStyle={{ color: "" }}
+							suffix="৳"
+						/>
+					</Card>
+				</div>
+			</Spin>
 		</div>
 	);
 };
