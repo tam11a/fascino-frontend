@@ -7,6 +7,8 @@ import { FloatButton, Input } from "antd";
 import Iconify from "@components/iconify";
 import OrderColumn from "./components/OrderColumn";
 import FilterDrawer from "./components/FilterDrawer";
+import DatePicker from "@components/antd/DatePicker";
+import moment from "moment";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const OrderList: React.FC = () => {
@@ -21,8 +23,13 @@ const OrderList: React.FC = () => {
     setFilterField,
     watch,
   } = usePaginate();
-  const { data, isLoading } = useGetOrders(getQueryParams());
+  const { data, isLoading } = useGetOrders({
+    ...getQueryParams(),
+    fromDate: watch("range")?.[0],
+    toDate: watch("range")?.[1],
+  });
   const { state: openFiler, toggleState: onCloseFilter } = useToggle(false);
+
   return (
     <>
       <Container
@@ -32,13 +39,32 @@ const OrderList: React.FC = () => {
         }}
       >
         <Grid container rowGap={1} direction="column" marginTop={4}>
+          <div className="flex flex-row items-center ">
+            <Typography variant="subtitle1" fontWeight={700}>
+              {/* {t("employee:EmployeeList")} */}
+              Order
+            </Typography>
+          </div>
           <Grid className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div className="flex flex-row items-center ">
-              <Typography variant="subtitle1" fontWeight={700}>
-                {/* {t("employee:EmployeeList")} */}
-                Order
-              </Typography>
-            </div>
+            <DatePicker.RangePicker
+              bordered={true}
+              size={"large"}
+              allowClear
+              allowEmpty={[false, false]}
+              className="grid-cols-2"
+              onChange={(v) => {
+                if (
+                  moment(v?.[0]).toISOString() === moment(v?.[1]).toISOString()
+                ) {
+                  setFilterField("range", [undefined, undefined]);
+                } else {
+                  setFilterField("range", [
+                    moment(v?.[0]).toISOString(),
+                    moment(v?.[1]).toISOString(),
+                  ]);
+                }
+              }}
+            />
             <Input
               className="w-full sm:max-w-xs"
               placeholder="Search Order By Invoice Id"
