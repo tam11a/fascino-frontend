@@ -13,7 +13,7 @@ export const useGetProducts = (params: any) => {
 };
 
 const getProductById = (id: any) => {
-  return instance.get(`/Product/${id}`, {
+  return instance.get(`/product/${id}`, {
     // params: {},
   });
 };
@@ -23,6 +23,23 @@ export const useGetProductById = (id: any) => {
     enabled: !!id,
     // select: (data: string) => data?.data || [],
   });
+};
+
+const getProductReportById = (id: any) => {
+  return instance.get(`/report/product/${id}`, {
+    // params: {},
+  });
+};
+
+export const useGetProductReportById = (id: any) => {
+  return useQuery(
+    ["get-product-report-by-id", id],
+    () => getProductReportById(id),
+    {
+      enabled: !!id,
+      // select: (data: string) => data?.data || [],
+    }
+  );
 };
 
 const updateProduct = ({

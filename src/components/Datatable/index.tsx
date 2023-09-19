@@ -41,6 +41,7 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
 }));
 
 const DataTable: React.FC<IDataTable> = ({
+  className,
   columns,
   rows,
   isLoading,
@@ -68,7 +69,7 @@ const DataTable: React.FC<IDataTable> = ({
           fontSize: 14,
         },
       }}
-      className="border-solid border-2 border-gray-100 p-2 pb-0"
+      className={"border-solid border-2 border-gray-100 p-2 pb-0 " + className}
     >
       <StripedDataGrid
         disableColumnMenu

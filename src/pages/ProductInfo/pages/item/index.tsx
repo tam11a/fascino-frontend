@@ -9,10 +9,11 @@ import {
 // import BranchColumn from "./components/BranchColumn";
 // import { useGetBranch } from "@/queries/branch";
 import { BsSearch } from "react-icons/bs";
-import { FloatButton, Input } from "antd";
+import { FloatButton, Input, Spin, Card, Statistic } from "antd";
 import Iconify from "@components/iconify";
 import ItemColumn from "./components/ItemColumn";
 import { useGetItem } from "@/queries/item";
+import { useGetProductReportById } from "@/queries/products";
 import { useParams } from "react-router-dom";
 import FilterDrawer from "./components/FilterDrawer";
 import { GridSelectionModel } from "@mui/x-data-grid";
@@ -53,6 +54,11 @@ const Item: React.FC = () => {
   const { state: openItems, toggleState: onCloseItem } = useToggle(false);
 
   const printRef = React.useRef(null);
+
+  const { data: reportData, isLoading: isReportLoading } =
+    useGetProductReportById(pid);
+
+  console.log(reportData?.data?.data);
 
   const reactToPrintContent = React.useCallback(() => {
     return printRef.current;
@@ -108,6 +114,27 @@ const Item: React.FC = () => {
               size="large"
               allowClear
             />
+          </Grid>
+          <Grid item>
+            <Spin spinning={isReportLoading}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
+                {Object.entries(reportData?.data?.data)?.map((data) => (
+                  <Card
+                    bordered={true}
+                    className="border-slate-200 border-2 text-slate-900 font-semibold"
+                  >
+                    <Statistic
+                      title={data[0] || "Untitled"}
+                      value={`${data[1] || 0}`}
+                      // precision={2}
+                      // valueStyle={{ color: "" }}
+                      // prefix={<ArrowUpOutlined />}
+                      // suffix="%"
+                    />
+                  </Card>
+                ))}
+              </div>
+            </Spin>
           </Grid>
           <Grid item>
             <DataTable

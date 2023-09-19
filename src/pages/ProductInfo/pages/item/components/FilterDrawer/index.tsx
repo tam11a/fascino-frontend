@@ -70,7 +70,6 @@ const FilterDrawer: React.FC<{
           allowClear
           onChange={(v) => setFilterField("branch", v)}
           options={branchData?.data?.data?.map((bd: any) => {
-            console.log(bd);
             return {
               value: bd?._id,
               label: bd?.name,
