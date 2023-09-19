@@ -22,6 +22,7 @@ export type GridNativeColTypes =
 export type GridAlignment = "left" | "right" | "center";
 
 export type IDataTable = {
+  className?: string;
   columns: GridColumns<any>;
   rows: any;
   isLoading: boolean;
