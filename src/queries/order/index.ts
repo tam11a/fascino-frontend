@@ -2,6 +2,7 @@ import instance from "@/services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const getOrders = (params: any) => {
+  console.log(params);
   return instance.get(`/order`, {
     params,
   });
