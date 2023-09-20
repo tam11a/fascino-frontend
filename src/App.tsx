@@ -35,8 +35,8 @@ const App: React.FC = () => {
 			isVerboseMode={false} //If true, the library writes verbose logs to console.
 			loadingComponent={
 				<>
-					<div className="h-full w-full flex flex-row items-center justify-center">
-						<p className="font-bold">Updating to New Version...</p>
+					<div className="h-screen w-screen flex flex-row items-center justify-center">
+						<p className="font-bold text-lg">Updating to New Version...</p>
 					</div>
 				</>
 			} //If not pass, nothing appears at the time of new version check.
