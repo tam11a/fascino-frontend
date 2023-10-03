@@ -36,18 +36,71 @@ import handleResponse from "@/utilities/handleResponse";
 import { useGetTailor } from "@/queries/tailor";
 import { useReactToPrint } from "react-to-print";
 // import { print } from "react-html2pdf";
-import short from "short-uuid";
 import { usePostOrder } from "@/queries/order";
 import moment from "moment";
 import { useGetEmployees } from "@/queries/employees";
+
+import { customAlphabet } from "nanoid";
+const nanoid = customAlphabet("1234567890", 5);
 
 const POS: React.FC = () => {
 	const { state: open, toggleState: onClose } = useToggle(false);
 	//   const { getQueryParams } = usePaginate();
 
-	const [posInvoice, setPosInvoice] = React.useState(
-		localStorage?.getItem("posInvoiceId") || short.generate()
+	//Branch Section
+	const { setSearch: setBranchSearch, getQueryParams: getBranchQueryParams } =
+		usePaginate({
+			defaultParams: {
+				limit: 10,
+			},
+		});
+
+	const { data: branchData, isLoading: isBranchLoading } = useGetBranch(
+		getBranchQueryParams()
 	);
+	const [branches, setBranches] = React.useState<IOption[]>([]);
+
+	React.useEffect(() => {
+		if (!branchData) return;
+		setBranches(
+			Array.from(branchData?.data?.data || [], (d: any) => ({
+				value: d?._id,
+				label: d?.name,
+				disabled: !d?.isActive,
+				data: d,
+			}))
+		);
+	}, [branchData]);
+
+	const [selectedBranch, setSelectedBranch] = React.useState<
+		IOption | undefined
+	>(
+		localStorage.getItem("sbpos")
+			? JSON.parse(localStorage.getItem("sbpos") || "{}")
+			: undefined
+	);
+
+	const generateInvoiceID = () => {
+		return selectedBranch
+			? `${selectedBranch?.data?.name
+					?.charAt(0)
+					.toUpperCase()}${selectedBranch?.data?.name
+					?.charAt(selectedBranch?.data?.name?.length - 1)
+					.toUpperCase()}-${nanoid()}`
+			: `${nanoid()}`;
+	};
+
+	const [posInvoice, setPosInvoice] = React.useState(
+		localStorage?.getItem("posInvoiceId") || generateInvoiceID()
+	);
+
+	React.useEffect(() => {
+		if (selectedBranch)
+			localStorage.setItem("sbpos", JSON.stringify(selectedBranch));
+		else localStorage.removeItem("sbpos");
+
+		setPosInvoice(generateInvoiceID());
+	}, [selectedBranch]);
 
 	React.useEffect(() => {
 		localStorage.setItem("posInvoiceId", posInvoice);
@@ -142,45 +195,6 @@ const POS: React.FC = () => {
 	const [selectedEmployee, setSelectedEmployee] = React.useState<
 		string | undefined
 	>();
-
-	//Branch Section
-	const { setSearch: setBranchSearch, getQueryParams: getBranchQueryParams } =
-		usePaginate({
-			defaultParams: {
-				limit: 10,
-			},
-		});
-
-	const { data: branchData, isLoading: isBranchLoading } = useGetBranch(
-		getBranchQueryParams()
-	);
-	const [branches, setBranches] = React.useState<IOption[]>([]);
-
-	React.useEffect(() => {
-		if (!branchData) return;
-		setBranches(
-			Array.from(branchData?.data?.data || [], (d: any) => ({
-				value: d?._id,
-				label: d?.name,
-				disabled: !d?.isActive,
-				data: d,
-			}))
-		);
-	}, [branchData]);
-
-	const [selectedBranch, setSelectedBranch] = React.useState<
-		IOption | undefined
-	>(
-		localStorage.getItem("sbpos")
-			? JSON.parse(localStorage.getItem("sbpos") || "{}")
-			: undefined
-	);
-
-	React.useEffect(() => {
-		if (selectedBranch)
-			localStorage.setItem("sbpos", JSON.stringify(selectedBranch));
-		else localStorage.removeItem("sbpos");
-	}, [selectedBranch]);
 
 	//tailors section
 	const { setSearch: setTailorSearch, getQueryParams: getTailorQueryParams } =
@@ -427,7 +441,7 @@ const POS: React.FC = () => {
 
 		const res = await handleResponse(() => postOrder(data), [201]);
 		if (res.status) {
-			setPosInvoice(short.generate());
+			setPosInvoice(generateInvoiceID());
 			localStorage.removeItem("stpos");
 			localStorage.removeItem("scpos");
 			localStorage.removeItem("pos_products");
