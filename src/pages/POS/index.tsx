@@ -965,6 +965,11 @@ const POS: React.FC = () => {
 								loading={orderLoading}
 								onClick={handlePrint}
 								type="primary"
+								disabled={
+									!selectedBranch ||
+									!Object.values(posProducts)?.length ||
+									!selectedCustomer
+								}
 							>
 								Invoice
 							</Dropdown.Button>
