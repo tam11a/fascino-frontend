@@ -10,6 +10,8 @@ import { FloatButton, Input } from "antd";
 import { BsSearch } from "react-icons/bs";
 import Iconify from "@components/iconify";
 import FilterDrawer from "./components/FilterDrawer";
+import { AccessMargin } from "@tam11a/react-use-access";
+import defaultPermissions from "@/utilities/defaultPermissions";
 // import { t } from "i18next";
 
 const DataTable = React.lazy(() => import("@/components/Datatable"));
@@ -31,7 +33,7 @@ const Customer: React.FC = () => {
   const { state: openFilter, toggleState: onCloseFilter } = useToggle(false);
 
   return (
-    <>
+    <AccessMargin to={defaultPermissions.INVENTORY} defaultFallback>
       <Container
         maxWidth={"lg"}
         sx={{
@@ -92,7 +94,7 @@ const Customer: React.FC = () => {
           onClose={onCloseFilter}
         />
       </Container>
-    </>
+    </AccessMargin>
   );
 };
 

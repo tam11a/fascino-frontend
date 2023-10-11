@@ -7,6 +7,8 @@ import CreateSupplier from "./components/CreateSupplier";
 import { FloatButton, Input } from "antd";
 import { BsSearch } from "react-icons/bs";
 import Iconify from "@components/iconify";
+import { AccessMargin } from "@tam11a/react-use-access";
+import defaultPermissions from "@/utilities/defaultPermissions";
 // import { AccessMargin } from "@tam11a/react-use-access";
 // import defaultPermissions from "@/utilities/defaultPermissions";
 // import { t } from "i18next";
@@ -21,7 +23,7 @@ const Suppliers: React.FC = () => {
   const { state: open, toggleState: onClose } = useToggle(false);
 
   return (
-    <>
+    <AccessMargin to={defaultPermissions.INVENTORY} defaultFallback>
       <Container
         maxWidth={"lg"}
         sx={{
@@ -73,7 +75,7 @@ const Suppliers: React.FC = () => {
         {/* Dialog Box */}
         <CreateSupplier open={open} onClose={onClose} />
       </Container>
-    </>
+    </AccessMargin>
   );
 };
 

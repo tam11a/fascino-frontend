@@ -3,12 +3,14 @@ import React from "react";
 import RoleList from "./components/RoleList";
 import RoleItem from "./components/RoleItem";
 import { useLocation, useNavigate } from "react-router-dom";
+import { AccessMargin } from "@tam11a/react-use-access";
+import defaultPermissions from "@/utilities/defaultPermissions";
 
 const Roles: React.FC = () => {
   let location = useLocation();
   const navigate = useNavigate();
   return (
-    <>
+    <AccessMargin to={defaultPermissions.EMPLOYEES} defaultFallback>
       <Grid
         container
         sx={{
@@ -45,7 +47,7 @@ const Roles: React.FC = () => {
           </DialogContent>
         </Dialog>
       </Hidden>
-    </>
+    </AccessMargin>
   );
 };
 

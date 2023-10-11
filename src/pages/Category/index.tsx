@@ -8,6 +8,8 @@ import CategoryColumn from "./components/CategoryColumn";
 import DataTable from "@components/Datatable";
 import { useGetCategories } from "@/queries/category";
 import CreateCategory from "./components/CreateCategory";
+import { AccessMargin } from "@tam11a/react-use-access";
+import defaultPermissions from "@/utilities/defaultPermissions";
 
 const Info: React.FC = () => {
   const { search, setSearch, getQueryParams, limit, setLimit, page, setPage } =
@@ -19,7 +21,7 @@ const Info: React.FC = () => {
   const { data, isLoading } = useGetCategories(getQueryParams());
   const { state: open, toggleState: onClose } = useToggle(false);
   return (
-    <>
+    <AccessMargin to={defaultPermissions.INVENTORY} defaultFallback>
       <Container
         maxWidth={"lg"}
         sx={{
@@ -70,7 +72,7 @@ const Info: React.FC = () => {
         {/* Dialog Box */}
         <CreateCategory open={open} onClose={onClose} />
       </Container>
-    </>
+    </AccessMargin>
   );
 };
 

@@ -9,6 +9,8 @@ import { BsSearch } from "react-icons/bs";
 import CreateProduct from "./components/CreateProduct";
 import ProductColumn from "./components/ProductColumn";
 import FilterDrawer from "./components/FilterDrawer";
+import { AccessMargin } from "@tam11a/react-use-access";
+import defaultPermissions from "@/utilities/defaultPermissions";
 
 const Products: React.FC = () => {
   const {
@@ -31,7 +33,7 @@ const Products: React.FC = () => {
   const { state: open, toggleState: onClose } = useToggle(false);
   const { state: openFiler, toggleState: onCloseFilter } = useToggle(false);
   return (
-    <>
+    <AccessMargin to={defaultPermissions.INVENTORY} defaultFallback>
       <Container
         maxWidth={"lg"}
         sx={{
@@ -93,7 +95,7 @@ const Products: React.FC = () => {
         setFilterField={setFilterField}
         watch={watch}
       />
-    </>
+    </AccessMargin>
   );
 };
 

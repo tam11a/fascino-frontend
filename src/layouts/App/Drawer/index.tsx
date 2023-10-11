@@ -47,70 +47,74 @@ const AppDrawer: React.FC<{ open: boolean; toggleDrawer: () => void }> = ({
             mt: "20px",
           }}
         >
-          {DrawerData(logout)?.map?.((item, index) => (
-            <List
-              key={item.title}
-              subheader={
-                open ? (
-                  <ListSubheader
-                    sx={{
-                      // color: "#000",
-                      fontWeight: "bold",
-                      textTransform: "uppercase",
-                      fontSize: "0.7em",
-                      lineHeight: "30px",
-                    }}
-                  >
-                    {item.title}
-                  </ListSubheader>
-                ) : index ? (
-                  <Divider variant={"middle"} />
-                ) : (
-                  <></>
-                )
-              }
-            >
-              {item.sublist?.map?.((navbtn) => (
-                <ListItemButton
-                  sx={{
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                  key={navbtn.to || navbtn.name}
-                  component={navbtn.to ? Link : ListItemButton}
-                  to={navbtn.to}
-                  onClick={navbtn.function}
-                  disabled={navbtn.disabled}
+          {DrawerData(logout)?.map?.(
+            (item, index) =>
+              !item.hide && (
+                <List
+                  key={item.title}
+                  subheader={
+                    open ? (
+                      <ListSubheader
+                        sx={{
+                          // color: "#000",
+                          fontWeight: "bold",
+                          textTransform: "uppercase",
+                          fontSize: "0.7em",
+                          lineHeight: "30px",
+                        }}
+                      >
+                        {item.title}
+                      </ListSubheader>
+                    ) : index ? (
+                      <Divider variant={"middle"} />
+                    ) : (
+                      <></>
+                    )
+                  }
                 >
-                  <Tooltip title={navbtn.name} placement={"right"} arrow>
-                    <ListItemIcon
+                  {item.sublist?.map?.((navbtn) => (
+                    <ListItemButton
                       sx={{
-                        minWidth: 0,
-                        mr: open ? 1.5 : "auto",
-                        justifyContent: "center",
-                        fontSize: "1.5rem",
-                        p: 1,
-                        borderRadius: "4px",
+                        justifyContent: open ? "initial" : "center",
+                        display: navbtn.hide ? "none" : "flex",
+                        px: 2.5,
                       }}
-                      className="bg-primary-50 bg-opacity-50 text-primary-800"
+                      key={navbtn.to || navbtn.name}
+                      component={navbtn.to ? Link : ListItemButton}
+                      to={navbtn.to}
+                      onClick={navbtn.function}
+                      disabled={navbtn.disabled}
                     >
-                      {navbtn.icon}
-                    </ListItemIcon>
-                  </Tooltip>
+                      <Tooltip title={navbtn.name} placement={"right"} arrow>
+                        <ListItemIcon
+                          sx={{
+                            minWidth: 0,
+                            mr: open ? 1.5 : "auto",
+                            justifyContent: "center",
+                            fontSize: "1.5rem",
+                            p: 1,
+                            borderRadius: "4px",
+                          }}
+                          className="bg-primary-50 bg-opacity-50 text-primary-800"
+                        >
+                          {navbtn.icon}
+                        </ListItemIcon>
+                      </Tooltip>
 
-                  <ListItemText
-                    primary={navbtn.name}
-                    sx={{ opacity: open ? 1 : 0 }}
-                    primaryTypographyProps={{
-                      sx: {
-                        fontSize: "0.9em",
-                      },
-                    }}
-                  />
-                </ListItemButton>
-              ))}
-            </List>
-          ))}
+                      <ListItemText
+                        primary={navbtn.name}
+                        sx={{ opacity: open ? 1 : 0 }}
+                        primaryTypographyProps={{
+                          sx: {
+                            fontSize: "0.9em",
+                          },
+                        }}
+                      />
+                    </ListItemButton>
+                  ))}
+                </List>
+              )
+          )}
         </Box>
         <DrawerFooter
           sx={{
