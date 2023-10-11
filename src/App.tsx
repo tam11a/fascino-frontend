@@ -26,6 +26,7 @@ const query = new QueryClient({
 
 import { version } from "../package.json";
 import { AccessProvider } from "@tam11a/react-use-access";
+import NoAccess from "@components/NoAccess";
 
 const App: React.FC = () => {
   const isProduction = import.meta.env.VITE_NODE_ENV === "production";
@@ -57,7 +58,7 @@ const App: React.FC = () => {
             >
               {/* <CssBaseline /> */}
               <BrowserRouter>
-                <AccessProvider>
+                <AccessProvider fallback={<NoAccess />}>
                   <AuthProvider>
                     <BaseRoutes />
                   </AuthProvider>

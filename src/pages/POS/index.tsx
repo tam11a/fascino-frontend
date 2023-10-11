@@ -464,7 +464,7 @@ const POS: React.FC = () => {
   };
 
   return (
-    <AccessMargin to={defaultPermissions.POS}>
+    <AccessMargin to={defaultPermissions.POS} defaultFallback>
       {/* <Container className="py-4"> */}
       <div className="relative flex flex-row items-center justify-between gap-2 p-3 bg-slate-100 rounded-md">
         <div className="flex flex-row items-center justify-between gap-2 pl-2">

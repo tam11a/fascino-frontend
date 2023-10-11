@@ -32,7 +32,7 @@ const Employees: React.FC = () => {
   const { state: OpenFilter, toggleState: onCloseFilter } = useToggle(false);
 
   return (
-    <AccessMargin to={defaultPermissions.EMPLOYEES}>
+    <AccessMargin to={defaultPermissions.EMPLOYEES} defaultFallback>
       <Container
         maxWidth={"lg"}
         sx={{
