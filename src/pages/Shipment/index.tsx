@@ -9,6 +9,8 @@ import { BsSearch } from "react-icons/bs";
 import CreateShipment from "./components/CreateShipment";
 import ShipmentColumn from "./components/ShipmentColumn";
 import FilterDrawer from "./components/FilterDrawer";
+import { AccessMargin } from "@tam11a/react-use-access";
+import defaultPermissions from "@/utilities/defaultPermissions";
 
 const Shipments: React.FC = () => {
   const {
@@ -29,7 +31,7 @@ const Shipments: React.FC = () => {
   const { state: openFilter, toggleState: onCloseFilter } = useToggle(false);
 
   return (
-    <>
+    <AccessMargin to={defaultPermissions.INVENTORY} defaultFallback>
       <Container
         maxWidth={"lg"}
         sx={{
@@ -91,7 +93,7 @@ const Shipments: React.FC = () => {
         setFilterField={setFilterField}
         watch={watch}
       />
-    </>
+    </AccessMargin>
   );
 };
 

@@ -7,6 +7,8 @@ import { useGetBranch } from "@/queries/branch";
 import { BsSearch } from "react-icons/bs";
 import { FloatButton, Input } from "antd";
 import Iconify from "@components/iconify";
+import { AccessMargin } from "@tam11a/react-use-access";
+import defaultPermissions from "@/utilities/defaultPermissions";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const Branches: React.FC = () => {
@@ -17,7 +19,7 @@ const Branches: React.FC = () => {
   const { state: open, toggleState: onClose } = useToggle(false);
 
   return (
-    <>
+    <AccessMargin to={defaultPermissions.INVENTORY} defaultFallback>
       <Container
         maxWidth={"lg"}
         sx={{
@@ -69,7 +71,7 @@ const Branches: React.FC = () => {
         {/* Dialog Box */}
         <CreateBranch open={open} onClose={onClose} />
       </Container>
-    </>
+    </AccessMargin>
   );
 };
 

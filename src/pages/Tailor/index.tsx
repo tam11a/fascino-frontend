@@ -8,6 +8,8 @@ import React from "react";
 import { BsSearch } from "react-icons/bs";
 import CreateTailor from "./components/CreateTailor";
 import TailorColumn from "./components/TailorColumn";
+import { AccessMargin } from "@tam11a/react-use-access";
+import defaultPermissions from "@/utilities/defaultPermissions";
 
 const Tailor: React.FC = () => {
   const { limit, setLimit, page, setPage, getQueryParams, setSearch, search } =
@@ -18,7 +20,7 @@ const Tailor: React.FC = () => {
   const { state: open, toggleState: onClose } = useToggle(false);
 
   return (
-    <>
+    <AccessMargin to={defaultPermissions.INVENTORY} defaultFallback>
       <Container
         maxWidth={"lg"}
         sx={{
@@ -70,7 +72,7 @@ const Tailor: React.FC = () => {
 
         <CreateTailor open={open} onClose={onClose} />
       </Container>
-    </>
+    </AccessMargin>
   );
 };
 

@@ -1,6 +1,5 @@
 import { lazy } from "react";
 import { PRIVATE_ROUTES } from "./paths";
-import defaultPermissions from "@/utilities/defaultPermissions";
 
 export const privateRoutes = [
   {
@@ -94,7 +93,7 @@ export const privateRoutes = [
   {
     path: PRIVATE_ROUTES.EMPLOYEES,
     Component: lazy(() => import("@pages/Employees")),
-    permissions: Object.values(defaultPermissions.EMPLOYEES),
+    // permissions: Object.values(defaultPermissions.EMPLOYEES),
   },
   {
     path: PRIVATE_ROUTES.EMPLOYEEINFO,
