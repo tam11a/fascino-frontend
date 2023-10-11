@@ -3,8 +3,8 @@ import { Container, Grid, Typography } from "@mui/material";
 import { usePaginate, useToggle } from "@tam11a/react-use-hooks";
 import CreateEmployee from "./components/CreateEmployee";
 import EmployeeColumn from "./components/EmployeeColumn";
-// import { AccessMargin } from "@tam11a/react-use-access";
-// import defaultPermissions from "@/utilities/defaultPermissions";
+import { AccessMargin } from "@tam11a/react-use-access";
+import defaultPermissions from "@/utilities/defaultPermissions";
 import { useGetEmployees } from "@/queries/employees";
 import { FloatButton, Input } from "antd";
 import { BsSearch } from "react-icons/bs";
@@ -32,7 +32,7 @@ const Employees: React.FC = () => {
   const { state: OpenFilter, toggleState: onCloseFilter } = useToggle(false);
 
   return (
-    <>
+    <AccessMargin to={defaultPermissions.EMPLOYEES}>
       <Container
         maxWidth={"lg"}
         sx={{
@@ -95,7 +95,7 @@ const Employees: React.FC = () => {
           watch={watch}
         />
       </Container>
-    </>
+    </AccessMargin>
   );
 };
 
