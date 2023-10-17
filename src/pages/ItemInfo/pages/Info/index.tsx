@@ -8,6 +8,7 @@ import { useGetItemById, useReturnStitchedItem } from "@/queries/item";
 // import Barcode from "react-barcode";
 import {
 	Button,
+	IconButton,
 	// IconButton
 } from "@mui/material";
 // import Iconify from "@components/iconify";
@@ -17,6 +18,9 @@ import useAreYouSure from "@/hooks/useAreYouSure";
 import handleResponse from "@/utilities/handleResponse";
 import { message } from "@components/antd/message";
 import { Icon } from "@iconify/react";
+import { useReactToPrint } from "react-to-print";
+import Iconify from "@components/iconify";
+import Barcode from "react-jsbarcode";
 
 const Info: React.FC = ({}) => {
 	const { iid } = useParams();
@@ -49,35 +53,35 @@ const Info: React.FC = ({}) => {
 		}
 	};
 
-	// const printRef = React.useRef(null);
+	const printRef = React.useRef(null);
 
-	// const reactToPrintContent = React.useCallback(() => {
-	// 	return printRef.current;
-	// }, [printRef.current]);
+	const reactToPrintContent = React.useCallback(() => {
+		return printRef.current;
+	}, [printRef.current]);
 
-	// const handlePrint = useReactToPrint({
-	// 	content: reactToPrintContent,
-	// 	documentTitle: "item-" + iid || "",
-	// 	removeAfterPrint: true,
-	// 	pageStyle: `
-	//   @page {
-	//     // size: 2.17in 0.71in;
-	//     margin: 0in 0.4in 0.67in 0.85in;
-	//   }
+	const handlePrint = useReactToPrint({
+		content: reactToPrintContent,
+		documentTitle: "item-" + iid || "",
+		removeAfterPrint: true,
+		pageStyle: `
+	  @page {
+	    // size: 2.17in 0.71in;
+	    margin: 0in 0.4in 0.67in 0.85in;
+	  }
 
-	//   @media all {
-	//     .pageBreak {
-	//       display: none
-	//     }
-	//   }
+	  @media all {
+	    .pageBreak {
+	      display: none
+	    }
+	  }
 
-	//   @media print {
-	//     .pageBreak {
-	//       page-break-before: always
-	//     }
-	//   }
-	//   `,
-	// });
+	  @media print {
+	    .pageBreak {
+	      page-break-before: always
+	    }
+	  }
+	  `,
+	});
 
 	return (
 		<>
@@ -87,29 +91,36 @@ const Info: React.FC = ({}) => {
 					bordered
 					column={{ xs: 1, sm: 1, md: 2 }}
 				>
-					{/* <Descriptions.Item
-            label={
-              <>
-                <IconButton onClick={() => handlePrint()}>
-                  <Iconify
-                    icon={"material-symbols:print-add-outline-rounded"}
-                  />
-                </IconButton>
-              </>
-            }
-            span={2}
-          >
-            <div ref={printRef}>
-              <Barcode
-                format="CODE128"
-                value={iid || ""}
-                width={1}
-                height={50}
-                fontSize={9}
-                fontOptions="bold"
-              />
-            </div>
-          </Descriptions.Item> */}
+					<Descriptions.Item
+						label={
+							<>
+								<IconButton onClick={() => handlePrint()}>
+									<Iconify
+										icon={"material-symbols:print-add-outline-rounded"}
+									/>
+								</IconButton>
+							</>
+						}
+						span={2}
+					>
+						<div ref={printRef}>
+							<Barcode
+								value={iid || ""}
+								options={{
+									text: `${iid}${
+										itemData?.data?.data?.stitch
+											? `-${itemData?.data?.data?.stitch?.size}`
+											: ""
+									}`,
+									width: 1,
+									fontOptions: "bold",
+									format: "CODE128",
+									fontSize: 8,
+									height: 50,
+								}}
+							/>
+						</div>
+					</Descriptions.Item>
 					<Descriptions.Item label="Product">
 						<b>Name:</b> {itemData?.data?.data?.product?.name}
 						<br />
