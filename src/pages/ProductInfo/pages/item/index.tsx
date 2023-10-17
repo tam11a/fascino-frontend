@@ -18,7 +18,7 @@ import { useParams } from "react-router-dom";
 import FilterDrawer from "./components/FilterDrawer";
 import { GridSelectionModel } from "@mui/x-data-grid";
 import { useReactToPrint } from "react-to-print";
-import Barcode from "react-barcode";
+import Barcode from "react-jsbarcode";
 import ItemDrawer from "./components/ItemDrawer";
 import AddItems from "./components/AddItems";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
@@ -223,12 +223,19 @@ const Item: React.FC = () => {
 					{rowSelectionModel?.map?.((barid) => (
 						<div key={barid}>
 							<Barcode
-								format="CODE128"
-								value={barid?.toString() || ""}
-								width={1}
-								height={50}
-								fontSize={9}
-								fontOptions="bold"
+								value={`${barid || ""}`}
+								options={{
+									// text: `${barid}${
+									// 	itemData?.data?.data?.stitch
+									// 		? `-${itemData?.data?.data?.stitch?.size}`
+									// 		: ""
+									// }`,
+									width: 1,
+									fontOptions: "bold",
+									format: "CODE128",
+									fontSize: 8,
+									height: 50,
+								}}
 							/>
 							<br />
 							<br />
