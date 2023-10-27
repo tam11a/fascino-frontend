@@ -10,6 +10,7 @@ import DataTable from "@components/Datatable";
 import SalesmanColumn from "./components/SalesmanColumn";
 import { AccessMargin } from "@tam11a/react-use-access";
 import defaultPermissions from "@/utilities/defaultPermissions";
+import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
 
 const Sales: React.FC = () => {
   const { limit, setLimit, page, setPage } = usePaginate();
@@ -48,6 +49,8 @@ const Sales: React.FC = () => {
     fromDate: range?.[0]?.startOf("day").toISOString(),
     toDate: range?.[1]?.endOf("day").toISOString(),
   });
+
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
   return (
     <AccessMargin to={defaultPermissions.SALES} defaultFallback>
@@ -309,6 +312,31 @@ const Sales: React.FC = () => {
           pageSize={limit}
           onPageSizeChange={setLimit}
         />
+        <div className="w-[450px] h-[450px]">
+          <ResponsiveContainer width={"100%"} height="100%">
+            <PieChart width={400} height={400} className="bg-orange-300">
+              <Pie
+                dataKey="percentage"
+                data={rangeData?.data?.typeWisePercentage || []}
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                label
+                fill="#8884d8"
+                labelLine={true}
+              >
+                {rangeData?.data?.typeWisePercentage?.map(
+                  (entry: any, index: number) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  )
+                )}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </AccessMargin>
   );
