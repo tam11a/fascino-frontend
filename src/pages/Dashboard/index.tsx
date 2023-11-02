@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import Iconify from "@components/iconify";
 import SalesmanColumn from "@pages/Reports/components/SalesmanColumn";
-import { PieChart, Pie, ResponsiveContainer } from "recharts";
 
 const Dashboard: React.FC = () => {
   const { limit, setLimit, page, setPage } = usePaginate();
@@ -222,22 +221,6 @@ const Dashboard: React.FC = () => {
           pageSize={limit}
           onPageSizeChange={setLimit}
         />
-        <div className="w-[450px] h-[450px]">
-          <ResponsiveContainer width={"100%"} height="100%">
-            <PieChart width={400} height={400}>
-              <Pie
-                dataKey="percentage"
-                data={rangeData?.data?.typeWisePercentage || []}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                label
-                fill="#8884d8"
-                labelLine={true}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
       </div>
     </AccessMargin>
   );
