@@ -11,19 +11,13 @@ import SalesmanColumn from "./components/SalesmanColumn";
 import { AccessMargin } from "@tam11a/react-use-access";
 import defaultPermissions from "@/utilities/defaultPermissions";
 import {
-  PieChart,
-  Pie,
   ResponsiveContainer,
-  Cell,
-  AreaChart,
   CartesianGrid,
   XAxis,
   YAxis,
   Tooltip,
-  Area,
   LineChart,
   Line,
-  Legend,
 } from "recharts";
 
 const Sales: React.FC = () => {
@@ -63,8 +57,6 @@ const Sales: React.FC = () => {
     fromDate: range?.[0]?.startOf("day").toISOString(),
     toDate: range?.[1]?.endOf("day").toISOString(),
   });
-
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
   return (
     <AccessMargin to={defaultPermissions.SALES} defaultFallback>
@@ -326,106 +318,7 @@ const Sales: React.FC = () => {
           pageSize={limit}
           onPageSizeChange={setLimit}
         />
-        <div className="flex flex-col gap-4 lg:flex-row">
-          <Spin spinning={isRangeLoading}>
-            {!!rangeData?.data?.typeWisePercentage?.length ? (
-              <div className="w-[450px] h-[500px] border-2 my-4">
-                <p className="font-bold text-center text-lg pt-3">
-                  Type-Wise Sales
-                </p>
-                <div className="flex flex-row items-center justify-center gap-6 flex-wrap">
-                  {rangeData?.data?.typeWisePercentage?.map(
-                    (entry: any, index: number) => (
-                      <p className="flex flex-row items-center justify-center gap-2 uppercase font-bold text-slate-600">
-                        <span
-                          className="rounded text-5xl"
-                          style={{ color: COLORS[index % COLORS.length] }}
-                        >
-                          &bull;
-                        </span>
-                        {entry._id}
-                      </p>
-                    )
-                  )}
-                </div>
 
-                <ResponsiveContainer width={"100%"} height="80%">
-                  <PieChart width={400} height={400}>
-                    <Pie
-                      dataKey="percentage"
-                      data={rangeData?.data?.typeWisePercentage || []}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={80}
-                      label
-                      labelLine={true}
-                    >
-                      {rangeData?.data?.typeWisePercentage?.map(
-                        (_entry: any, index: number) => (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={COLORS[index % COLORS.length]}
-                          />
-                        )
-                      )}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            ) : (
-              ""
-            )}
-          </Spin>
-          <Spin spinning={isRangeLoading}>
-            {!!rangeData?.data?.branchWisePercentage?.length ? (
-              <div className="w-[450px] h-[500px] border-2 my-4">
-                <p className="font-bold text-center text-lg pt-3">
-                  Branch-Wise Sales
-                </p>
-                <div className="flex flex-row items-center justify-center gap-6 flex-wrap">
-                  {rangeData?.data?.branchWisePercentage?.map(
-                    (entry: any, index: number) => (
-                      <p className="flex flex-row items-center justify-center gap-2 uppercase font-bold text-slate-600">
-                        <span
-                          className="rounded text-5xl"
-                          style={{ color: COLORS[index % COLORS.length] }}
-                        >
-                          &bull;
-                        </span>
-                        {entry?.branchData?.[0]?.name || "Untitled"}
-                      </p>
-                    )
-                  )}
-                </div>
-
-                <ResponsiveContainer width={"100%"} height="80%">
-                  <PieChart width={400} height={400}>
-                    <Pie
-                      dataKey="percentage"
-                      data={rangeData?.data?.branchWisePercentage || []}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={80}
-                      label
-                      labelLine={true}
-                    >
-                      {rangeData?.data?.branchWisePercentage?.map(
-                        (_entry: any, index: number) => (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={COLORS[index % COLORS.length]}
-                          />
-                        )
-                      )}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            ) : (
-              ""
-            )}
-          </Spin>
-        </div>
         <p className="font-bold text-center text-lg pt-3">Yearly Sales Chart</p>
         <div className="w-full h-80">
           <ResponsiveContainer width="100%" height="100%">
