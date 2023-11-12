@@ -293,7 +293,9 @@ const Sales: React.FC = () => {
             bordered={true}
             className="border-slate-200 border-2 text-slate-900 font-medium my-2 min-h-[80px] text-center"
           >
-            <p className="text-xl font-bold mb-4 underline">MFS Report</p>
+            <p className="text-xl font-bold mb-4 underline">
+              Payment Method wise Sales Report
+            </p>
             <div
               className={
                 "flex flex-row items-center justify-center flex-wrap gap-5 text-lg"
