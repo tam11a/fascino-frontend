@@ -23,7 +23,6 @@ const FilterDrawer: React.FC<{
   const { data: CustomerData } = useGetCustomers(getQueryParams());
   const { data: BranchData } = useGetBranch(getQueryParams());
   const { data: EmployeeData } = useGetEmployees(getQueryParams());
-  console.log(BranchData);
 
   return (
     <Drawer

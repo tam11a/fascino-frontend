@@ -4,5 +4,6 @@ const defaultPermissions = {
   DASHBOARD: "dashboard.report",
   SALES: "sales.report",
   INVENTORY: "inventory",
+  DOWNLOADORDER: "order.download",
 };
 export default defaultPermissions;

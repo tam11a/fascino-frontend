@@ -11,6 +11,7 @@ import DatePicker from "@components/antd/DatePicker";
 import moment from "moment";
 import { AccessMargin } from "@tam11a/react-use-access";
 import defaultPermissions from "@/utilities/defaultPermissions";
+import DownloadDialog from "./components/DownloadDialog";
 const DataTable = React.lazy(() => import("@/components/Datatable"));
 
 const OrderList: React.FC = () => {
@@ -31,6 +32,7 @@ const OrderList: React.FC = () => {
     toDate: watch("range")?.[1],
   });
   const { state: openFiler, toggleState: onCloseFilter } = useToggle(false);
+  const { state: openDialog, toggleState: onCloseDialog } = useToggle(false);
 
   return (
     <AccessMargin to={defaultPermissions.INVENTORY} defaultFallback>
@@ -125,6 +127,12 @@ const OrderList: React.FC = () => {
         </Grid>
 
         <FloatButton.Group shape="square" className="bottom-20 sm:bottom-4">
+          <AccessMargin to={defaultPermissions.DOWNLOADORDER}>
+            <FloatButton
+              icon={<Iconify icon={"material-symbols:download"} />}
+              onClick={() => onCloseDialog()}
+            />
+          </AccessMargin>
           <FloatButton
             icon={<Iconify icon={"material-symbols:filter-alt-outline"} />}
             onClick={() => onCloseFilter()}
@@ -137,6 +145,7 @@ const OrderList: React.FC = () => {
         setFilterField={setFilterField}
         watch={watch}
       />
+      <DownloadDialog open={openDialog} onClose={onCloseDialog} />
     </AccessMargin>
   );
 };
