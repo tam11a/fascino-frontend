@@ -26,7 +26,7 @@ export const PRIVATE_ROUTES = {
   EMPLOYEES: "employees",
   SUPPLIERSINFO: "suppliers/:sid/*",
   SUPPLIERS: "suppliers",
-  EMPLOYEEINFO: "employee/:eid/*",
+  EMPLOYEEINFO: "employees/:eid/*",
   ROLES: "roles/*",
   SALES: "sales/*",
   SETTINGS: "settings/*",

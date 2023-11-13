@@ -5,5 +5,6 @@ const defaultPermissions = {
   SALES: "sales.report",
   INVENTORY: "inventory",
   DOWNLOADORDER: "order.download",
+  RESETPASSWORD: "employee.resetpassword",
 };
 export default defaultPermissions;

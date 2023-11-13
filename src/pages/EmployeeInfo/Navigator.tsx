@@ -11,6 +11,11 @@ const items: MenuProps["items"] = [
     key: Employee_ROUTES.INFO,
     icon: <Icon icon="clarity:employee-line" className="text-xl" />,
   },
+  {
+    label: "Security",
+    key: Employee_ROUTES.SECURITY,
+    icon: <Icon icon="ic:twotone-lock-person" className="text-xl" />,
+  },
 ];
 
 const Navigator: React.FC = () => {

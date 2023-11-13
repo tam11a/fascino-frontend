@@ -66,3 +66,11 @@ export const useToggleEmployee = () => {
     onSuccess: () => queryClient.invalidateQueries(["get-all-employees"]),
   });
 };
+
+const resetEmployeePassword = (data: {
+  uid: string | undefined;
+  password?: string;
+}) => instance.post(`employee/resetpassword`, { ...data });
+
+export const useResetEmployeePassword = () =>
+  useMutation(resetEmployeePassword);
