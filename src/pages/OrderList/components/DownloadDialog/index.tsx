@@ -163,7 +163,7 @@ const DownloadDialog: React.FC<{ open: boolean; onClose: () => void }> = ({
           <Button variant="outlined" size="small" onClick={onClose}>
             Cancel
           </Button>
-          <Button variant="contained" size="small" onClick={onClose}>
+          <Button variant="contained" size="small" onClick={onClose} disabled>
             Download
           </Button>
         </DialogActions>
