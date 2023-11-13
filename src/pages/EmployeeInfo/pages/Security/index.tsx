@@ -19,7 +19,7 @@ import defaultPermissions from "@/utilities/defaultPermissions";
 const Security: React.FC = () => {
   const { eid } = useParams();
   const [messageApi, contextHolder] = message.useMessage();
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, control, reset } = useForm({
     resolver: joiResolver(resetPasswordResolver),
   });
 
@@ -39,6 +39,7 @@ const Security: React.FC = () => {
     messageApi.destroy();
     if (res.status) {
       messageApi.success("Password updated successfully!");
+      reset();
     } else messageApi.error(res.message);
   };
 
