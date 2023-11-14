@@ -21,7 +21,8 @@ import {
 } from "recharts";
 
 const Sales: React.FC = () => {
-  const { limit, setLimit, page, setPage } = usePaginate();
+  const { search, setSearch, limit, setLimit, page, setPage, watch } =
+    usePaginate();
   //Branch Section
   const { setSearch: setBranchSearch, getQueryParams: getBranchQueryParams } =
     usePaginate({
@@ -50,9 +51,13 @@ const Sales: React.FC = () => {
   const [selectedBranch, setSelectedBranch] = React.useState<
     IOption | undefined
   >(undefined);
+  const [selectedType, setSelectedType] = React.useState<IOption | undefined>(
+    undefined
+  );
   const [range, setRange] = React.useState<Moment[]>([moment(), moment()]);
   const { data: globalData, isLoading: isGlobalLoading } = useGetGlobalReport();
   const { data: rangeData, isLoading: isRangeLoading } = useGetRangeReport({
+    type: selectedType?.value,
     branch: selectedBranch?.value,
     fromDate: range?.[0]?.startOf("day").toISOString(),
     toDate: range?.[1]?.endOf("day").toISOString(),
@@ -160,24 +165,47 @@ const Sales: React.FC = () => {
         <p className="pt-8 pb-4 font-semibold text-xl">Other Reports</p>
         <div className="grid grid-cols-2">
           <Divider orientation="left">
-            <Select
-              placeholder={"Select Your Branch"}
-              allowClear
-              showSearch
-              // bordered={false}
-              // size="large"
-              showArrow={false}
-              dropdownMatchSelectWidth={false}
-              onClear={() => setSelectedBranch(undefined)}
-              onSearch={(v) => setBranchSearch(v)}
-              value={selectedBranch?.value}
-              onSelect={(_v, o) => setSelectedBranch(o)}
-              // onChange={(_v, o) => setSelectedBranch(o)}
-              loading={isBranchLoading}
-              options={branches}
-              filterOption={false}
-              className="min-w-[100px] text-left"
-            />
+            <div className="flex gap-2">
+              <Select
+                placeholder={"Select Type"}
+                dropdownMatchSelectWidth={false}
+                className="min-w-[100px] text-left"
+                value={watch("type")}
+                showArrow={false}
+                allowClear
+                // onChange={(v) => setFilterField("type", v)}
+                options={
+                  [
+                    { value: "online", label: "Online" },
+                    { value: "offline", label: "Offline" },
+                  ] || []
+                }
+                showSearch
+                filterOption={false}
+                searchValue={search}
+                onSearch={(v) => setSearch(v)}
+                onClear={() => setSelectedType(undefined)}
+                onSelect={(_v, o) => setSelectedType(o)}
+              />
+              <Select
+                placeholder={"Select Your Branch"}
+                allowClear
+                showSearch
+                // bordered={false}
+                // size="large"
+                showArrow={false}
+                dropdownMatchSelectWidth={false}
+                onClear={() => setSelectedBranch(undefined)}
+                onSearch={(v) => setBranchSearch(v)}
+                value={selectedBranch?.value}
+                onSelect={(_v, o) => setSelectedBranch(o)}
+                // onChange={(_v, o) => setSelectedBranch(o)}
+                loading={isBranchLoading}
+                options={branches}
+                filterOption={false}
+                className="min-w-[100px] text-left"
+              />
+            </div>
           </Divider>
           <Divider orientation="right">
             <div className="w-fit">

@@ -19,7 +19,6 @@ import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
 const Dashboard: React.FC = () => {
   const { search, setSearch, limit, setLimit, page, setPage, watch } =
     usePaginate();
-
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
   //Branch Section
   const { setSearch: setBranchSearch, getQueryParams: getBranchQueryParams } =
