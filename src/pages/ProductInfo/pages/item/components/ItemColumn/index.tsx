@@ -3,6 +3,7 @@ import { IDataTable } from "@/types";
 import { Icon } from "@iconify/react";
 import { Chip, IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
+import { Tag } from "antd";
 import moment from "moment";
 // import { checkAccess } from "@tam11a/react-use-access";
 // import moment from "moment";
@@ -53,24 +54,37 @@ const ItemColumn = (): GridColumns<IDataTable> => {
     {
       headerName: "Shipping Date",
       field: "shippingDate",
-      width: 100,
-      minWidth: 80,
+      width: 150,
+      minWidth: 120,
       headerAlign: "center",
       align: "center",
-      flex: 1,
       renderCell: (data: any) =>
         data.row?.shipment
           ? moment(data.row?.shipment?.createdAt).format("LL")
           : "-",
     },
     {
-      headerName: "Stitch Status",
-      field: "sticthStatus ",
-      width: 100,
-      minWidth: 80,
+      headerName: "Status",
+      field: "orderline",
+      width: 120,
+      minWidth: 100,
       headerAlign: "center",
       align: "center",
       flex: 1,
+      renderCell: (data: any) =>
+        data.row?.orderline ? (
+          <Tag color="red">Sold</Tag>
+        ) : (
+          <Tag color="green">Available</Tag>
+        ),
+    },
+    {
+      headerName: "Stitch Status",
+      field: "sticthStatus ",
+      width: 120,
+      minWidth: 100,
+      headerAlign: "center",
+      align: "center",
       renderCell: (data: any) =>
         data.row?.stitch ? (
           <>
