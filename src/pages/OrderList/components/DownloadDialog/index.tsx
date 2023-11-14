@@ -1,4 +1,3 @@
-import { downloadOrders, useDownloadOrders } from "@/queries/order";
 import DatePicker from "@components/antd/DatePicker";
 import Iconify from "@components/iconify";
 import {
@@ -11,7 +10,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { usePaginate } from "@tam11a/react-use-hooks";
-import { InputNumber, Select, Slider } from "antd";
+import { Select } from "antd";
 import moment from "moment";
 import React from "react";
 import instance from "@/services";
