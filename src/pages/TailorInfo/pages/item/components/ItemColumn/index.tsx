@@ -79,7 +79,8 @@ const ItemColumn = (): GridColumns<IDataTable> => {
       width: 150,
       minWidth: 130,
       flex: 1,
-      renderCell: (data: any) => data.row?.stitch?.fee,
+      renderCell: (data: any) =>
+        data.row?.stitch ? data.row?.stitch?.fee : "-",
     },
     {
       headerName: "Stitch Size",
@@ -89,7 +90,8 @@ const ItemColumn = (): GridColumns<IDataTable> => {
       width: 150,
       minWidth: 130,
       flex: 1,
-      renderCell: (data: any) => data.row?.stitch?.size,
+      renderCell: (data: any) =>
+        data.row?.stitch ? data.row?.stitch?.size : "-",
     },
     {
       headerName: "Created At",
