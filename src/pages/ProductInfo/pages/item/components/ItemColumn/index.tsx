@@ -1,6 +1,5 @@
 // import defaultPermissions from "@/utilities/defaultPermissions";
 import { IDataTable } from "@/types";
-import { Icon } from "@iconify/react";
 import { Chip, IconButton } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { Tag } from "antd";
@@ -86,23 +85,7 @@ const ItemColumn = (): GridColumns<IDataTable> => {
       headerAlign: "center",
       align: "center",
       renderCell: (data: any) =>
-        data.row?.stitch ? (
-          <>
-            {data?.row?.stitch?.receivedAt ? (
-              <>
-                <Icon
-                  icon="game-icons:sewing-machine"
-                  className="text-xl"
-                  color="#36b336"
-                />
-              </>
-            ) : (
-              <Icon icon="game-icons:sewing-machine" className="text-xl" />
-            )}
-          </>
-        ) : (
-          "-"
-        ),
+        data.row?.stitch ? data.row?.stitch?.size : "-",
     },
     {
       headerName: "Action",
