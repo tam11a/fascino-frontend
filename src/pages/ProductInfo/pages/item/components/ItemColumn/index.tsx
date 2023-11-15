@@ -78,8 +78,8 @@ const ItemColumn = (): GridColumns<IDataTable> => {
         ),
     },
     {
-      headerName: "Stitch Status",
-      field: "sticthStatus ",
+      headerName: "Stitch Size",
+      field: "stitchSize",
       width: 120,
       minWidth: 100,
       headerAlign: "center",
