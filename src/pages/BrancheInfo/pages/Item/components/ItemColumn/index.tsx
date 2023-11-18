@@ -117,14 +117,14 @@ const ItemColumn = (): GridColumns<IDataTable> => {
     },
     {
       headerName: "Status",
-      field: "orderline",
+      field: "orderLine",
       width: 120,
       minWidth: 100,
       headerAlign: "center",
       align: "center",
       flex: 1,
       renderCell: (data: any) =>
-        data.row?.orderline ? (
+        data.row?.orderLine ? (
           <Tag color="red">Sold</Tag>
         ) : (
           <Tag color="green">Available</Tag>
