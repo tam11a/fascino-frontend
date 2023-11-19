@@ -288,6 +288,8 @@ const POS: React.FC = () => {
   const [subTotal, setSubTotal] = React.useState(0);
   const [stitchCost, setStitchCost] = React.useState(0);
   const [discount, setDiscount] = React.useState(0);
+  const [exchange, setExchange] = React.useState(0);
+  const [deliveryCharge, setDeliveryCharge] = React.useState(0);
   const [paid, setPaid] = React.useState(0);
   const [temppaid, setTempPaid] = React.useState(0);
   const [payMethod, setPayMethod] = React.useState("Cash");
@@ -299,7 +301,6 @@ const POS: React.FC = () => {
   >([]);
 
   const [online, setOnline] = React.useState(false);
-
   React.useEffect(() => {
     localStorage.setItem("pos_products", JSON.stringify(posProducts));
     let amount = 0;
@@ -313,6 +314,10 @@ const POS: React.FC = () => {
     setSubTotal(amount);
     setStitchCost(stitchAmount);
   }, [posProducts]);
+
+  React.useEffect(() => {
+    !online && setDeliveryCharge(0);
+  }, [online]);
 
   const [scanType, setScanType] = React.useState(
     JSON.parse(localStorage.getItem("scanType") || "true")
@@ -435,7 +440,8 @@ const POS: React.FC = () => {
       customer: selectedCustomer?._id,
       branch: JSON.parse(localStorage.getItem("sbpos") || "{}")?.value,
       type: online ? "online" : "offline",
-      discount: discount || 0,
+      discount: discount + exchange || 0,
+      delivery_charge: deliveryCharge,
       products,
       tailor: selectedTailor?.value,
       transactions,
@@ -452,6 +458,8 @@ const POS: React.FC = () => {
       setSelectedCustomer(null);
       setPosProducts({});
       setPaid(0);
+      setExchange(0);
+      setDeliveryCharge(0);
       setDiscount(0);
       setTransactions([]);
       setTempPaid(0);
@@ -665,9 +673,21 @@ const POS: React.FC = () => {
               <Typography variant="body2">{discount} ৳</Typography>
             </div>
             <div className="w-full flex flex-row items-center gap-4 justify-between">
+              <Typography variant="body2">Exchange : </Typography>
+              <Typography variant="body2">{exchange} ৳</Typography>
+            </div>
+            {online === true ? (
+              <div className="w-full flex flex-row items-center gap-4 justify-between">
+                <Typography variant="body2">Delivery Charge : </Typography>
+                <Typography variant="body2">{deliveryCharge} ৳</Typography>
+              </div>
+            ) : (
+              ""
+            )}
+            <div className="w-full flex flex-row items-center gap-4 justify-between">
               <Typography variant="body2">Total : </Typography>
               <Typography variant="body2">
-                {subTotal - discount + stitchCost} ৳
+                {subTotal - discount - exchange + stitchCost + deliveryCharge} ৳
               </Typography>
             </div>
             {transactions?.length > 0 && (
@@ -689,8 +709,14 @@ const POS: React.FC = () => {
             <div className="w-full flex flex-row items-center gap-4 justify-between">
               <Typography variant="body2">Changed Amount : </Typography>
               <Typography variant="body2">
-                {paid > subTotal - discount + stitchCost
-                  ? paid - (subTotal - discount + stitchCost)
+                {paid >
+                subTotal - discount - exchange + stitchCost + deliveryCharge
+                  ? paid -
+                    (subTotal -
+                      discount -
+                      exchange +
+                      stitchCost +
+                      deliveryCharge)
                   : "0"}{" "}
                 ৳
               </Typography>
@@ -700,8 +726,14 @@ const POS: React.FC = () => {
               <Typography variant="body2">Due : </Typography>
 
               <Typography variant="body2">
-                {subTotal - discount - paid + stitchCost > 0
-                  ? subTotal - discount - paid + stitchCost
+                {subTotal - discount - exchange + stitchCost + deliveryCharge >
+                paid
+                  ? subTotal -
+                    discount -
+                    exchange +
+                    stitchCost +
+                    deliveryCharge -
+                    paid
                   : "0"}{" "}
                 ৳
               </Typography>
@@ -819,7 +851,39 @@ const POS: React.FC = () => {
                 onChange={(e) => setOnline(e)}
               />
             </div>
-            <div className="flex flex-row items-center gap-5">
+            {online === true ? (
+              <div className="flex flex-row items-center justify-between w-60 gap-5">
+                <Typography variant={"caption"} className={"font-bold"}>
+                  Delivery Charge
+                </Typography>
+                <InputNumber
+                  addonAfter={<Iconify icon={"tabler:currency-taka"} />}
+                  size="large"
+                  min={0}
+                  className={"max-w-[7rem]"}
+                  value={deliveryCharge}
+                  onChange={(e) => setDeliveryCharge(e || 0)}
+                />
+              </div>
+            ) : (
+              ""
+            )}
+
+            <div className="flex flex-row items-center justify-between w-60 gap-5 ">
+              <Typography variant={"caption"} className={"font-bold"}>
+                Exchange
+              </Typography>
+              <InputNumber
+                addonAfter={<Iconify icon={"tabler:currency-taka"} />}
+                max={subTotal + stitchCost}
+                size="large"
+                min={0}
+                className={"max-w-[7rem]"}
+                value={exchange}
+                onChange={(e) => setExchange(e || 0)}
+              />
+            </div>
+            <div className="flex flex-row items-center justify-between w-60 gap-5">
               <Typography variant={"caption"} className={"font-bold"}>
                 Discount
               </Typography>
@@ -833,7 +897,6 @@ const POS: React.FC = () => {
                 onChange={(e) => setDiscount(e || 0)}
               />
             </div>
-
             <div className="flex flex-col gap-2">
               <Typography variant={"caption"} className={"font-bold"}>
                 Add Payment
@@ -853,8 +916,8 @@ const POS: React.FC = () => {
                     dropdownMatchSelectWidth={false}
                   >
                     <Select.Option value="Cash">Cash</Select.Option>
-                    <Select.Option value="Card">Card</Select.Option>
                     <Select.Option value="bKash">bKash</Select.Option>
+                    <Select.Option value="Card">Card</Select.Option>
                     <Select.Option value="Nagad">Nagad</Select.Option>
                     <Select.Option value="Rocket">Rocket</Select.Option>
                     <Select.Option value="COD">COD</Select.Option>
@@ -1079,6 +1142,9 @@ const POS: React.FC = () => {
               stitchCost,
               paid,
               discount,
+              transactions,
+              exchange,
+              deliveryCharge,
               selectedCustomer,
               branch: selectedBranch,
               method: payMethod,
@@ -1094,6 +1160,9 @@ const POS: React.FC = () => {
               stitchCost,
               paid,
               discount,
+              transactions,
+              exchange,
+              deliveryCharge,
               selectedCustomer,
               branch: selectedBranch,
               method: payMethod,
@@ -1113,6 +1182,12 @@ const PrintableArea: React.FC<{
   subTotal: number;
   stitchCost: number;
   discount: number;
+  exchange: number;
+  transactions: {
+    paid: number;
+    method: string;
+  }[];
+  deliveryCharge: number;
   paid: number;
   selectedCustomer: {
     [id: string]: any;
@@ -1224,9 +1299,7 @@ const PrintableArea: React.FC<{
           </div>
           <div className="flex flex-row gap-2">
             <b>Email: </b>
-            <p className={"text-xs flex-1 pl-4"}>
-              asdasd{selectedCustomer?.email}
-            </p>
+            <p className={"text-xs flex-1 pl-4"}>{selectedCustomer?.email}</p>
           </div>
           <div className="flex flex-row gap-2">
             <b>Address:</b>
@@ -1287,6 +1360,16 @@ const PrintableArea: React.FC<{
           <p>{others?.discount}৳</p>
         </div>
         <div className="w-full flex flex-row items-center gap-4 justify-between">
+          <p>Exchange: </p>
+          <p>{others?.exchange}৳</p>
+        </div>
+        {!!others?.deliveryCharge && (
+          <div className="w-full flex flex-row items-center gap-4 justify-between">
+            <p>Delivery Charge: </p>
+            <p>{others?.deliveryCharge}৳</p>
+          </div>
+        )}
+        <div className="w-full flex flex-row items-center gap-4 justify-between">
           <p>Vat Inclusive (7.5%) : </p>
           <p>
             {parseFloat(
@@ -1303,18 +1386,26 @@ const PrintableArea: React.FC<{
         {!!(
           others?.subTotal -
           others?.discount -
-          others?.paid +
-          others?.stitchCost
+          others?.exchange +
+          others?.deliveryCharge +
+          others?.stitchCost -
+          others?.paid
         ) && (
           <div className="w-full flex flex-row items-center gap-4 justify-between">
             <p>Amount Due: </p>
             <p>
               {others?.paid <
-              others?.subTotal - others?.discount + others?.stitchCost
-                ? others?.paid -
-                  others?.subTotal -
-                  others?.discount +
-                  others?.stitchCost
+              others?.subTotal -
+                others?.discount -
+                others?.exchange +
+                others?.deliveryCharge +
+                others?.stitchCost
+                ? others?.subTotal -
+                  others?.discount -
+                  others?.exchange +
+                  others?.deliveryCharge +
+                  others?.stitchCost -
+                  others?.paid
                 : "0"}
               ৳
             </p>
@@ -1322,13 +1413,23 @@ const PrintableArea: React.FC<{
         )}
         <div className="w-full flex flex-row items-center gap-4 justify-between">
           <p>Mode of Payment: </p>
-          <b>{others?.method}</b>
+          <b>
+            {Array.from(others?.transactions || [], (t: any) => t.method).join(
+              ", "
+            )}
+          </b>
         </div>
         <div className="w-full flex flex-row items-center gap-4 justify-between border-t-2 border-black pt-2">
           <b>MRP: </b>
           <b>
             {parseFloat(
-              `${others?.subTotal - others?.discount + others?.stitchCost}`
+              `${
+                others?.subTotal -
+                others?.discount -
+                others.exchange +
+                others.deliveryCharge +
+                others?.stitchCost
+              }`
             ).toFixed(2)}
             ৳
           </b>
@@ -1337,11 +1438,17 @@ const PrintableArea: React.FC<{
           <p>Changed Amount : </p>
           <p>
             {others?.paid >
-            others?.subTotal - others?.discount + others?.stitchCost
+            others?.subTotal -
+              others?.discount -
+              others.exchange +
+              others.deliveryCharge +
+              others?.stitchCost
               ? others?.paid -
-                others?.subTotal -
-                others?.discount +
-                others?.stitchCost
+                (others?.subTotal -
+                  others?.discount -
+                  others.exchange +
+                  others.deliveryCharge +
+                  others?.stitchCost)
               : "0"}
             ৳
           </p>
