@@ -206,7 +206,7 @@ const Dashboard: React.FC = () => {
             >
               <Statistic
                 title="Petty Cash"
-                value={rangeData?.data?.totalPrttyCash || 0}
+                value={rangeData?.data?.totalPettyCash || 0}
                 // precision={2}
                 valueStyle={{ color: "" }}
                 // prefix={<ArrowUpOutlined />}
