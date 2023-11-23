@@ -33,6 +33,7 @@ const OrderList: React.FC = () => {
   });
   const { state: openFiler, toggleState: onCloseFilter } = useToggle(false);
   const { state: openDialog, toggleState: onCloseDialog } = useToggle(false);
+  console.log(data);
 
   return (
     <AccessMargin to={defaultPermissions.INVENTORY} defaultFallback>
