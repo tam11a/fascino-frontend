@@ -106,8 +106,10 @@ const OrderColumn = (): GridColumns<IDataTable> => {
       field: "mfs",
       align: "center",
       flex: 1,
-      width: 100,
-      minWidth: 80,
+      width: 200,
+      minWidth: 180,
+      renderCell: (data: any) =>
+        data.row?.mfs ? <Typography>{data.row?.mfs}</Typography> : "-",
     },
 
     {
@@ -157,6 +159,21 @@ const OrderColumn = (): GridColumns<IDataTable> => {
       flex: 1,
       width: 100,
       minWidth: 80,
+    },
+    {
+      headerName: "Delivery Charge",
+      headerAlign: "center",
+      field: "delivery_charge",
+      align: "center",
+      flex: 1,
+      width: 200,
+      minWidth: 160,
+      renderCell: (data: any) =>
+        data.row?.delivery_charge ? (
+          <Typography>{data.row?.delivery_charge}</Typography>
+        ) : (
+          "-"
+        ),
     },
     {
       headerName: "Type",

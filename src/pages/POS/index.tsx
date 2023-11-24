@@ -1133,7 +1133,7 @@ const POS: React.FC = () => {
       {/* 
         Invoice Container
       */}
-      <div className="">
+      <div className="hidden">
         <div ref={printRef}>
           <PrintableArea
             {...{
@@ -1232,7 +1232,7 @@ const PrintableArea: React.FC<{
                 />
               </div>
               <div>
-                <b>Dhanmondi Showroom:</b>
+                <b>{branch?.data?.name} Showroom:</b>
                 <p className={"text-xs whitespace-pre"}>
                   {branch?.data?.address}
                 </p>
@@ -1388,31 +1388,36 @@ const PrintableArea: React.FC<{
           </p>
         </div>
 
-        <div className="w-full flex flex-row items-center gap-4 justify-between">
-          <p>Amount Paid: </p>
-          <p>{others?.paid}৳</p>
-        </div>
-
         {isA5 ? (
-          <div className="w-full flex flex-row items-center gap-4 justify-between border-t-2 border-black pt-2">
-            <b>COD Amount: </b>
+          <>
+            <div className="w-full flex flex-row items-center gap-4 justify-between">
+              <p>Advance: </p>
+              <p>{others?.paid}৳</p>
+            </div>
+            <div className="w-full flex flex-row items-center gap-4 justify-between border-t-2 border-black pt-2">
+              <b>COD Amount: </b>
 
-            <b>
-              {parseFloat(
-                `${
-                  others?.subTotal -
-                  others?.discount -
-                  others?.exchange +
-                  others?.deliveryCharge +
-                  others?.stitchCost -
-                  others?.paid
-                }`
-              ).toFixed(2)}
-              ৳
-            </b>
-          </div>
+              <b>
+                {parseFloat(
+                  `${
+                    others?.subTotal -
+                    others?.discount -
+                    others?.exchange +
+                    others?.deliveryCharge +
+                    others?.stitchCost -
+                    others?.paid
+                  }`
+                ).toFixed(2)}
+                ৳
+              </b>
+            </div>
+          </>
         ) : (
           <>
+            <div className="w-full flex flex-row items-center gap-4 justify-between">
+              <p>Amount Paid: </p>
+              <p>{others?.paid}৳</p>
+            </div>
             {!!(
               others?.subTotal -
               others?.discount -
@@ -1451,7 +1456,7 @@ const PrintableArea: React.FC<{
               </b>
             </div>
             <div className="w-full flex flex-row items-center gap-4 justify-between border-t-2 border-black pt-2">
-              <b>MRP: </b>
+              <b>Total: </b>
               <b>
                 {parseFloat(
                   `${
