@@ -2,14 +2,17 @@ import { Container } from "@mui/system";
 import { Descriptions } from "antd";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useGetOrderById } from "@/queries/order";
+import { useGetInvoiceById, useGetOrderById } from "@/queries/order";
 import moment from "moment";
 import { Grid, Typography } from "@mui/material";
 
 const Info: React.FC = () => {
 	const { oid } = useParams();
 	const { data: orderDataById } = useGetOrderById(oid);
-	console.log(orderDataById);
+	const { data: invoiceDataById } = useGetInvoiceById(oid);
+
+	console.log("invoiceDataById", invoiceDataById);
+
 	return (
 		<>
 			<Container>
