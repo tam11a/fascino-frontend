@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import { useGetInvoiceById, useGetOrderById } from "@/queries/order";
 import moment from "moment";
 import { Grid, Typography } from "@mui/material";
+import { useReactToPrint } from "react-to-print";
+import { PrintableArea } from "@pages/POS";
 
 const Info: React.FC = () => {
 	const { oid } = useParams();
@@ -12,6 +14,68 @@ const Info: React.FC = () => {
 	const { data: invoiceDataById } = useGetInvoiceById(oid);
 
 	console.log("invoiceDataById", invoiceDataById);
+
+	//Print Function
+
+	const printRef = React.useRef(null);
+
+	const reactToPrintContent = React.useCallback(() => {
+		return printRef.current;
+	}, [printRef.current]);
+
+	const handlePrint = useReactToPrint({
+		content: reactToPrintContent,
+		documentTitle: "Invoice",
+		removeAfterPrint: true,
+		pageStyle: `
+    @page {
+      // size: 2.17in 0.71in;
+      // margin: 0in 0.4in 0.67in 0.85in;
+    }
+
+    @media all {
+      .pageBreak {
+        display: none
+      }
+    }
+
+    @media print {
+      .pageBreak {
+        page-break-before: always
+      }
+    }
+    `,
+	});
+
+	const printA5Ref = React.useRef(null);
+
+	const reactToPrintA5Content = React.useCallback(() => {
+		return printA5Ref.current;
+	}, [printRef.current]);
+
+	const handlePrintA5 = useReactToPrint({
+		content: reactToPrintA5Content,
+		documentTitle: "Invoice",
+		removeAfterPrint: true,
+		pageStyle: `
+    @page {
+      // size: 2.17in 0.71in;
+      // margin: 0in 0.4in 0.67in 0.85in;
+    }
+
+    @media all {
+      .pageBreak {
+        display: none
+      }
+    }
+
+    @media print {
+      .pageBreak {
+        page-break-before: always
+      }
+    }
+    `,
+	});
 
 	return (
 		<>
@@ -85,6 +149,47 @@ const Info: React.FC = () => {
 					</Descriptions.Item>
 				</Descriptions>
 			</Container>
+			{/* 
+        Invoice Container
+      */}
+			{/* <div className="hidden">
+				<div ref={printRef}>
+					<PrintableArea
+						{...{
+							posProducts,
+							subTotal,
+							stitchCost,
+							paid,
+							discount,
+							transactions,
+							exchange,
+							deliveryCharge,
+							selectedCustomer,
+							branch: selectedBranch,
+							method: payMethod,
+						}}
+					/>
+				</div>
+				<hr className="my-5" />
+				<div ref={printA5Ref}>
+					<PrintableArea
+						{...{
+							posProducts,
+							subTotal,
+							stitchCost,
+							paid,
+							discount,
+							transactions,
+							exchange,
+							deliveryCharge,
+							selectedCustomer,
+							branch: selectedBranch,
+							method: payMethod,
+						}}
+						isA5={true}
+					/>
+				</div>
+			</div> */}
 		</>
 	);
 };
