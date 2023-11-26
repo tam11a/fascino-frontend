@@ -1232,7 +1232,7 @@ const PrintableArea: React.FC<{
                 />
               </div>
               <div>
-                <b>Dhanmondi Showroom:</b>
+                <b>{branch?.data?.name} Showroom:</b>
                 <p className={"text-xs whitespace-pre"}>
                   {branch?.data?.address}
                 </p>
@@ -1359,10 +1359,12 @@ const PrintableArea: React.FC<{
           <p>Discount: </p>
           <p>{others?.discount}৳</p>
         </div>
-        <div className="w-full flex flex-row items-center gap-4 justify-between">
-          <p>Exchange: </p>
-          <p>{others?.exchange}৳</p>
-        </div>
+        {!!others?.exchange && (
+          <div className="w-full flex flex-row items-center gap-4 justify-between">
+            <p>Exchange: </p>
+            <p>{others?.exchange}৳</p>
+          </div>
+        )}
         {!!others?.deliveryCharge && (
           <div className="w-full flex flex-row items-center gap-4 justify-between">
             <p>Delivery Charge: </p>
@@ -1373,86 +1375,122 @@ const PrintableArea: React.FC<{
           <p>Vat Inclusive (7.5%) : </p>
           <p>
             {parseFloat(
-              `${(others?.subTotal + others?.stitchCost) * 0.075}`
+              `${
+                ((others?.subTotal +
+                  others?.stitchCost -
+                  others?.discount -
+                  others?.exchange) /
+                  (1 + 0.075)) *
+                0.075
+              }`
             ).toFixed(2)}
             ৳
           </p>
         </div>
 
-        <div className="w-full flex flex-row items-center gap-4 justify-between">
-          <p>Amount Paid: </p>
-          <p>{others?.paid}৳</p>
-        </div>
-        {!!(
-          others?.subTotal -
-          others?.discount -
-          others?.exchange +
-          others?.deliveryCharge +
-          others?.stitchCost -
-          others?.paid
-        ) && (
-          <div className="w-full flex flex-row items-center gap-4 justify-between">
-            <p>Amount Due: </p>
-            <p>
-              {others?.paid <
+        {isA5 ? (
+          <>
+            <div className="w-full flex flex-row items-center gap-4 justify-between">
+              <p>Advance: </p>
+              <p>{others?.paid}৳</p>
+            </div>
+            <div className="w-full flex flex-row items-center gap-4 justify-between border-t-2 border-black pt-2">
+              <b>COD Amount: </b>
+
+              <b>
+                {parseFloat(
+                  `${
+                    others?.subTotal -
+                    others?.discount -
+                    others?.exchange +
+                    others?.deliveryCharge +
+                    others?.stitchCost -
+                    others?.paid
+                  }`
+                ).toFixed(2)}
+                ৳
+              </b>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="w-full flex flex-row items-center gap-4 justify-between">
+              <p>Amount Paid: </p>
+              <p>{others?.paid}৳</p>
+            </div>
+            {!!(
               others?.subTotal -
-                others?.discount -
-                others?.exchange +
-                others?.deliveryCharge +
-                others?.stitchCost
-                ? others?.subTotal -
-                  others?.discount -
-                  others?.exchange +
-                  others?.deliveryCharge +
-                  others?.stitchCost -
-                  others?.paid
-                : "0"}
-              ৳
-            </p>
-          </div>
-        )}
-        <div className="w-full flex flex-row items-center gap-4 justify-between">
-          <p>Mode of Payment: </p>
-          <b>
-            {Array.from(others?.transactions || [], (t: any) => t.method).join(
-              ", "
-            )}
-          </b>
-        </div>
-        <div className="w-full flex flex-row items-center gap-4 justify-between border-t-2 border-black pt-2">
-          <b>MRP: </b>
-          <b>
-            {parseFloat(
-              `${
-                others?.subTotal -
-                others?.discount -
-                others.exchange +
-                others.deliveryCharge +
-                others?.stitchCost
-              }`
-            ).toFixed(2)}
-            ৳
-          </b>
-        </div>
-        <div className="w-full flex flex-row items-center gap-4 justify-between">
-          <p>Changed Amount : </p>
-          <p>
-            {others?.paid >
-            others?.subTotal -
               others?.discount -
-              others.exchange +
-              others.deliveryCharge +
-              others?.stitchCost
-              ? others?.paid -
-                (others?.subTotal -
+              others?.exchange +
+              others?.deliveryCharge +
+              others?.stitchCost -
+              others?.paid
+            ) && (
+              <div className="w-full flex flex-row items-center gap-4 justify-between">
+                <p>Amount Due: </p>
+                <p>
+                  {others?.paid <
+                  others?.subTotal -
+                    others?.discount -
+                    others?.exchange +
+                    others?.deliveryCharge +
+                    others?.stitchCost
+                    ? others?.subTotal -
+                      others?.discount -
+                      others?.exchange +
+                      others?.deliveryCharge +
+                      others?.stitchCost -
+                      others?.paid
+                    : "0"}
+                  ৳
+                </p>
+              </div>
+            )}
+            <div className="w-full flex flex-row items-center gap-4 justify-between">
+              <p>Mode of Payment: </p>
+              <b>
+                {Array.from(
+                  others?.transactions || [],
+                  (t: any) => t.method
+                ).join(", ")}
+              </b>
+            </div>
+            <div className="w-full flex flex-row items-center gap-4 justify-between border-t-2 border-black pt-2">
+              <b>Total: </b>
+              <b>
+                {parseFloat(
+                  `${
+                    others?.subTotal -
+                    others?.discount -
+                    others.exchange +
+                    others.deliveryCharge +
+                    others?.stitchCost
+                  }`
+                ).toFixed(2)}
+                ৳
+              </b>
+            </div>
+            <div className="w-full flex flex-row items-center gap-4 justify-between">
+              <p>Changed Amount : </p>
+              <p>
+                {others?.paid >
+                others?.subTotal -
                   others?.discount -
                   others.exchange +
                   others.deliveryCharge +
-                  others?.stitchCost)
-              : "0"}
-            ৳
-          </p>
-        </div>
+                  others?.stitchCost
+                  ? others?.paid -
+                    (others?.subTotal -
+                      others?.discount -
+                      others.exchange +
+                      others.deliveryCharge +
+                      others?.stitchCost)
+                  : "0"}
+                ৳
+              </p>
+            </div>
+          </>
+        )}
       </div>
       {/* </div> */}
       <div className=" flex flex-col items-center justify-center gap-1 mt-2">

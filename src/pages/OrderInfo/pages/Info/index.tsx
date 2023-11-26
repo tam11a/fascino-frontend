@@ -58,6 +58,12 @@ const Info: React.FC = () => {
 						<b>Regular Price:</b> {orderDataById?.data?.data?.total}
 						<br />
 						<b>Discount:</b> {orderDataById?.data?.data?.discount}
+						{!!orderDataById?.data?.data?.delivery_charge && (
+							<>
+								<b>Delivery Charge:</b>{" "}
+								{orderDataById?.data?.data?.delivery_charge}
+							</>
+						)}
 						{orderDataById?.data?.data?.discount > 0 && (
 							<>
 								<br />
