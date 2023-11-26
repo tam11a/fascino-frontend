@@ -54,6 +54,19 @@ export const useGetOrderById = (id: any) => {
 	});
 };
 
+const getInvoiceById = (id: any) => {
+	return instance.get(`/order/${id}/invoice`, {
+		// params: {},
+	});
+};
+
+export const useGetInvoiceById = (id: any) => {
+	return useQuery(["get-invoice-by-id", id], () => getInvoiceById(id), {
+		enabled: !!id,
+		select: (data: any) => data?.data,
+	});
+};
+
 const getItemsByOrderId = (id: any) => {
 	return instance.get(`/order/orderlines/${id}`, {
 		// params: {},
