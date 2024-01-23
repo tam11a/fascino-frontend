@@ -34,6 +34,7 @@ const Info: React.FC = ({}) => {
 				productData?.data?.data?.subcategory?._id,
 			],
 			price: productData?.data?.data?.price,
+			barcode: productData?.data?.data?.barcode,
 		});
 	}, [productData]);
 
@@ -226,6 +227,27 @@ const Info: React.FC = ({}) => {
 								)}
 							/>
 						</div>
+					</div>
+					<div className="flex flex-col">
+						<Label>Barcode</Label>
+						<Controller
+							control={control}
+							name={"barcode"}
+							render={({
+								field: { onChange, onBlur, value },
+								fieldState: { error },
+							}) => (
+								<Input
+									// className="w-1/2"
+									placeholder="Product Barcode"
+									size="large"
+									onChange={onChange}
+									onBlur={onBlur}
+									value={value}
+									status={error ? "error" : ""}
+								/>
+							)}
+						/>
 					</div>
 					<div className="flex flex-col">
 						<Label>Category</Label>

@@ -129,6 +129,7 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
 									)}
 								/>
 							</div>
+
 							<div>
 								<Label>Price</Label>
 								<Controller
@@ -151,7 +152,29 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
 								/>
 							</div>
 						</div>
+
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+							<div className="flex flex-col">
+								<Label>Barcode</Label>
+								<Controller
+									control={control}
+									name={"barcode"}
+									render={({
+										field: { onChange, onBlur, value },
+										fieldState: { error },
+									}) => (
+										<Input
+											// className="w-1/2"
+											placeholder="Product Barcode"
+											size="large"
+											onChange={onChange}
+											onBlur={onBlur}
+											value={value}
+											status={error ? "error" : ""}
+										/>
+									)}
+								/>
+							</div>
 							<div className="flex flex-col">
 								<Label isRequired>Category</Label>
 								<Controller
@@ -180,27 +203,27 @@ const CreateProduct: React.FC<{ open: boolean; onClose: () => void }> = ({
 									)}
 								/>
 							</div>
-							<div className="flex flex-col">
-								<Label>Description</Label>
-								<Controller
-									control={control}
-									name={"description"}
-									render={({
-										field: { onChange, onBlur, value },
-										fieldState: { error },
-									}) => (
-										<Input
-											// className="w-1/2"
-											placeholder="Description.."
-											size="large"
-											onChange={onChange}
-											onBlur={onBlur}
-											value={value}
-											status={error ? "error" : ""}
-										/>
-									)}
-								/>
-							</div>
+						</div>
+						<div className="flex flex-col">
+							<Label>Description</Label>
+							<Controller
+								control={control}
+								name={"description"}
+								render={({
+									field: { onChange, onBlur, value },
+									fieldState: { error },
+								}) => (
+									<Input.TextArea
+										// className="w-1/2"
+										placeholder="Description.."
+										size="large"
+										onChange={onChange}
+										onBlur={onBlur}
+										value={value}
+										status={error ? "error" : ""}
+									/>
+								)}
+							/>
 						</div>
 					</DialogContent>
 					<Divider />
